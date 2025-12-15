@@ -1,0 +1,16 @@
+login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--sds-size-space-800);
+
+    h1{
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: var(--sds-size-space-800);
+    }
+}

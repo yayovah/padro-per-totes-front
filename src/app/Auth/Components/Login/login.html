@@ -6,32 +6,27 @@
                 <span>Correu electrònic</span>
                 <abbr title="required">*</abbr>
             </label>
-            <input type="email" id="correu" required >
+            <input type="email" id="correu" required>
             <div *ngIf="email.errors">
-                <div
-                    class="error-msg"
-                    *ngIf="email.errors && (email.touched || email.dirty)"
-                >
-                    <p *ngIf="email.errors?.['required']">Email is required</p>
-                    <p *ngIf="email.errors?.['pattern']">Email not a valid format.</p>
+                <div class="error-msg" *ngIf="email.errors && (email.touched || email.dirty)">
+                    <p *ngIf="email.errors?.['required']">El email es necesario</p>
+                    <p *ngIf="email.errors?.['pattern']">Formato del email no válido.</p>
                 </div>
             </div>
-        </div>  
+        </div>
         <div>
             <label for="password">
                 <span>Contrassenya</span>
                 <abbr title="required">*</abbr>
             </label>
-            <input type="text" id="cognoms" required >
+            <input type="text" id="cognoms" required>
             <div *ngIf="password.errors">
-                <div
-                    class="error-msg"
-                    *ngIf="password.errors && (password.touched || password.dirty)"
-                >
-                    <p *ngIf="password.errors?.['required']">Email is required</p>
+                <div class="error-msg" *ngIf="password.errors && (password.touched || password.dirty)">
+                    <p *ngIf="password.errors?.['required']">El email es necesario</p>
                 </div>
             </div>
-        </div>      
+        </div>
+        <button type="submit">Envía</button>
     </form>
 
 
