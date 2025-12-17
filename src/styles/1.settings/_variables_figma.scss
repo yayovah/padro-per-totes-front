@@ -1,0 +1,397 @@
+
+:root {
+    --rosa-fosc: rgba(227, 37, 133, 1);
+    --rosa-clar: rgba(253, 104, 196, 1);
+    --groc: rgba(253, 218, 90, 1);
+    --negre: rgba(18, 25, 38, 1);
+    --blanc: rgba(255, 255, 255, 1);
+    --fosc-900: rgba(176, 0, 82, 1);
+    --fosc-800: rgba(201, 11, 107, 1);
+    --fosc-700: rgba(227, 37, 133, 1);
+    --fosc-600: rgba(230, 59, 145, 1);
+    --fosc-500: rgba(233, 81, 157, 1);
+    --fosc-400: rgba(235, 102, 170, 1);
+    --fosc-300: rgba(238, 124, 182, 1);
+    --fosc-200: rgba(241, 146, 194, 1);
+    --fosc-100: rgba(244, 168, 206, 1);
+    --fosc-50: rgba(249, 211, 231, 1);
+    --fosc-25: rgba(252, 233, 243, 1);
+    --clar-900: rgba(125, 0, 68, 1);
+    --clar-800: rgba(151, 2, 94, 1);
+    --clar-700: rgba(159, 159, 159, 1);
+    --clar-600: rgba(202, 53, 145, 1);
+    --clar-500: rgba(227, 78, 170, 1);
+    --clar-300: rgba(253, 119, 202, 1);
+    --clar-200: rgba(253, 134, 208, 1);
+    --clar-100: rgba(254, 164, 220, 1);
+    --clar-50: rgba(254, 195, 231, 1);
+    --clar-25: rgba(255, 225, 243, 1);
+    --bold-font-family: "Plus Jakarta Sans", Helvetica;
+    --bold-font-weight: 700;
+    --bold-font-size: 36px;
+    --bold-letter-spacing: -0.72px;
+    --bold-line-height: 44px;
+    --bold-font-style: normal;
+    --padr-text-12-regular-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-12-regular-font-weight: 400;
+    --padr-text-12-regular-font-size: 12px;
+    --padr-text-12-regular-letter-spacing: 0px;
+    --padr-text-12-regular-line-height: 18px;
+    --padr-text-12-regular-font-style: normal;
+    --padr-text-12-medium-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-12-medium-font-weight: 500;
+    --padr-text-12-medium-font-size: 12px;
+    --padr-text-12-medium-letter-spacing: 0px;
+    --padr-text-12-medium-line-height: 18px;
+    --padr-text-12-medium-font-style: normal;
+    --padr-text-12-semi-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-12-semi-font-weight: 600;
+    --padr-text-12-semi-font-size: 12px;
+    --padr-text-12-semi-letter-spacing: 0px;
+    --padr-text-12-semi-line-height: 18px;
+    --padr-text-12-semi-font-style: normal;
+    --padr-text-12-bold-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-12-bold-font-weight: 700;
+    --padr-text-12-bold-font-size: 12px;
+    --padr-text-12-bold-letter-spacing: 0px;
+    --padr-text-12-bold-line-height: 18px;
+    --padr-text-12-bold-font-style: normal;
+    --padr-text-14-regular-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-14-regular-font-weight: 400;
+    --padr-text-14-regular-font-size: 14px;
+    --padr-text-14-regular-letter-spacing: 0px;
+    --padr-text-14-regular-line-height: 20px;
+    --padr-text-14-regular-font-style: normal;
+    --padr-text-14-medium-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-14-medium-font-weight: 500;
+    --padr-text-14-medium-font-size: 14px;
+    --padr-text-14-medium-letter-spacing: 0px;
+    --padr-text-14-medium-line-height: 20px;
+    --padr-text-14-medium-font-style: normal;
+    --padr-text-14-semi-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-14-semi-font-weight: 600;
+    --padr-text-14-semi-font-size: 14px;
+    --padr-text-14-semi-letter-spacing: 0px;
+    --padr-text-14-semi-line-height: 20px;
+    --padr-text-14-semi-font-style: normal;
+    --padr-text-14-bold-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-14-bold-font-weight: 700;
+    --padr-text-14-bold-font-size: 14px;
+    --padr-text-14-bold-letter-spacing: 0px;
+    --padr-text-14-bold-line-height: 20px;
+    --padr-text-14-bold-font-style: normal;
+    --padr-text-16-regular-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-16-regular-font-weight: 400;
+    --padr-text-16-regular-font-size: 16px;
+    --padr-text-16-regular-letter-spacing: 0px;
+    --padr-text-16-regular-line-height: 24px;
+    --padr-text-16-regular-font-style: normal;
+    --padr-text-16-medium-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-16-medium-font-weight: 500;
+    --padr-text-16-medium-font-size: 16px;
+    --padr-text-16-medium-letter-spacing: 0px;
+    --padr-text-16-medium-line-height: 24px;
+    --padr-text-16-medium-font-style: normal;
+    --padr-text-16-semi-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-16-semi-font-weight: 600;
+    --padr-text-16-semi-font-size: 16px;
+    --padr-text-16-semi-letter-spacing: 0px;
+    --padr-text-16-semi-line-height: 24px;
+    --padr-text-16-semi-font-style: normal;
+    --padr-text-16-bold-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-16-bold-font-weight: 700;
+    --padr-text-16-bold-font-size: 16px;
+    --padr-text-16-bold-letter-spacing: 0px;
+    --padr-text-16-bold-line-height: 24px;
+    --padr-text-16-bold-font-style: normal;
+    --padr-text-18-regular-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-18-regular-font-weight: 400;
+    --padr-text-18-regular-font-size: 18px;
+    --padr-text-18-regular-letter-spacing: 0px;
+    --padr-text-18-regular-line-height: 28px;
+    --padr-text-18-regular-font-style: normal;
+    --padr-text-18-medium-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-18-medium-font-weight: 500;
+    --padr-text-18-medium-font-size: 18px;
+    --padr-text-18-medium-letter-spacing: 0px;
+    --padr-text-18-medium-line-height: 28px;
+    --padr-text-18-medium-font-style: normal;
+    --padr-text-18-semi-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-18-semi-font-weight: 600;
+    --padr-text-18-semi-font-size: 18px;
+    --padr-text-18-semi-letter-spacing: 0px;
+    --padr-text-18-semi-line-height: 28px;
+    --padr-text-18-semi-font-style: normal;
+    --padr-text-18-bold-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-18-bold-font-weight: 700;
+    --padr-text-18-bold-font-size: 18px;
+    --padr-text-18-bold-letter-spacing: 0px;
+    --padr-text-18-bold-line-height: 28px;
+    --padr-text-18-bold-font-style: normal;
+    --padr-text-20-regular-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-20-regular-font-weight: 400;
+    --padr-text-20-regular-font-size: 20px;
+    --padr-text-20-regular-letter-spacing: 0px;
+    --padr-text-20-regular-line-height: 30px;
+    --padr-text-20-regular-font-style: normal;
+    --padr-text-20-medium-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-20-medium-font-weight: 500;
+    --padr-text-20-medium-font-size: 20px;
+    --padr-text-20-medium-letter-spacing: 0px;
+    --padr-text-20-medium-line-height: 30px;
+    --padr-text-20-medium-font-style: normal;
+    --padr-text-20-semi-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-20-semi-font-weight: 600;
+    --padr-text-20-semi-font-size: 20px;
+    --padr-text-20-semi-letter-spacing: 0px;
+    --padr-text-20-semi-line-height: 30px;
+    --padr-text-20-semi-font-style: normal;
+    --padr-text-20-bold-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-20-bold-font-weight: 700;
+    --padr-text-20-bold-font-size: 20px;
+    --padr-text-20-bold-letter-spacing: 0px;
+    --padr-text-20-bold-line-height: 30px;
+    --padr-text-20-bold-font-style: normal;
+    --padr-text-24-regular-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-24-regular-font-weight: 400;
+    --padr-text-24-regular-font-size: 24px;
+    --padr-text-24-regular-letter-spacing: 0px;
+    --padr-text-24-regular-line-height: 32px;
+    --padr-text-24-regular-font-style: normal;
+    --padr-text-24-medium-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-24-medium-font-weight: 500;
+    --padr-text-24-medium-font-size: 24px;
+    --padr-text-24-medium-letter-spacing: 0px;
+    --padr-text-24-medium-line-height: 32px;
+    --padr-text-24-medium-font-style: normal;
+    --padr-text-24-semi-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-24-semi-font-weight: 600;
+    --padr-text-24-semi-font-size: 24px;
+    --padr-text-24-semi-letter-spacing: 0px;
+    --padr-text-24-semi-line-height: 32px;
+    --padr-text-24-semi-font-style: normal;
+    --padr-text-24-bold-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-24-bold-font-weight: 700;
+    --padr-text-24-bold-font-size: 24px;
+    --padr-text-24-bold-letter-spacing: 0px;
+    --padr-text-24-bold-line-height: 32px;
+    --padr-text-24-bold-font-style: normal;
+    --padr-text-30-regular-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-30-regular-font-weight: 400;
+    --padr-text-30-regular-font-size: 30px;
+    --padr-text-30-regular-letter-spacing: 0px;
+    --padr-text-30-regular-line-height: 38px;
+    --padr-text-30-regular-font-style: normal;
+    --padr-text-30-medium-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-30-medium-font-weight: 500;
+    --padr-text-30-medium-font-size: 30px;
+    --padr-text-30-medium-letter-spacing: 0px;
+    --padr-text-30-medium-line-height: 38px;
+    --padr-text-30-medium-font-style: normal;
+    --padr-text-30-semi-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-30-semi-font-weight: 600;
+    --padr-text-30-semi-font-size: 30px;
+    --padr-text-30-semi-letter-spacing: 0px;
+    --padr-text-30-semi-line-height: 38px;
+    --padr-text-30-semi-font-style: normal;
+    --padr-text-30-bold-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-30-bold-font-weight: 700;
+    --padr-text-30-bold-font-size: 30px;
+    --padr-text-30-bold-letter-spacing: 0px;
+    --padr-text-30-bold-line-height: 38px;
+    --padr-text-30-bold-font-style: normal;
+    --padr-text-34-regular-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-34-regular-font-weight: 400;
+    --padr-text-34-regular-font-size: 36px;
+    --padr-text-34-regular-letter-spacing: -0.72px;
+    --padr-text-34-regular-line-height: 44px;
+    --padr-text-34-regular-font-style: normal;
+    --padr-text-34-medium-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-34-medium-font-weight: 500;
+    --padr-text-34-medium-font-size: 36px;
+    --padr-text-34-medium-letter-spacing: -0.72px;
+    --padr-text-34-medium-line-height: 44px;
+    --padr-text-34-medium-font-style: normal;
+    --padr-text-34-semi-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-34-semi-font-weight: 600;
+    --padr-text-34-semi-font-size: 36px;
+    --padr-text-34-semi-letter-spacing: -0.72px;
+    --padr-text-34-semi-line-height: 44px;
+    --padr-text-34-semi-font-style: normal;
+    --padr-text-48-regular-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-48-regular-font-weight: 400;
+    --padr-text-48-regular-font-size: 48px;
+    --padr-text-48-regular-letter-spacing: -0.96px;
+    --padr-text-48-regular-line-height: 60px;
+    --padr-text-48-regular-font-style: normal;
+    --padr-text-48-medium-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-48-medium-font-weight: 500;
+    --padr-text-48-medium-font-size: 48px;
+    --padr-text-48-medium-letter-spacing: -0.96px;
+    --padr-text-48-medium-line-height: 60px;
+    --padr-text-48-medium-font-style: normal;
+    --padr-text-48-semi-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-48-semi-font-weight: 600;
+    --padr-text-48-semi-font-size: 48px;
+    --padr-text-48-semi-letter-spacing: -0.96px;
+    --padr-text-48-semi-line-height: 60px;
+    --padr-text-48-semi-font-style: normal;
+    --padr-text-48-bold-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-48-bold-font-weight: 700;
+    --padr-text-48-bold-font-size: 48px;
+    --padr-text-48-bold-letter-spacing: -0.96px;
+    --padr-text-48-bold-line-height: 60px;
+    --padr-text-48-bold-font-style: normal;
+    --padr-text-60-regular-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-60-regular-font-weight: 400;
+    --padr-text-60-regular-font-size: 60px;
+    --padr-text-60-regular-letter-spacing: -1.2px;
+    --padr-text-60-regular-line-height: 72px;
+    --padr-text-60-regular-font-style: normal;
+    --padr-text-60-medium-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-60-medium-font-weight: 500;
+    --padr-text-60-medium-font-size: 60px;
+    --padr-text-60-medium-letter-spacing: -1.2px;
+    --padr-text-60-medium-line-height: 72px;
+    --padr-text-60-medium-font-style: normal;
+    --padr-text-60-semi-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-60-semi-font-weight: 600;
+    --padr-text-60-semi-font-size: 60px;
+    --padr-text-60-semi-letter-spacing: -1.2px;
+    --padr-text-60-semi-line-height: 72px;
+    --padr-text-60-semi-font-style: normal;
+    --padr-text-60-bold-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-60-bold-font-weight: 700;
+    --padr-text-60-bold-font-size: 60px;
+    --padr-text-60-bold-letter-spacing: -1.2px;
+    --padr-text-60-bold-line-height: 72px;
+    --padr-text-60-bold-font-style: normal;
+    --padr-text-72-regular-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-72-regular-font-weight: 400;
+    --padr-text-72-regular-font-size: 72px;
+    --padr-text-72-regular-letter-spacing: -1.44px;
+    --padr-text-72-regular-line-height: 90px;
+    --padr-text-72-regular-font-style: normal;
+    --padr-text-72-medium-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-72-medium-font-weight: 500;
+    --padr-text-72-medium-font-size: 72px;
+    --padr-text-72-medium-letter-spacing: -1.44px;
+    --padr-text-72-medium-line-height: 90px;
+    --padr-text-72-medium-font-style: normal;
+    --padr-text-72-semi-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-72-semi-font-weight: 600;
+    --padr-text-72-semi-font-size: 72px;
+    --padr-text-72-semi-letter-spacing: -1.44px;
+    --padr-text-72-semi-line-height: 90px;
+    --padr-text-72-semi-font-style: normal;
+    --padr-text-72-bold-font-family: "Plus Jakarta Sans", Helvetica;
+    --padr-text-72-bold-font-weight: 700;
+    --padr-text-72-bold-font-size: 72px;
+    --padr-text-72-bold-letter-spacing: -1.44px;
+    --padr-text-72-bold-line-height: 90px;
+    --padr-text-72-bold-font-style: normal;
+    --text-12-medium-font-family: "Plus Jakarta Sans", Helvetica;
+    --text-12-medium-font-weight: 500;
+    --text-12-medium-font-size: 12px;
+    --text-12-medium-letter-spacing: 0px;
+    --text-12-medium-line-height: 18px;
+    --text-12-medium-font-style: normal;
+    --text-16-semibold-font-family: "Plus Jakarta Sans", Helvetica;
+    --text-16-semibold-font-weight: 600;
+    --text-16-semibold-font-size: 16px;
+    --text-16-semibold-letter-spacing: 0px;
+    --text-16-semibold-line-height: 24px;
+    --text-16-semibold-font-style: normal;
+    --text-14-semibold-font-family: "Plus Jakarta Sans", Helvetica;
+    --text-14-semibold-font-weight: 600;
+    --text-14-semibold-font-size: 14px;
+    --text-14-semibold-letter-spacing: 0px;
+    --text-14-semibold-line-height: 20px;
+    --text-14-semibold-font-style: normal;
+    --padron-sm: 0px 2px 8px 0px rgba(16, 24, 40, 0.08);
+    --padron-md: 0px 4px 16px 0px rgba(16, 24, 40, 0.08);
+    --padron-lg: 0px 8px 28px -2px rgba(16, 24, 40, 0.1);
+    --padron-xl: 0px 16px 32px -4px rgba(16, 24, 40, 0.12);
+    --size-space-0: 0px;
+    --size-space-050: 2px;
+    --size-space-400: 16px;
+    --size-space-300: 12px;
+    --size-space-600: 24px;
+    --size-space-200: 8px;
+    --size-space-1600: 64px;
+    --size-space-4000: 160px;
+    --numbers-gaps-gap-badges: var(--numbers-base-4);
+    --numbers-base-4: 4px;
+    --numbers-paddings-pad-leftright-badges: var(--numbers-base-8);
+    --numbers-paddings-pad-topbottom-badges: var(--numbers-base-2);
+    --numbers-base-8: 8px;
+    --numbers-base-2: 2px;
+    --numbers-gaps-gap-internal-general: var(--numbers-base-8-duplicate);
+    --numbers-gaps-gaps-small-link: var(--numbers-base-4-duplicate);
+    --numbers-base-8-duplicate: 8px;
+    --numbers-base-4-duplicate: 4px;
+    --numbers-corners-corners-buttons: var(--numbers-base-8-duplicate);
+    --numbers-gaps-gap-internal-general-duplicate: var(--numbers-base-8);
+    --numbers-gaps-gap-badges-duplicate: var(--numbers-base-4-duplicate);
+    --numbers-paddings-pad-leftright-badges-duplicate: var(
+        --numbers-base-8-duplicate
+    );
+    --numbers-paddings-pad-topbottom-badges-duplicate: var(
+        --numbers-base-2-duplicate
+    );
+    --numbers-base-2-duplicate: 2px;
+    --3-spacing-spacing-2xl: var(--primitives-spacing-5-20px);
+    --primitives-spacing-5-20px: 20px;
+    --shape-corner-small: 8px;
+    --shape-corner-large: 16px;
+    --system-colors-grays-gray-6: rgba(242, 242, 247, 1);
+    --colors-success-fill-green-dot: var(--colors-success-success-500);
+    --colors-success-success-500: rgba(18, 183, 106, 1);
+}
+
+/*
+
+To enable a theme in your HTML, simply add one of the following data attributes to an HTML element, like so:
+
+<body data-system-colors-mode="light">
+        <!-- the rest of your content -->
+</body>
+
+You can apply the theme on any DOM node, not just the `body`
+
+*/
+
+[data-system-colors-mode="light"] {
+    --system-colors-grays-gray-6: rgba(242, 242, 247, 1);
+}
+
+[data-system-colors-mode="dark"] {
+    --system-colors-grays-gray-6: rgba(28, 28, 30, 1);
+}
+
+[data-system-colors-mode="dark-elevated"] {
+    --system-colors-grays-gray-6: rgba(28, 28, 30, 1);
+}
+
+[data-system-colors-mode="IC-light"] {
+    --system-colors-grays-gray-6: rgba(242, 242, 246, 1);
+}
+
+[data-system-colors-mode="IC-dark"] {
+    --system-colors-grays-gray-6: rgba(0, 0, 0, 1);
+}
+
+[data-system-colors-mode="IC-dark-elevated"] {
+    --system-colors-grays-gray-6: rgba(0, 0, 0, 1);
+}
+
+[data-colors-mode="light"] {
+    --colors-success-success-500: rgba(18, 183, 106, 1);
+}
+
+[data-colors-mode="dark"] {
+    --colors-success-success-500: rgba(35, 198, 117, 1);
+}
+
+
+
