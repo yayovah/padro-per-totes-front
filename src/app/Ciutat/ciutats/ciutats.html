@@ -1,0 +1,10 @@
+{{ciutats.length}} ciutats trobades.
+<div *ngIf="ciutats.length === 0">
+    <p>No s'han trobat ciutats.</p>
+</div>
+
+<ul>
+    <li *ngFor="let ciutat of ciutats">
+        {{ ciutat.nom }} (ID: {{ ciutat.id }})
+    </li>
+</ul>

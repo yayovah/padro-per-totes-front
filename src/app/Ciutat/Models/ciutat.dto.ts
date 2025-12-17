@@ -1,5 +1,5 @@
 export interface CiutatDTO {
-    id: BigInt;
+    id: number;
     nom: string;
     provincia: string;
 }
