@@ -3,13 +3,13 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { CiutatDTO } from '../Models/ciutat.dto';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Ciutats {
-  //private readonly baseUrl = 'https://api.padronparatodxs.net/api';
-  private readonly baseUrl = 'http://127.0.0.1:8000/api';
+  private readonly baseUrl = environment.apiUrl;
   private readonly ciutatsEndpoint = '/ciutats';
   private readonly url = `${this.baseUrl}${this.ciutatsEndpoint}`;
 
