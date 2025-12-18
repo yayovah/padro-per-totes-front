@@ -1,6 +1,8 @@
-<label [for]="name">{{ label }}</label>
-<input [type]="type || 'text'" [formControl]="control" [name]="name" [required]="required"
-    [placeholder]="placeholder" />
-<p class="error-msg" *ngIf="control.errors && (control.touched || control.dirty)">
-    {{ errorMessage || "Aquest camp és obligatori." }}
-</p>
+<div class="o-input-div">
+    <label [for]="name">{{ label }}</label>
+    <input [type]="type || 'text'" [formControl]="control" [name]="name" [required]="required"
+        [placeholder]="placeholder" />
+    <p class="o-error-msg" *ngIf="control.errors && (control.touched || control.dirty)">
+        {{ errorMessage || "Aquest camp és obligatori." }}
+    </p>
+</div>

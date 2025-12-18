@@ -27,7 +27,6 @@ const _ciutatReducer = createReducer(
         error: null,
     })),
     on(CiutatActions.getCiutatsSuccess, (state, { ciutats }) => {
-        console.log('REDUCER →', ciutats);
         return {
             ...state,
             ciutats: ciutats,

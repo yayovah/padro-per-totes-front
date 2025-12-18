@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import * as CiutatsAction from '../Actions/ciutat.action';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { selectCredentials } from '../../Auth/Selectors/auth.selector';
 
 @Component({
   selector: 'app-ciutats',
@@ -28,6 +29,7 @@ export class CiutatsComponent implements OnInit {
       this.ciutats = ciutats.ciutats;
       // Afegeix això per veure si arriben les dades al component
       console.log('Ciutats rebudes:', this.ciutats); 
+      console.log('Credencials a l\'AppState:', selectCredentials(this.store));
     });
   }
 

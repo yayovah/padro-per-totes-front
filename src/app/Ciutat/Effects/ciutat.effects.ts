@@ -23,7 +23,7 @@ export class CiutatsEffects {
             exhaustMap(() =>
                 this.ciutatsService.getCiutats().pipe(
                 map((ciutats) => {
-                    console.log('CIUTATS API →', ciutats);
+                    //console.log('CIUTATS API →', ciutats);
                     //CiutatsActions.getCiutatsSuccess({ ciutats });
                     return CiutatsActions.getCiutatsSuccess({ ciutats });
                 }

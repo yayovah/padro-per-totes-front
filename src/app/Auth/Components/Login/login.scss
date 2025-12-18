@@ -1,16 +1,17 @@
-login{
+.c-login-main{
+    display: flex;
+    padding: var(--padding-xl) var(--padding-xl);
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap-lg);
+    flex: 1 0 0;
+    align-self: stretch;
+}
+
+.c-login-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: var(--sds-size-space-800);
-
-    h1{
-        align-self: stretch;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        gap: var(--sds-size-space-800);
-    }
+    gap: var(--gap-lg);
 }

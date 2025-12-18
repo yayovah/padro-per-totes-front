@@ -1,0 +1,25 @@
+//Objecte d'encapçalament de pàgines o seccions
+
+.o-heading{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-sm);
+    align-self: stretch;
+    p{
+        color: var(--Negre, #121926);
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 28px; /* 155.556% */
+    }
+}
+
+.o-web-heading{
+    color: var(--Negre, #121926);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 60px; /* 125% */
+    letter-spacing: -0.96px;
+}

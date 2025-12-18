@@ -1,9 +1,18 @@
 h1{
+    color: var(--Negre, #121926);
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 60px; /* 125% */
+    letter-spacing: -0.96px;
+}
+
+h2{
     color: var(--negre);
     text-align: right;
     font-family: var(--font-principal);
-    font-size: 18px;
+    font-size: 16px;
     font-style: normal;
-    font-weight: 700;
-    line-height: 28px;
+    font-weight: 600;
+    line-height: 24px;
 }

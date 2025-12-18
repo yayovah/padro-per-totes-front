@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-submit',
@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './submit.scss',
 })
 export class Submit {
-
+  @Input() text = "";
+  @Input() icono = false;
 }

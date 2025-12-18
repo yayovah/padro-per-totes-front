@@ -1,8 +1,12 @@
-@import 'styles/1.settings/variables_figma';
-@import 'styles/1.settings/variables';
-@import 'styles/2.tools/dependencies';
-@import 'styles/3.generic/reset';
-@import 'styles/4.elements/body';
-@import 'styles/4.elements/forms';
-@import 'styles/4.elements/headings';
+@use 'styles/1.settings/variables_figma';
+@use 'styles/1.settings/variables';
+@use 'styles/2.tools/dependencies';
 
+@use 'styles/3.generic/reset';
+
+@use 'styles/4.elements/body';
+@use 'styles/4.elements/forms';
+@use 'styles/4.elements/headings';
+
+@use 'styles/5.objects/form_objects';
+@use 'styles/5.objects/headings_objects';

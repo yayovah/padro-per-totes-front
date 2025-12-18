@@ -1,14 +1,11 @@
-.input {
+input {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--numbers-paddings-pad-topbottom-inputs)
-            var(--numbers-paddings-pad-leftright-inputs)
-            var(--numbers-paddings-pad-topbottom-inputs)
-            var(--numbers-paddings-pad-leftright-inputs);
+    padding: var(--padding-topbottom-inputs)
+            var(--padding-leftright-inputs);
     position: relative;
-    border-radius: var(--numbers-corners-corners-inputs);
+    border-radius: var(--corners-corners-inputs, 8px);
+    border: 1px solid var(--gray-border-border-input, #CDD5DF);
     overflow: hidden;
-    border: 1px solid;
-    border-color: var(--colors-gray-border-border-input);
 }

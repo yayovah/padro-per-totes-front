@@ -1,33 +1,17 @@
-<div class="login">
-    <h1>Login</h1>
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
-        <div>
-            <label for="correu">
-                <span>Correu electrònic</span>
-                <abbr title="required">*</abbr>
-            </label>
-            <input type="email" id="correu" required>
-            <div *ngIf="email.errors">
-                <div class="error-msg" *ngIf="email.errors && (email.touched || email.dirty)">
-                    <p *ngIf="email.errors?.['required']">El email es necesario</p>
-                    <p *ngIf="email.errors?.['pattern']">Formato del email no válido.</p>
-                </div>
-            </div>
+<main class="c-login-main">
+    <div class="c-login-container">
+        <div class="o-heading">
+            <h1>Login</h1>
+            <p>Introduce tus credenciales</p>
         </div>
-        <div>
-            <label for="password">
-                <span>Contrassenya</span>
-                <abbr title="required">*</abbr>
-            </label>
-            <input type="text" id="cognoms" required>
-            <div *ngIf="password.errors">
-                <div class="error-msg" *ngIf="password.errors && (password.touched || password.dirty)">
-                    <p *ngIf="password.errors?.['required']">El email es necesario</p>
-                </div>
-            </div>
-        </div>
-        <button type="submit">Envía</button>
-    </form>
-
-
-</div>
+        <form class="o-form-box" [formGroup]="loginForm" (ngSubmit)="login()">
+            <app-input-email label="Escriu el teu correu electrònic: " name="email" [control]="email"
+                placeholder="correu@domini.ext" errorMessage="{{ getErrorMessage(email, 'Email') }}"
+                required="required">
+            </app-input-email>
+            <app-input-password label="Escriu la teva contrasenya: " name="password" [control]="password"
+                errorMessage="{{ getErrorMessage(password, 'Password') }}" required="required"></app-input-password>
+            <app-submit text="Envía"></app-submit>
+        </form>
+    </div>
+</main>
