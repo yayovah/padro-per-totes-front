@@ -1,0 +1,18 @@
+<main class="o-layout">
+    <div class="o-layout-part">
+        <div class="o-heading">
+            <h1>Dashboard</h1>
+            <p>Gestiona las ciudades</p>
+            <app-list [title]="'Ciutats'" [items]="noms_ciutats()" [editable]="true" [back]="false"
+                (accio)="handleAccio($event)">
+            </app-list>
+        </div>
+    </div>
+    <div class="o-layout-part">
+        <app-card [title]="ciutatSelected() ? ciutatSelected() : 'Benvingut al dashboard de superadministrador'">
+            <p>Aquí pots gestionar les ciutats disponibles a l'aplicació. Pots afegir noves ciutats, editar les
+                existents o
+                eliminar-les segons sigui necessari.</p>
+        </app-card>
+    </div>
+</main>

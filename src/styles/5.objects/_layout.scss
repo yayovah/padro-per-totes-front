@@ -1,0 +1,17 @@
+.o-layout{
+    display: flex;
+    flex-direction: row;
+    padding: var(--padding-xl);
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--gap-xl);
+    align-self: stretch;
+}
+
+.o-layout-part{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    width: 620px;
+}

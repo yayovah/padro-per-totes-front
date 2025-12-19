@@ -1,0 +1,36 @@
+<div class="c-list-container">
+    <div class="o-list-div">
+        <div class="o-list-heading">
+            <h2>{{ title }}</h2>
+        </div>
+        <ul class="o-list">
+            @for(item of items; track item) {
+            <li class="o-list-item">
+                <!--  <div *ngIf="label" class="o-list-item-name">{{ item.label }}</div>-->
+                <div class="o-list-item-content">{{ item }}</div>
+
+                <div class="o-list-item-actions">
+                    @if(editable){
+                    <button (click)="onAccio('edit', item)" class="o-edit-button"><i
+                            class="fa-solid fa-pencil"></i></button>
+                    <button (click)="onAccio('delete', item)" class="o-delete-button"><i
+                            class="fa-solid fa-trash-can"></i></button>
+                    }
+                    @if(back){
+                    <div (click)="onAccio('back', item)"><i class="fa-solid fa-arrow-left"></i></div>
+                    }
+                    @if(!back){
+                    <div (click)="onAccio('view', item)"><i class="fa-solid fa-arrow-right"></i></div>
+                    }
+                </div>
+            </li>
+            }@empty{
+            <div>No hi ha ciutats disponibles.</div>
+            }
+        </ul>
+    </div>
+
+    <app-submit [text]="'Afegir ciutat'" (submitEvent)="onAccio('add', null)" [icono]="true">
+    </app-submit>
+
+</div>

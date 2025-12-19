@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CiutatDTO } from '../Models/ciutat.dto';
-import { Ciutats } from '../Services/ciutats';
-import { AppState } from '../../app.reducers';
+import { CiutatDTO } from '../../Models/ciutat.dto';
+import { Ciutats } from '../../Services/ciutats';
+import { AppState } from '../../../app.reducers';
 import { Store } from '@ngrx/store';
-import * as CiutatsAction from '../Actions/ciutat.action';
+import * as CiutatsAction from '../../Actions/ciutat.action';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { selectCredentials } from '../../Auth/Selectors/auth.selector';
+import { selectCredentials } from '../../../Auth/Selectors/auth.selector';
 
 @Component({
   selector: 'app-ciutats',
@@ -34,8 +34,6 @@ export class CiutatsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
     this.store.dispatch(CiutatsAction.getCiutats());
   }
 }

@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+
 
 @Component({
   selector: 'app-submit',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './submit.html',
   styleUrl: './submit.scss',
 })

@@ -10,3 +10,8 @@
 
 @use 'styles/5.objects/form_objects';
 @use 'styles/5.objects/headings_objects';
+@use 'styles/5.objects/list_objects';
+@use 'styles/5.objects/layout';
+@use 'styles/5.objects/card_objects';
+
+@import "@fortawesome/fontawesome-free/css/all.css";
