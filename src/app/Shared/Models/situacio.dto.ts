@@ -1,7 +1,7 @@
 export interface SituacioDTO {
-    id: BigInt;
-    pregunta: BigInt;
-    resposta?: BigInt;
-    seguent_pregunta?: BigInt;
-    posicio?: BigInt;
+    id: number;
+    pregunta: number;
+    resposta?: number;
+    seguent_pregunta?: number;
+    posicio?: number;
 }

@@ -5,6 +5,8 @@ import { AdminDashboard } from './Admin-dashboard/admin-dashboard';
 import { SuperadminDashboard } from './Ciutat/Components/Superadmin-dashboard/superadmin-dashboard';
 import { Ciutats } from './Ciutat/Services/ciutats';
 import { CiutatsComponent } from './Ciutat/Components/ciutats/ciutats';
+import { authGuard } from './Shared/Guards/auth-guard';
+
 
 export const routes: Routes = [
   {
@@ -20,13 +22,19 @@ export const routes: Routes = [
     component: CiutatsComponent,
   },
   {
-    path: 'admin',
-    component: AdminDashboard,
-    //canActivate: [AuthGuard],
+    path: 'userDash',
+    component: CiutatsComponent,
   },
   {
-    path: 'superadmin',
+    path: 'adminDash',
+    component: AdminDashboard,
+    canActivate: [authGuard],
+    data: { rolNecessari: 'admin' }
+  },
+  {
+    path: 'superadminDash',
     component: SuperadminDashboard,
-    //canActivate: [AuthGuard],
+    canActivate: [authGuard],
+    data: { rolNecessari: 'superadmin' }
   },
 ];

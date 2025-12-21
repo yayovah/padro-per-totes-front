@@ -1,4 +1,5 @@
 export interface LlistableDTO {
-    item: any;
-    label: string;
+    id: number;
+    nom: string;
+    label?: string;
 }

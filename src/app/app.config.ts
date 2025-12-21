@@ -3,9 +3,11 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { appReducers, EffectsArray } from './app.reducers';
 import { provideEffects } from '@ngrx/effects';
+
+import { AuthInterceptor } from './Shared/Services/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +16,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore(appReducers),
     provideEffects(EffectsArray),
-    provideHttpClient()
+    provideHttpClient(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ]
 };

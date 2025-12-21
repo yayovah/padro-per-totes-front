@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ButtonSubmit } from './button-submit';
+import { Modal } from './modal';
 
-describe('ButtonSubmit', () => {
-  let component: ButtonSubmit;
-  let fixture: ComponentFixture<ButtonSubmit>;
+describe('Modal', () => {
+  let component: Modal;
+  let fixture: ComponentFixture<Modal>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ButtonSubmit]
+      imports: [Modal]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ButtonSubmit);
+    fixture = TestBed.createComponent(Modal);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

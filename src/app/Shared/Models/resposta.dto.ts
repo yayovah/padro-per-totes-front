@@ -1,4 +1,4 @@
 export interface RespostaDTO {
-    id: BigInt;
+    id: number;
     text: string;
 }

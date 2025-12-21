@@ -22,7 +22,6 @@ export class Ciutats {
    *  
    */
   getCiutats(): Observable<CiutatDTO[]> {
-      console.log(this.url);
     //Petició a la api
     return this.http
     .get<CiutatDTO[]>(this.url)
@@ -30,8 +29,51 @@ export class Ciutats {
       //en cas d'error en la petició
       catchError((error) => {
         console.error('Error recuperando ciudades del servidor:', error);
-        return throwError(() => new Error('Error fetching cities'));
+        return throwError(() => new Error('Error fetching ciutat'));
       })
     );
+  }
+
+  getAdminsCiutat(ciutatId: number): Observable<any[]> {
+    return this.http
+      .get<any[]>(`${this.url}/${ciutatId}/admins`)
+      .pipe(
+        catchError((error) => {
+          console.error(`Error recuperando administradores de la ciudad del servidor:`, error);
+          return throwError(() => new Error('Error fetching ciutat admins'));
+        }
+      ));
+  }
+
+  updateCiutat(dadesCiutat: CiutatDTO): Observable<CiutatDTO> {
+    return this.http
+      .put<CiutatDTO>(`${this.url}/${dadesCiutat.id}`, dadesCiutat)
+        .pipe(catchError((error) => {
+          console.error(`Error actualizando la ciudad en el servidor:`, error);
+          return throwError(() => new Error('Error updating ciutat'));
+        }
+      ));
+  }
+
+  createCiutat(dadesCiutat:  Omit<CiutatDTO, 'id'>){
+    return this.http
+      .post<CiutatDTO>(`${this.url}/`, dadesCiutat)
+      .pipe(
+          catchError((error) => {
+            console.error(`Error intentando crear la ciudad:`, error);
+            return throwError(() => new Error('Error creating ciutat'));
+        }
+      ));
+  }
+
+  deleteCiutat(ciutatId: number){
+    return this.http
+      .delete<number>(`${this.url}/${ciutatId}`)
+      .pipe(
+          catchError((error) => {
+            console.error(`Error intentando eliminar la ciudad:`, error);
+            return throwError(() => new Error('Error deleting ciutat'));
+        }        
+      ));
   }
 }

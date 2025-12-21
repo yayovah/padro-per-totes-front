@@ -1,4 +1,5 @@
 <div class="o-button-div">
-    <button class="o-submit-button" type="submit">{{ text }}</button>
-    <img *ngIf="icono === true" src="/assets/icons/plus.svg" alt="Icono del simbol més" />
+    <button class="o-submit-button" type="submit" (click)="onClick()">{{ text }}
+        <i class="fa-solid fa-circle-plus"></i>
+    </button>
 </div>

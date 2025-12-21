@@ -1,5 +1,5 @@
 export interface UserDTO {
-    id: BigInt;
+    id: number;
     nom: string;
     email: string;
     accesToken?: string;

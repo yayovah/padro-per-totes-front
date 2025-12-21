@@ -1,10 +1,11 @@
 <div class="c-card-container">
     <div class="o-card-div">
         <div class="o-card-heading">
-            <h2>{{ title }}</h2>
+            <div>
+                <h2>{{ title }}</h2>
+            </div>
+            <p>{{ subtitle }}</p>
         </div>
-        <div>
-            <ng-content></ng-content>
-        </div>
+        <ng-content></ng-content>
     </div>
 </div>

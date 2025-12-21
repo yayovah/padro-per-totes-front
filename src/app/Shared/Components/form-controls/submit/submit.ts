@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 
 @Component({
@@ -11,4 +11,9 @@ import { Component, Input } from '@angular/core';
 export class Submit {
   @Input() text = "";
   @Input() icono = false;
+  @Output() clickEvent = new EventEmitter<void>();
+
+  onClick(){
+    this.clickEvent.emit();
+  }
 }

@@ -7,19 +7,16 @@ import { Submit } from '../form-controls/submit/submit';
 import { LlistableDTO } from '../../Models/llistable.dto';
 
 
-
 @Component({
-  selector: 'app-list',
-  imports: [FontAwesomeModule, CommonModule, Submit],
-  templateUrl: './list.html',
-  styleUrl: './list.scss',
+  selector: 'app-list-in-card',
+  imports: [FontAwesomeModule, CommonModule],
+  templateUrl: './list-in-card.html',
+  styleUrl: './list-in-card.scss',
 })
-export class List {
+export class ListInCard {
   @Input() items: LlistableDTO[] = [];
-  @Input() idSelected?: any;
-  @Input() title: string = '';
+  @Input() tipus: string = '';
   @Input() editable: boolean = false;
-  @Input() back: boolean = true;
   @Output() accio = new EventEmitter<{ type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }>();
 
   onAccio(type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any): void {

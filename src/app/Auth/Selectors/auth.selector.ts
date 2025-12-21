@@ -18,3 +18,13 @@ export const selectAuthLoaded = createSelector(
   (state: AuthState) => state.loaded
 );
 
+export const selectAuthToken = createSelector(
+  selectAuthFeature,
+  (state: AuthState) => state.credentials?.access_token
+);
+
+export const selectAuthRol = createSelector(
+  selectAuthFeature,
+  (state: AuthState) => state.credentials?.rol
+);
+

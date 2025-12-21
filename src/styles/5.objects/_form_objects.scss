@@ -36,4 +36,9 @@
     background: var(--Clar-200, #FD86D0);
     box-shadow: 0 2px 8px 0 rgba(16, 24, 40, 0.08);
     border: none;
+    cursor: pointer;
+
+    i{
+        margin-left: 12px;
+    }
 }

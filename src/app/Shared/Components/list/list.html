@@ -4,23 +4,26 @@
             <h2>{{ title }}</h2>
         </div>
         <ul class="o-list">
-            @for(item of items; track item) {
-            <li class="o-list-item">
+            @for(item of items; track item.id) {
+            <li class="o-list-item" [class.o-list-item-selected]="item.id === idSelected"
+                (click)="onAccio('view', item.id)">
                 <!--  <div *ngIf="label" class="o-list-item-name">{{ item.label }}</div>-->
-                <div class="o-list-item-content">{{ item }}</div>
+                <div class="o-list-item-content">{{ item.nom }}</div>
 
                 <div class="o-list-item-actions">
                     @if(editable){
-                    <button (click)="onAccio('edit', item)" class="o-edit-button"><i
+                    <button (click)="$event.stopPropagation(); onAccio('edit', item.id)" class="o-edit-button"><i
                             class="fa-solid fa-pencil"></i></button>
-                    <button (click)="onAccio('delete', item)" class="o-delete-button"><i
+                    <button (click)="$event.stopPropagation(); onAccio('delete', item.id)" class="o-delete-button"><i
                             class="fa-solid fa-trash-can"></i></button>
                     }
                     @if(back){
-                    <div (click)="onAccio('back', item)"><i class="fa-solid fa-arrow-left"></i></div>
+                    <div (click)="$event.stopPropagation(); onAccio('back', item.id)"><i
+                            class="fa-solid fa-arrow-left"></i></div>
                     }
                     @if(!back){
-                    <div (click)="onAccio('view', item)"><i class="fa-solid fa-arrow-right"></i></div>
+                    <div (click)="$event.stopPropagation(); onAccio('view', item.id)"><i
+                            class="fa-solid fa-arrow-right"></i></div>
                     }
                 </div>
             </li>
@@ -30,7 +33,7 @@
         </ul>
     </div>
 
-    <app-submit [text]="'Afegir ciutat'" (submitEvent)="onAccio('add', null)" [icono]="true">
+    <app-submit [text]="'Afegir ciutat'" (clickEvent)="onAccio('add')" [icono]="true">
     </app-submit>
 
 </div>

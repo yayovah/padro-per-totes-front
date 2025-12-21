@@ -2,14 +2,17 @@ import { inject, Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Auth } from "../Services/auth";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, exhaustMap, map, switchMap } from "rxjs";
+import { catchError, exhaustMap, map, switchMap, tap } from "rxjs";
 import * as AuthActions from '../Actions/auth.action';
+import { AppState } from "../../app.reducers";
+import { Store } from "@ngrx/store";
 
 @Injectable()
 export class AuthEffects {
     private responseOK = false;
     private errorResponse: any = null;
     private actions$ = inject(Actions);
+    private store = inject(Store<AppState>);
 
     constructor(
         private authService: Auth,
@@ -17,13 +20,11 @@ export class AuthEffects {
     ) {}
 
     login$ = createEffect(() => {
-        console.log('AuthEffects login$ effect initialized');
         return this.actions$.pipe(
             ofType(AuthActions.login),
             exhaustMap(({ credentials }) => 
                 this.authService.login(credentials).pipe(
                 map((userToken) => {
-                    console.log('Effect LOGIN userToken →', userToken);
                     const auth = {
                         user_id: userToken.user_id,
                         access_token: userToken.access_token,
@@ -42,16 +43,28 @@ export class AuthEffects {
         )}
     );      
 
-    loginSuccess$ = createEffect(() =>
-        this.actions$.pipe(
+    loginSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
             ofType(AuthActions.loginSuccess),
-            switchMap(() => {
-                this.router.navigate(['/ciutats']);
-                return [];
-            })
-        ),
-    { dispatch: false }
-    );
+            tap(({ credentials }) => {
+                switch(credentials.rol){
+                    case 'usuari':
+                        this.router.navigate(['/userDash']);
+                        break;
+                    case 'admin':
+                        this.router.navigate(['/adminDash']);
+                        break;
+                    case 'speradminadmin':
+                        this.router.navigate(['/superadminDash']);
+                        break;
+                    default:
+                        this.router.navigate(['/userDash']);
+                        break;
+                }
+             }
+            ))},
+            { dispatch: false }
+        );
 
     loginFailure$ = createEffect(() =>
         this.actions$.pipe(

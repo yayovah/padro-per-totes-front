@@ -1,5 +1,5 @@
 export interface ItinerariDTO {
-    id: BigInt;
-    ciutat: BigInt;
-    usuariaId?: BigInt;
+    id: number;
+    ciutat: number;
+    usuariaId?: number;
 }

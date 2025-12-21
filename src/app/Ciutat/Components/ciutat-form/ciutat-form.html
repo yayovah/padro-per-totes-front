@@ -1,0 +1,9 @@
+<form class="o-form-box" [formGroup]="ciutatForm" (ngSubmit)="submit()">
+    <app-input-text label="Escrive el nombre de la ciudad: " name="ciutat" [control]="ciutat" placeholder="Buenos Aires"
+        errorMessage="{{ getErrorMessage(ciutat, 'Ciudad') }}" required="required">
+    </app-input-text>
+    <app-input-text label="Escrive el nombre de la provincia: " name="provincia" [control]="provincia"
+        placeholder="La provence" errorMessage="{{ getErrorMessage(provincia, 'Provincia') }}" required="required">
+    </app-input-text>
+    <app-submit text="Guardar"></app-submit>
+</form>

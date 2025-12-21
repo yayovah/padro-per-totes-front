@@ -1,0 +1,10 @@
+.u-list-item-gray{
+    background: #EEE;
+    width: 100%;
+}
+
+.u-list-espaiat{
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm)
+}

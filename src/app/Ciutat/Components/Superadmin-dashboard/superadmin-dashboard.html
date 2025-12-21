@@ -3,16 +3,42 @@
         <div class="o-heading">
             <h1>Dashboard</h1>
             <p>Gestiona las ciudades</p>
-            <app-list [title]="'Ciutats'" [items]="noms_ciutats()" [editable]="true" [back]="false"
-                (accio)="handleAccio($event)">
+            <app-list [title]="'Ciutats'" [items]="ciutatsLlistables()" [editable]="true" [back]="false"
+                (accio)="handleAccio($event)" [idSelected]="idCiutatSeleccionada()">
             </app-list>
         </div>
     </div>
     <div class="o-layout-part">
-        <app-card [title]="ciutatSelected() ? ciutatSelected() : 'Benvingut al dashboard de superadministrador'">
-            <p>Aquí pots gestionar les ciutats disponibles a l'aplicació. Pots afegir noves ciutats, editar les
-                existents o
-                eliminar-les segons sigui necessari.</p>
+        @if(ciutatSeleccionada()){
+        @if(accioActual()=='view'){
+        <app-card [title]="ciutatSeleccionada()?.nom" [subtitle]="'Gestiona la administración de esta ciudad'">
+            <div class="o-card-content">
+                @if(adminsLlistables()){
+                <app-list-in-card [title]="'Administradors de la ciutat'" [items]="adminsLlistables()" [editable]="true"
+                    (accio)="handleAccioAdmins($event)">
+                </app-list-in-card>
+                }
+                @else{
+                <p>No hay administradoras para esta ciudad</p>
+                }
+            </div>
+            <div>
+                <app-submit [text]="'Afegir administradora'" (submitEvent)="afegeixAdmin()" [icono]="true">
+                </app-submit>
+            </div>
         </app-card>
+        }
+        @if(accioActual() === 'edit'){
+        <app-card [title]="ciutatSeleccionada()?.nom" [subtitle]="'Edita la ciutat'">
+            <app-ciutat-form></app-ciutat-form>
+        </app-card>
+        }
+        }
+
+        @if(accioActual() === 'add'){
+        <app-card [title]="'Añadir nueva ciudad'" [subtitle]="'Añade una nueva ciudad a la lista'">
+            <app-ciutat-form></app-ciutat-form>
+        </app-card>
+        }
     </div>
 </main>

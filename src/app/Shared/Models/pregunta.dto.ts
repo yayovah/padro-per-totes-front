@@ -1,5 +1,5 @@
 export interface PreguntaDTO {
-    id: BigInt;
+    id: number;
     titol: string;
     text: string;
     imatgeUrl?: string;
