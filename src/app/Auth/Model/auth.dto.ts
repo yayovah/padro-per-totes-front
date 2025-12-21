@@ -1,12 +1,12 @@
 export class AuthDTO {
-  user_id: string;
+  user_id?: number;
   access_token: string;
   email: string;
   password: string;
   rol?: string | undefined;
 
   constructor(
-    user_id: string,
+    user_id: number,
     access_token: string,
     email: string,
     password: string,

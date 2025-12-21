@@ -25,6 +25,7 @@ const _ciutatReducer = createReducer(
     initialState,
     on(CiutatActions.getCiutats, (state) => ({
         ...state,
+        idCiutatSeleccionada: null,
         loading: true,
         loaded: false,
         error: null,

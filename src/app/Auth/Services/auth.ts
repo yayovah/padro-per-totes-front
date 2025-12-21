@@ -24,12 +24,10 @@ constructor(private http: HttpClient) {}
    * @throws Error en cas d'error en la petició
    *  
    */
-  login(auth: AuthDTO): Observable<AuthToken> {
-    console.log('Auth Service login called with:', auth);
+  login(auth: AuthDTO): Observable<AuthDTO> {
     return this.http
-      .post<AuthToken>(this.url, auth)
+      .post<AuthDTO>(this.url, auth)
       .pipe(catchError((error) => {
-        console.error('Error during login:', error);
         throw new Error('Error during login');
       }));
   }

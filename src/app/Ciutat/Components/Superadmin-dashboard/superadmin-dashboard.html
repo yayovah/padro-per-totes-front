@@ -21,6 +21,9 @@
                 @else{
                 <p>No hay administradoras para esta ciudad</p>
                 }
+                @if(addAdmin()){
+                <app-ciutat-form></app-ciutat-form>
+                }
             </div>
             <div>
                 <app-submit [text]="'Afegir administradora'" (submitEvent)="afegeixAdmin()" [icono]="true">

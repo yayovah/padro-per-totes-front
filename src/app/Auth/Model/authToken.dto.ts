@@ -1,4 +1,4 @@
 export interface AuthToken {
-  user_id: string;
+  user_id: number;
   access_token: string;
 }

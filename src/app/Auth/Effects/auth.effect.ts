@@ -24,15 +24,17 @@ export class AuthEffects {
             ofType(AuthActions.login),
             exhaustMap(({ credentials }) => 
                 this.authService.login(credentials).pipe(
-                map((userToken) => {
+                map((apiResponse: any) => {
+                    console.log(apiResponse);
                     const auth = {
-                        user_id: userToken.user_id,
-                        access_token: userToken.access_token,
+                        user_id: apiResponse.user.id,
+                        access_token: apiResponse.token,
+                        rol: apiResponse.user.rol,
                         email: credentials.email,
-                        password: credentials.password
-                    }
-
-                    return AuthActions.loginSuccess({ credentials: auth })
+                        password: credentials.password,
+                    };
+                    console.log(auth);
+                    return AuthActions.loginSuccess({ credentials: auth });
                 }),
                 catchError((error) => {
                     console.error('Effect Error:', error);
@@ -54,7 +56,7 @@ export class AuthEffects {
                     case 'admin':
                         this.router.navigate(['/adminDash']);
                         break;
-                    case 'speradminadmin':
+                    case 'superadmin':
                         this.router.navigate(['/superadminDash']);
                         break;
                     default:

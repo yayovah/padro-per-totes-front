@@ -6,13 +6,15 @@ import { CiutatDTO } from '../../Models/ciutat.dto';
 import * as CiutatsAction from '../../Actions/ciutat.action';
 import { CommonModule } from '@angular/common';
 import { Card } from '../../../Shared/Components/card/card';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { LlistableDTO } from '../../../Shared/Models/llistable.dto';
 import { selectCiutatAdmins, selectCiutatIdSeleccionada, selectCiutats } from '../../Selectors/ciutats.selector';
 import { UserDTO } from '../../../Shared/Models/user.dto';
 import { ListInCard } from '../../../Shared/Components/list-in-card/list-in-card';
 import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { CiutatForm } from '../ciutat-form/ciutat-form';
+import { Actions, ofType } from '@ngrx/effects';
+import * as CiutatsActions from '../../Actions/ciutat.action';
 
 @Component({
   selector: 'app-superadmin-dashboard',
@@ -23,6 +25,7 @@ import { CiutatForm } from '../ciutat-form/ciutat-form';
 export class SuperadminDashboard implements OnInit {
   // Ús de l'store amb signals
   private store = inject(Store<AppState>);
+
   private ciutats = toSignal(this.store.select(selectCiutats), { initialValue: [] });
   idCiutatSeleccionada = toSignal(this.store.select(selectCiutatIdSeleccionada), { initialValue: null });
   ciutatAdmins = toSignal(this.store.select(selectCiutatAdmins), { initialValue: [] });
@@ -46,7 +49,17 @@ export class SuperadminDashboard implements OnInit {
     }))
   );
   
+  private actions$ = inject(Actions);
   accioActual= signal<String | null>("");
+  //Per tancar el formulari d'afegir usuari (és l'únic cas en que no hi ciutat seleccionada)
+  private successListener = this.actions$.pipe(
+    ofType(CiutatsActions.createCiutatSuccess),
+    takeUntilDestroyed()
+  ).subscribe(() => {
+    console.log('ARA SÍ! Acció detectada');
+    this.accioActual.set(null)});
+
+  addAdmin = signal<boolean>(false);
 
   ngOnInit(): void {
     this.store.dispatch(CiutatsAction.getCiutats());
@@ -58,11 +71,15 @@ export class SuperadminDashboard implements OnInit {
     console.log( this.accioActual());
     if(event.id){
       this.store.dispatch(CiutatsAction.selectCiutat({ ciutatId: event.id }));
-      if(this.accioActual() == 'view'){
+      if(this.accioActual() === 'view'){
         this.store.dispatch(CiutatsAction.getCiutatAdmins({ ciutatId: this.idCiutatSeleccionada()! }));
       }
+      if(this.accioActual() === 'delete'){
+        this.store.dispatch(CiutatsAction.deleteCiutat({ ciutatId: this.idCiutatSeleccionada()! }));
+      }
     }
-    if(this.accioActual() == 'add'){
+
+    if(this.accioActual() === 'add'){
       this.store.dispatch(CiutatsAction.resetSelectCiutat());
     }
   }

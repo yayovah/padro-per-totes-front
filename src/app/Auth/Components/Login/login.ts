@@ -54,7 +54,6 @@ export class Login {
     const credentials: AuthDTO = {
       email: this.email.value,
       password: this.password.value,
-      user_id: '',
       access_token: '',
     };
     this.store.dispatch(AuthAction.login({ credentials }));

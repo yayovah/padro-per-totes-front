@@ -33,6 +33,19 @@ export class CiutatsEffects {
             )
         )
     );     
+
+    getCiutatSuccess$ = createEffect(() =>
+        this.actions$.pipe(ofType(CiutatsActions.getCiutatsSuccess)),
+        { dispatch: false }
+    )
+    getCiutatFailure$ = createEffect(() =>
+        this.actions$.pipe(ofType(CiutatsActions.getCiutatsFailure),
+            tap(({ payload }) => {
+                console.log("Error al intentar cargar las ciudades", payload.error);
+            })
+        ),
+        { dispatch: false }
+    )
     
     getCiutatAdmins$ = createEffect(() =>
         this.actions$.pipe(
@@ -81,9 +94,9 @@ export class CiutatsEffects {
             ofType(CiutatsActions.createCiutat),
             exhaustMap(({ dadesCiutat }) =>
                 this.ciutatsService.createCiutat(dadesCiutat).pipe(
-                    map((updatedCiutat) =>{
-                        return CiutatsActions.updateCiutatSuccess({
-                            ciutat: updatedCiutat
+                    map((ciutatCreada) =>{
+                        return CiutatsActions.createCiutatSuccess({
+                            dadesCiutat: ciutatCreada
                         });
                     }),
                     catchError((error) =>
@@ -93,6 +106,14 @@ export class CiutatsEffects {
             )
         )
     )
+
+    createCiutatSuccess$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CiutatsActions.createCiutatSuccess),
+                map(() =>CiutatsActions.getCiutats())
+        ),
+    )
+
 
     deleteCiutat$ = createEffect(() =>
         this.actions$.pipe(
@@ -109,6 +130,13 @@ export class CiutatsEffects {
                 ))
             )
         )
+    )
+
+    deleteCiutatSuccess$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CiutatsActions.deleteCiutatSuccess),
+            map(() =>CiutatsActions.getCiutats())
+        ),
     )
 }
 

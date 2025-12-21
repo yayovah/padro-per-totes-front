@@ -1,0 +1,6 @@
+<form class="o-form-box" [formGroup]="addAdminForm" (ngSubmit)="submit()">
+    <app-input-select label="Selecciona una administradora: " name="admin" [control]="admin"
+        errorMessage="{{ getErrorMessage(ciutat, 'Ciudad') }}" required="required">
+    </app-input-select>
+    <app-submit text="Añadir"></app-submit>
+</form>
