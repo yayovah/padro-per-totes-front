@@ -21,15 +21,22 @@
                 @else{
                 <p>No hay administradoras para esta ciudad</p>
                 }
-                @if(addAdmin()){
-                <app-ciutat-form></app-ciutat-form>
-                }
             </div>
             <div>
-                <app-submit [text]="'Afegir administradora'" (submitEvent)="afegeixAdmin()" [icono]="true">
+                <app-submit [text]="'Añadir administradora'" (submitEvent)="afegeixAdmin()" [icono]="true">
                 </app-submit>
             </div>
+
         </app-card>
+        <!-- Formulari per afegir administradores -->
+        @if(addAdmin()){
+        <app-card [title]="Añadir administradora"
+            [subtitle]="'Selecciona una administradora para añadir a esta ciudad'">
+            <app-add-admin></app-add-admin>
+        </app-card>
+        }
+
+
         }
         @if(accioActual() === 'edit'){
         <app-card [title]="ciutatSeleccionada()?.nom" [subtitle]="'Edita la ciutat'">

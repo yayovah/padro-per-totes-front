@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { AuthDTO } from '../Model/auth.dto';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LlistableDTO } from '../../Shared/Models/llistable.dto';
 
 
 // Auth Actions
@@ -35,3 +36,17 @@ export const loginFailure = createAction(
   props<{ payload: HttpErrorResponse }>()
 );
 
+/* export const getUsersByRol = createAction(
+  '[Ciutat] Get Users By Rol',
+  props<{ rol: string }>()
+);
+
+export const getUsersByRolSuccess = createAction(
+  '[Ciutat] Get Users By Rol Success',
+  props<{ users: any[] }>()
+);
+
+export const getUsersByRolFailure = createAction(
+  '[Ciutat] Get Users By Rol Failure',
+  props<{ payload: HttpErrorResponse }>()
+); */

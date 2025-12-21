@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Auth } from "../Services/auth";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, exhaustMap, map, switchMap, tap } from "rxjs";
+import { catchError, exhaustMap, map, of, switchMap, tap } from "rxjs";
 import * as AuthActions from '../Actions/auth.action';
 import { AppState } from "../../app.reducers";
 import { Store } from "@ngrx/store";
@@ -80,4 +80,36 @@ export class AuthEffects {
         ),
     { dispatch: false }
     );
+/* 
+    getUsersByRol$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.getUsersByRol),
+            exhaustMap((action) =>
+                this.authService.getUsersByRol(action.rol).pipe(
+                map((users) => {
+                    return AuthActions.getUsersByRolSuccess({ users });
+                }
+                ),
+                catchError((error) =>
+                    of(AuthActions.getUsersByRolFailure({ payload: error }))       
+                )
+                )
+            )
+        )
+    )
+    getUsersByRolSuccess$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.getUsersByRolSuccess)),
+            { dispatch: false }
+        );
+        
+    getUsersByRolFailure$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.getUsersByRolFailure),
+            tap(({ payload }) => {
+                console.log("Error al intentar cargar usuárias administradoras", payload.error);
+            })
+        ),
+        { dispatch: false }
+    ); */
 }

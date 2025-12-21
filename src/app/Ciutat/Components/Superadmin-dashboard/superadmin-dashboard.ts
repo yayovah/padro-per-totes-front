@@ -16,6 +16,7 @@ import { CiutatForm } from '../ciutat-form/ciutat-form';
 import { Actions, ofType } from '@ngrx/effects';
 import * as CiutatsActions from '../../Actions/ciutat.action';
 
+
 @Component({
   selector: 'app-superadmin-dashboard',
   imports: [List, CommonModule, Card, ListInCard, Submit, CiutatForm],
@@ -87,9 +88,14 @@ export class SuperadminDashboard implements OnInit {
   handleAccioAdmins(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }): void {
     // Implementa la lògica per gestionar les accions rebudes des del component fill
     console.log('Acció admin ciutat:', event);
+
+
+
   }
 
   afegeixAdmin(){
-    console.log('Diàleg afegir admin');
+        console.log('Diàleg afegir admin');
+    this.addAdmin.set(true);
+
   }
 }
