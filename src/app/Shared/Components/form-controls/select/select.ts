@@ -13,7 +13,6 @@ export class Select {
   @Input() items: LlistableDTO[] = [];
   @Input() label = "";
   @Input() control! : FormControl;
-  @Input() placeholder = "";
   @Input() errorMessage = "";
   @Input() name = "";
   @Input() required = "required";

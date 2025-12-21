@@ -1,8 +1,8 @@
 <div class="o-input-div">
     <label [for]="name">{{ label }}</label>
-    <select [formControl]="control" [name]="name" [required]="required" [placeholder]="placeholder">
+    <select [formControl]="control" [name]="name" [required]="required">
         @for(item of items; track item.id) {
-        <option value="item.id">{{ item.nom }}</option>
+        <option [value]="item.id">{{ item.nom }}</option>
         }@empty{
         <div>No hi ha elements disponibles.</div>
         }

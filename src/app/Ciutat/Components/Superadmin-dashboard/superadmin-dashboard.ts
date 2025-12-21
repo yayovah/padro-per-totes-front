@@ -1,6 +1,6 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { List } from '../../../Shared/Components/list/list';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
 import { CiutatDTO } from '../../Models/ciutat.dto';
 import * as CiutatsAction from '../../Actions/ciutat.action';
@@ -15,11 +15,12 @@ import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { CiutatForm } from '../ciutat-form/ciutat-form';
 import { Actions, ofType } from '@ngrx/effects';
 import * as CiutatsActions from '../../Actions/ciutat.action';
+import { AddAdmin } from '../add-admin/add-admin';
 
 
 @Component({
   selector: 'app-superadmin-dashboard',
-  imports: [List, CommonModule, Card, ListInCard, Submit, CiutatForm],
+  imports: [List, CommonModule, Card, ListInCard, Submit, CiutatForm, AddAdmin],
   templateUrl: './superadmin-dashboard.html',
   styleUrl: './superadmin-dashboard.scss',
 })
@@ -88,14 +89,16 @@ export class SuperadminDashboard implements OnInit {
   handleAccioAdmins(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }): void {
     // Implementa la lògica per gestionar les accions rebudes des del component fill
     console.log('Acció admin ciutat:', event);
+    if(event.id){
 
-
-
+      if(event.type === 'delete'){
+        console.log('delete admin', event.id)
+        this.store.dispatch(CiutatsAction.deleteAdminFromCiutat({ ciutatId: this.idCiutatSeleccionada()!, adminId: event.id }));
+      }
+    }
   }
 
   afegeixAdmin(){
-        console.log('Diàleg afegir admin');
-    this.addAdmin.set(true);
-
+      this.addAdmin.set(true);
   }
 }

@@ -16,9 +16,7 @@ export class AuthInterceptor implements HttpInterceptor{
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-        console.log("PREPARANT CAPÇALERES 1");
     if (req.url.includes('/api/login')) {
-        console.log('Interceptor: Ruta de login detectada, saltant...');
         return next.handle(req);
     }
 
@@ -34,8 +32,6 @@ export class AuthInterceptor implements HttpInterceptor{
             }
           })
         }
-        console.log("PREPARANT CAPÇALERES 2");
-        console.log(req);
         return next.handle(req);
       }),
     )

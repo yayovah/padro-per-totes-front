@@ -110,13 +110,50 @@ const _ciutatReducer = createReducer(
         error: null,
     })),
 
-
     on(CiutatActions.deleteCiutatFailure, (state, { payload }) => ({
         ...state,
         loading: false,
         loaded: false,
         error: payload,
     })),
+
+    on(CiutatActions.addAdminToCiutat, (state, { ciutatId, adminId }) => ({
+        ...state,
+        loading: true,
+        loaded: false,
+        error: null,
+    })),
+    on(CiutatActions.addAdminToCiutatSuccess, (state, { ciutatId, adminId }) => ({
+        ...state,
+        loading: false,
+        loaded: true,
+        error: null,
+    })),
+    on(CiutatActions.addAdminToCiutatFailure, (state, { payload }) => ({
+        ...state,
+        loading: false,
+        loaded: false,
+        error: payload,
+    })),
+    on(CiutatActions.deleteAdminFromCiutat, (state, { ciutatId, adminId }) => ({
+        ...state,
+        loading: true,
+        loaded: false,
+        error: null,
+    })),
+    on(CiutatActions.deleteAdminFromCiutatSuccess, (state, { ciutatId, adminId }) => ({
+        ...state,
+        loading: false,
+        loaded: true,
+        error: null,
+    })),
+    on(CiutatActions.deleteAdminFromCiutatFailure, (state, { payload }) => ({
+        ...state,
+        loading: false,
+        loaded: false,
+        error: payload,
+    })),
+
     
     
 );

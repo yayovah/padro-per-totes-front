@@ -2,13 +2,13 @@
     <div class="o-list-div ">
         <ul class="u-list-espaiat">
             @for(item of items; track item.id) {
-            <li class="o-list-item u-list-item-gray" (click)="onAccio('view', item.id)">
+            <li class="o-list-item u-list-item-gray" (click)="$event.stopPropagation(); onAccio('view', item.id)">
                 <!--  <div *ngIf="label" class="o-list-item-name">{{ item.label }}</div>-->
                 <div class="o-list-item-content">{{ item.nom }}</div>
 
                 <div class="o-list-item-actions">
                     @if(editable){
-                    <button (click)="onAccio('delete', item.id)" class="o-delete-button"><i
+                    <button (click)="$event.stopPropagation(); onAccio('delete', item.id)" class="o-delete-button"><i
                             class="fa-solid fa-trash-can"></i></button>
                     }
                 </div>

@@ -80,36 +80,4 @@ export class AuthEffects {
         ),
     { dispatch: false }
     );
-/* 
-    getUsersByRol$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(AuthActions.getUsersByRol),
-            exhaustMap((action) =>
-                this.authService.getUsersByRol(action.rol).pipe(
-                map((users) => {
-                    return AuthActions.getUsersByRolSuccess({ users });
-                }
-                ),
-                catchError((error) =>
-                    of(AuthActions.getUsersByRolFailure({ payload: error }))       
-                )
-                )
-            )
-        )
-    )
-    getUsersByRolSuccess$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(AuthActions.getUsersByRolSuccess)),
-            { dispatch: false }
-        );
-        
-    getUsersByRolFailure$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(AuthActions.getUsersByRolFailure),
-            tap(({ payload }) => {
-                console.log("Error al intentar cargar usuárias administradoras", payload.error);
-            })
-        ),
-        { dispatch: false }
-    ); */
 }

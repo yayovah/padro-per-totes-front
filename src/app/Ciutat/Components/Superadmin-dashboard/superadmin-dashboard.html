@@ -23,16 +23,16 @@
                 }
             </div>
             <div>
-                <app-submit [text]="'Añadir administradora'" (submitEvent)="afegeixAdmin()" [icono]="true">
+                <app-submit [text]="'Nueva administradora'" (clickEvent)="afegeixAdmin()" [icono]="true">
                 </app-submit>
             </div>
 
         </app-card>
         <!-- Formulari per afegir administradores -->
         @if(addAdmin()){
-        <app-card [title]="Añadir administradora"
+        <app-card [title]="'Nueva administradora'"
             [subtitle]="'Selecciona una administradora para añadir a esta ciudad'">
-            <app-add-admin></app-add-admin>
+            <app-add-admin [idCiutatSeleccionada]="idCiutatSeleccionada()"></app-add-admin>
         </app-card>
         }
 

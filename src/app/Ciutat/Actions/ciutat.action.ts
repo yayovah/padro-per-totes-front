@@ -87,3 +87,29 @@ export const deleteCiutatFailure = createAction(
   '[Ciutat] Delete Ciutat',
   props<{ payload: HttpErrorResponse }>()
 );
+
+export const addAdminToCiutat = createAction(
+  '[Ciutat] Add Admin to Ciutat',
+  props<{ ciutatId: number, adminId: number }>()
+);
+export const addAdminToCiutatSuccess = createAction(
+  '[Ciutat] Add Admin to Ciutat Success',
+  props<{ ciutatId: number, adminId: number }>()
+);
+export const addAdminToCiutatFailure = createAction(
+  '[Ciutat] Add Admin to Ciutat Failure',
+  props<{ payload: HttpErrorResponse }>()
+);
+export const deleteAdminFromCiutat = createAction(
+  '[Ciutat] Delete Admin from Ciutat',
+  props<{ ciutatId: number, adminId: number }>()
+);
+export const deleteAdminFromCiutatSuccess = createAction(
+  '[Ciutat] Delete Admin from Ciutat Success',
+  props<{ ciutatId: number, adminId: number }>()
+);
+export const deleteAdminFromCiutatFailure = createAction(
+  '[Ciutat] Delete Admin from Ciutat Failure',
+  props<{ payload: HttpErrorResponse }>()
+);
+

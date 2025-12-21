@@ -5,12 +5,14 @@ import { of } from 'rxjs';
 import { catchError, exhaustMap, finalize, map, tap } from 'rxjs/operators';
 import { Ciutats } from '../Services/ciutats';
 import * as CiutatsActions from '../Actions/ciutat.action';
+import { Permis } from '../Services/permis';
 
 @Injectable()
 export class CiutatsEffects {
     private responseOK = false;
     private errorResponse: any = null;
     private actions$ = inject(Actions);
+    private PermisService = inject(Permis);
 
     constructor(
         private ciutatsService: Ciutats,
@@ -138,5 +140,76 @@ export class CiutatsEffects {
             map(() =>CiutatsActions.getCiutats())
         ),
     )
+
+    
+    addAdminToCiutat$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CiutatsActions.addAdminToCiutat),
+            exhaustMap(({ ciutatId, adminId }) =>
+                this.PermisService.createPermis( ciutatId, adminId ).pipe(
+                    map((nouPermis) =>{
+                        return CiutatsActions.addAdminToCiutatSuccess({
+                            ciutatId: nouPermis.ciutat,
+                            adminId: nouPermis.user
+                        });
+                    }),
+                    catchError((error) =>
+                        of(CiutatsActions.addAdminToCiutatFailure({ payload: error }))       
+                    )
+                )
+            )
+        )
+    )
+    addAdminToCiutatSuccess$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CiutatsActions.addAdminToCiutatSuccess),
+                map((nouPermis) =>CiutatsActions.getCiutatAdmins({ ciutatId: nouPermis.ciutatId }))
+        ),
+    )
+    addAdminToCiutatFailure$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CiutatsActions.addAdminToCiutatFailure),
+            tap(({ payload }) => {
+                console.log("Error al intentar añadir admin a Ciutat", payload.error);
+            })
+        ),
+        { dispatch: false }
+    )
+    deleteAdminFromCiutat$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CiutatsActions.deleteAdminFromCiutat),
+            exhaustMap(({ ciutatId, adminId }) =>
+                
+                this.ciutatsService.deletePermis( ciutatId, adminId ).pipe(
+                    map((nouPermis) =>{
+                        return CiutatsActions.deleteAdminFromCiutatSuccess({
+                            ciutatId: ciutatId,
+                            adminId: nouPermis.id
+                        });
+                    }),
+                    tap(() => console.log("AQUI A L'EFFECT!")),
+                    catchError((error) =>
+                        of(CiutatsActions.addAdminToCiutatFailure({ payload: error }))       
+                    )
+                )
+            )
+        )
+    )
+    deleteAdminFromCiutatSuccess$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CiutatsActions.deleteAdminFromCiutatSuccess),
+                map((nouPermis) =>CiutatsActions.getCiutatAdmins({ ciutatId: nouPermis.ciutatId }))
+        ),
+    )
+    deleteAdminFromCiutatFailure$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CiutatsActions.deleteAdminFromCiutatFailure),
+            tap(({ payload }) => {
+                console.log("Error al intentar añadir admin a Ciutat", payload.error);
+            })
+        ),
+        { dispatch: false }
+    )
+    
 }
 
