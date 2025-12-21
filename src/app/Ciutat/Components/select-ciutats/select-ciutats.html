@@ -1,0 +1,6 @@
+<form class="o-form-box" [formGroup]="selectCiutatForm" (ngSubmit)="submit()">
+    <app-select label="Selecciona una ciudad: " name="ciutat" [control]="ciutat"
+        errorMessage="{{ getErrorMessage(ciutat, 'Ciudad') }}" required="required" [items]="ciutatsLlistables()">
+    </app-select>
+    <app-submit text="Seleccionar"></app-submit>
+</form>

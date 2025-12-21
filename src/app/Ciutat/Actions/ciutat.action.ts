@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { CiutatDTO } from '../Models/ciutat.dto';
+import { UserDTO } from '../../Shared/Models/user.dto';
 
 //Ciutats Actions
 
@@ -113,3 +114,19 @@ export const deleteAdminFromCiutatFailure = createAction(
   props<{ payload: HttpErrorResponse }>()
 );
 
+
+//Admin
+
+
+export const getCiutatsAdministrades = createAction(
+  '[Ciutat] Get Ciutat Administrated by User',
+  props<{ userId: number }>()
+)
+export const getCiutatsAdministradesSuccess = createAction(
+  '[Ciutat] Get Ciutat Administrated by User Success',
+  props<{ ciutats: CiutatDTO[] }>()
+)
+export const getCiutatsAdministradesFailure = createAction(
+  '[Ciutat] Get Ciutat Administrated by User Failure',
+  props<{ payload: HttpErrorResponse }>()
+)

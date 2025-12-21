@@ -187,7 +187,6 @@ export class CiutatsEffects {
                             adminId: nouPermis.id
                         });
                     }),
-                    tap(() => console.log("AQUI A L'EFFECT!")),
                     catchError((error) =>
                         of(CiutatsActions.addAdminToCiutatFailure({ payload: error }))       
                     )
@@ -206,6 +205,35 @@ export class CiutatsEffects {
             ofType(CiutatsActions.deleteAdminFromCiutatFailure),
             tap(({ payload }) => {
                 console.log("Error al intentar añadir admin a Ciutat", payload.error);
+            })
+        ),
+        { dispatch: false }
+    )
+
+    getCiutatsAdministrades = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CiutatsActions.getCiutatsAdministrades),
+            exhaustMap(({ userId }) =>
+                this.ciutatsService.getCiutatsAdministrades( userId ).pipe(
+                    map((ciutats) =>{
+                        return CiutatsActions.getCiutatsAdministradesSuccess({ ciutats });
+                    }),
+                    catchError((error) =>
+                        of(CiutatsActions.addAdminToCiutatFailure({ payload: error }))       
+                    )
+                )
+            )
+        )
+    )
+
+    getCiutatsAdministradesSuccess$ = createEffect(() =>
+        this.actions$.pipe(ofType(CiutatsActions.getCiutatsAdministradesSuccess)),
+        { dispatch: false }
+    )
+    getCiutatsAdministradesFailure$ = createEffect(() =>
+        this.actions$.pipe(ofType(CiutatsActions.getCiutatsAdministradesFailure),
+            tap(({ payload }) => {
+                console.log("Error al intentar cargar las ciudades", payload.error);
             })
         ),
         { dispatch: false }

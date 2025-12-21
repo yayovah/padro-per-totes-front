@@ -154,6 +154,29 @@ const _ciutatReducer = createReducer(
         error: payload,
     })),
 
+
+    on(CiutatActions.getCiutatsAdministrades, (state, user) => ({
+        ...state,
+        loading: true,
+        loaded: false,
+        error: null,
+    })),    
+
+    on(CiutatActions.getCiutatsAdministradesSuccess, (state, { ciutats }) => ({
+        ...state,
+        ciutats: ciutats,
+        loading: false,
+        loaded: true,
+        error: null
+    })),
+
+    on(CiutatActions.getCiutatsAdministradesFailure, (state, { payload }) => ({
+        ...state,
+        loading: false,
+        loaded: false,
+        error: payload,
+    })),
+
     
     
 );

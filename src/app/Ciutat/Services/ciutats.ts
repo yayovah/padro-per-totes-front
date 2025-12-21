@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { CiutatDTO } from '../Models/ciutat.dto';
 import { environment } from '../../../environments/environment';
+import { UserDTO } from '../../Shared/Models/user.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -86,5 +87,17 @@ export class Ciutats {
           return throwError(() => new Error('Error actualizando permisos'));
         }
       ));
+    }
+
+    getCiutatsAdministrades(userId: number){
+      return this.http
+      .get<any>(`${this.url}/administrades/${userId}`)
+      .pipe(
+        catchError((error) => {
+          console.error(`Error recuperando ciudades administradas del servidor:`, error);
+          return throwError(() => new Error('Error recuperando cudades administradas'));
+        }
+      ));
+
     }
 }
