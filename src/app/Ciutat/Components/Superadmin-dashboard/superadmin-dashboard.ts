@@ -53,6 +53,7 @@ export class SuperadminDashboard implements OnInit {
   
   private actions$ = inject(Actions);
   accioActual= signal<String | null>("");
+  
   //Per tancar el formulari d'afegir usuari (és l'únic cas en que no hi ciutat seleccionada)
   private successListener = this.actions$.pipe(
     ofType(CiutatsActions.createCiutatSuccess),
