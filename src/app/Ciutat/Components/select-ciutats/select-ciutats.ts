@@ -71,6 +71,8 @@ export class SelectCiutats implements OnInit{
   }
 
   submit(){
+    
+    this.store.dispatch(CiutatsAction.selectCiutat({ ciutatId: this.ciutat.value }));
     console.log('SUBMIT!');
   }
 

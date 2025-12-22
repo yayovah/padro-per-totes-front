@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { Login } from './Auth/Components/Login/login';
 import { Home } from './Home/Components/Home/home';
-import { AdminDashboard } from './Admin-dashboard/admin-dashboard';
 import { SuperadminDashboard } from './Ciutat/Components/Superadmin-dashboard/superadmin-dashboard';
 import { Ciutats } from './Ciutat/Services/ciutats';
 import { CiutatsComponent } from './Ciutat/Components/ciutats/ciutats';
 import { authGuard } from './Shared/Guards/auth-guard';
+import { AdminDashboard } from './Admin-dashboard/Components/admin-dashboard';
 
 
 export const routes: Routes = [

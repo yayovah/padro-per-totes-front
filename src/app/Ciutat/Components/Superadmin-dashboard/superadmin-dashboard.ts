@@ -3,7 +3,7 @@ import { List } from '../../../Shared/Components/list/list';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
 import { CiutatDTO } from '../../Models/ciutat.dto';
-import * as CiutatsAction from '../../Actions/ciutat.action';
+import * as CiutatsAction from '../../Actions/ciutat.action'
 import { CommonModule } from '@angular/common';
 import { Card } from '../../../Shared/Components/card/card';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
@@ -59,7 +59,6 @@ export class SuperadminDashboard implements OnInit {
     ofType(CiutatsActions.createCiutatSuccess),
     takeUntilDestroyed()
   ).subscribe(() => {
-    console.log('ARA SÍ! Acció detectada');
     this.accioActual.set(null)});
 
   addAdmin = signal<boolean>(false);

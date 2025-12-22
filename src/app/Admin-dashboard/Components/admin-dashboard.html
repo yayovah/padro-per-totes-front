@@ -4,7 +4,11 @@
             <h1>Dashboard</h1>
             <p>Escoje una ciudad</p>
             <app-select-ciutats></app-select-ciutats>
-
+            @if(idCiutatSeleccionada()){
+            <app-list [title]="'Preguntas'" [items]="preguntesLlistables()" [editable]="true" [back]="false"
+                (accio)="handleAccio($event)" [idSelected]="idCiutatSeleccionada()">
+            </app-list>
+            }
         </div>
     </div>
     <div class="o-layout-part">

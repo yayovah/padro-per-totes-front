@@ -9,15 +9,9 @@ import { Permis } from '../Services/permis';
 
 @Injectable()
 export class CiutatsEffects {
-    private responseOK = false;
-    private errorResponse: any = null;
     private actions$ = inject(Actions);
     private PermisService = inject(Permis);
-
-    constructor(
-        private ciutatsService: Ciutats,
-        private router: Router,
-    ) {}
+    private ciutatsService = inject(Ciutats);
 
     getCiutats$ = createEffect(() =>
         this.actions$.pipe(
