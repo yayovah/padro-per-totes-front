@@ -96,7 +96,7 @@ export class CiutatsEffects {
                         });
                     }),
                     catchError((error) =>
-                        of(CiutatsActions.updateCiutatFailure({ payload: error }))       
+                        of(CiutatsActions.createCiutatFailure({ payload: error }))       
                     )
                 )
             )
@@ -232,6 +232,6 @@ export class CiutatsEffects {
         ),
         { dispatch: false }
     )
-    
+
 }
 

@@ -22,7 +22,7 @@ import { selectCiutatIdSeleccionada, selectCiutats } from '../../Selectors/ciuta
   templateUrl: './ciutat-form.html',
   styleUrl: './ciutat-form.scss',
 })
-export class CiutatForm implements OnInit {
+export class CiutatForm {
   private store = inject(Store<AppState>);
   private ciutats = toSignal(this.store.select(selectCiutats), { initialValue: [] });
   ciutat: FormControl;
@@ -60,11 +60,6 @@ export class CiutatForm implements OnInit {
         })
       }
     });
-
-  }
-
-  ngOnInit(): void{
-
   }
 
   submit(): void {

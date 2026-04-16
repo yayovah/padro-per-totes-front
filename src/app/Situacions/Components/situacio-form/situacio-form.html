@@ -1,0 +1,24 @@
+<form class="o-form-box" [formGroup]="situacioForm" (ngSubmit)="submit()">
+    <!-- Resposta -->
+    <app-input-text 
+        label="Escrive una respuesta: " 
+        name="resposta" 
+        [control]="resposta" 
+        placeholder="Buenos Aires"
+        errorMessage="{{ getErrorMessage(resposta, 'Respuesta') }}" 
+        required="required">
+    </app-input-text>
+
+    <!-- Següent pregunta -->
+    <app-select 
+        label="Selecciona la pregunta a la que lleva esta respuesta: " 
+        name="seguentPregunta" 
+        [control]="seguentPregunta"
+        placeholder="Selecciona una respuesta de destino" 
+        errorMessage="{{ getErrorMessage(seguentPregunta, 'Siguiente pregunta') }}" 
+        required="required"
+        [items]="preguntesLlistables()">
+    </app-select>
+
+    <app-submit text="Guardar"></app-submit>
+</form>

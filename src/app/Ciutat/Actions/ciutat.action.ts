@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { CiutatDTO } from '../Models/ciutat.dto';
-import { UserDTO } from '../../Shared/Models/user.dto';
 
 //Ciutats Actions
 
@@ -45,6 +44,22 @@ export const getCiutatAdminsFailure = createAction(
   props<{ payload: HttpErrorResponse }>()
 );
 
+
+export const createCiutat = createAction(
+  '[Ciutat] Create Ciutat',
+  props<{dadesCiutat: Omit<CiutatDTO, 'id'>}>()
+);
+
+export const createCiutatSuccess = createAction(
+  '[Ciutat] Create Ciutat Success',
+  props<{dadesCiutat: Omit<CiutatDTO, 'id'>}>()
+);
+export const createCiutatFailure = createAction(
+  '[Ciutat] Create Ciutat Failure',
+  props<{ payload: HttpErrorResponse}>()
+);
+
+
 export const updateCiutat = createAction(
   '[Ciutat] update Ciutat data',
   props<{ dadesCiutat: CiutatDTO }>()
@@ -60,20 +75,6 @@ export const updateCiutatFailure = createAction(
   props<{ payload: HttpErrorResponse}>()
 );
 
-
-export const createCiutat = createAction(
-  '[Ciutat] Create Ciutat',
-  props<{dadesCiutat: Omit<CiutatDTO, 'id'>}>()
-);
-
-export const createCiutatSuccess = createAction(
-  '[Ciutat] Create Ciutat Success',
-  props<{dadesCiutat: Omit<CiutatDTO, 'id'>}>()
-);
-export const createCiutatFailure = createAction(
-  '[Ciutat] Create Ciutat Failure',
-  props<{ payload: HttpErrorResponse}>()
-);
 
 
 export const deleteCiutat = createAction(

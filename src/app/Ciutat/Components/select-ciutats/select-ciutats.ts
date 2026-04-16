@@ -55,13 +55,13 @@ export class SelectCiutats implements OnInit{
     ]);
 
     this.selectCiutatForm = this.formBuilder.group({
-      admin: this.ciutat,
+      ciutat: this.ciutat,
     });
   }
 
   ngOnInit(){
     const auth = this.usuaria();
-
+    console.log("USUARIA:",auth);
     if(auth?.user_id){
       this.store.dispatch(CiutatsAction.getCiutatsAdministrades({ userId: auth.user_id }));
     }
@@ -71,7 +71,6 @@ export class SelectCiutats implements OnInit{
   }
 
   submit(){
-    
     this.store.dispatch(CiutatsAction.selectCiutat({ ciutatId: this.ciutat.value }));
     console.log('SUBMIT!');
   }

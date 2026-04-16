@@ -1,1 +1,8 @@
-<p>text-area works!</p>
+<div class="o-input-div">
+    <label [for]="name">{{ label }}</label>
+    <textarea [formControl]="control" [name]="name" [placeholder]="placeholder" [required]="required">
+    </textarea>
+    <p class="o-error-msg" *ngIf="control.errors && (control.touched || control.dirty)">
+        {{ errorMessage || "Este campo es obligatorio." }}
+    </p>
+</div>
