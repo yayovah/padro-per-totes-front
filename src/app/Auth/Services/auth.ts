@@ -25,8 +25,13 @@ export class Auth {
   //Signals
   private credentials = signal<AuthDTO | null>(null);
   
+  constructor(private http: HttpClient) {
+    //Comprovem si a l'Storage hi ha credencials guardades, si és així les carreguem a la signal
+    if(!this.credentials()) {
+      this.restoreCredentials();
+    }
+  }
 
-constructor(private http: HttpClient) {}
   /**
    * Intentar login a la API
    * 
@@ -41,7 +46,7 @@ constructor(private http: HttpClient) {}
         tap( credentials => {
           this.credentials.set(credentials);
           this.storageCredentials();
-          this.navegateByRol();
+          this.navigateByRol();
         }),
         
         catchError((error) => {
@@ -81,8 +86,23 @@ constructor(private http: HttpClient) {}
     this.router.navigate(['/login']);
   }
 
+  restoreCredentials(): void {
+    const userRol = this.storage.getItem('userRol')? this.storage.getItem('userRol')! : '';
+    
+    const userIdStr = this.storage.getItem('userId');
+    const userId = (userIdStr && userIdStr !== '')? parseInt(userIdStr) : null;
+
+    this.storage.getItem('authToken')? this.credentials.set({
+      access_token: this.storage.getItem('authToken')!,
+      user: {
+        rol: userRol,
+        user_id: userId || undefined
+      }
+    }) : null;
+  }
+
   //Porta a la pàgina d'inici segons el rol de l'usuari
-  navegateByRol(): void {
+  navigateByRol(): void {
     switch(this.credentials()?.user.rol || '') {
       case 'usuari':
           this.router.navigate(['/userDash']);

@@ -11,6 +11,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { selectCredentials } from '../../../Auth/Selectors/auth.selector';
 import { selectCiutatIdSeleccionada, selectCiutats } from '../../Selectors/ciutats.selector';
 import { CiutatDTO } from '../../Models/ciutat.dto';
+import { Ciutats } from '../../Services/ciutats';
 
 
 @Component({
@@ -25,12 +26,24 @@ import { CiutatDTO } from '../../Models/ciutat.dto';
   styleUrl: './select-ciutats.scss',
 })
 export class SelectCiutats implements OnInit{
-  private store = inject(Store<AppState>);
-  private usuaria = toSignal(this.store.select(selectCredentials));
+
+  private storage = inject(Storage);
+  private ciutatsService = inject(Ciutats);
+
+  private usuariId = computed(() => (this.storage.getItem('userId')? );
+  private usuariRol = computed(() => this.storage.getItem('userRol'));
   
+  ciutats = signal<CiutatDTO[]>([]);
+  idCiutatSeleccionada = signal<number | null>(null);
+  
+  /*
+    private store = inject(Store<AppState>);
+    private usuaria = toSignal(this.store.select(selectCredentials));
+  */
+/*
   private ciutats = toSignal(this.store.select(selectCiutats), { initialValue: [] });
   idCiutatSeleccionada = toSignal(this.store.select(selectCiutatIdSeleccionada), { initialValue: null }); 
-
+*/
   // Creem l'array de llistables a partir de l'array de ciutats
   ciutatsLlistables = computed<LlistableDTO[]>(() => 
     this.ciutats().map((ciutat: CiutatDTO) => ({
@@ -59,7 +72,19 @@ export class SelectCiutats implements OnInit{
     });
   }
 
-  ngOnInit(){
+  ngOnInit(): void {
+    if(this.usuariId() && this.usuariRol() === 'admin'){
+      this.ciutatsService.getCiutatsAdministrades(this.usuariId()!).subscribe((ciutats) => {
+        this.ciutats.set(ciutats);
+      });
+    } else {
+      this.ciutatsService.getCiutats().subscribe((ciutats) => {
+        this.ciutats.set(ciutats);
+      });
+    }
+  }
+
+  /*ngOnInitREDUX(){
     const auth = this.usuaria();
     console.log("USUARIA:",auth);
     if(auth?.user_id){
@@ -68,7 +93,7 @@ export class SelectCiutats implements OnInit{
     else{
       this.store.dispatch(CiutatsAction.getCiutats());
     }
-  }
+  }*/
 
   submit(){
     this.store.dispatch(CiutatsAction.selectCiutat({ ciutatId: this.ciutat.value }));

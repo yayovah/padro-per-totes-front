@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from './Layout/Components/header/header';
 import { Footer } from './Layout/Components/footer/footer';
+import { Auth } from './Auth/Services/auth';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,5 @@ import { Footer } from './Layout/Components/footer/footer';
 })
 export class App {
   protected readonly title = signal('padro-per-totes-front');
+  private authService = inject(Auth);
 }
