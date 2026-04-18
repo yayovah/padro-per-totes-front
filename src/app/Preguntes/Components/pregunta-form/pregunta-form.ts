@@ -6,10 +6,10 @@ import { CommonModule } from '@angular/common';
 import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
-import { selectPreguntaIdSeleccionada, selectPreguntes } from '../../../Admin-dashboard/Selectors/adminDashboard.selectors';
+import { selectPreguntaIdSeleccionada, selectPreguntes } from '../../../Home/Components/Admin-dashboard/Selectors/adminDashboard.selectors';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { PreguntaDTO } from '../../Models/pregunta.dto';
-import * as AdminDashboardActions from '../../../Admin-dashboard/Actions/adminDashboard.action';
+import * as AdminDashboardActions from '../../../Home/Components/Admin-dashboard/Actions/adminDashboard.action';
 import { selectCiutatIdSeleccionada } from '../../../Ciutat/Selectors/ciutats.selector';
 
 @Component({

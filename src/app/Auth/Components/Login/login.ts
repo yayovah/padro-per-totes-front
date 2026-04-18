@@ -64,7 +64,7 @@ export class Login {
     //this.store.dispatch(AuthAction.login({ credentials }));
   }
 
-  loginRedux(): void {
+/*  loginRedux(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -75,7 +75,7 @@ export class Login {
       access_token: '',
     };
     this.store.dispatch(AuthAction.login({ credentials }));
-  }
+  }*/
 
   getErrorMessage(camp : FormControl, nom : string): string {
     if(camp.hasError('required')) {

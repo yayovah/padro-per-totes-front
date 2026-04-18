@@ -1,8 +1,8 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as AdminDashboardActions from '../Actions/adminDashboard.action';
-import { PreguntaDTO } from '../../Preguntes/Models/pregunta.dto';
-import { RespostaDTO } from '../../Respostes/Models/resposta.dto';
-import { SituacioDTO } from '../../Situacions/Model/situacio.dto';
+import { PreguntaDTO } from '../../../../Preguntes/Models/pregunta.dto';
+import { RespostaDTO } from '../../../../Respostes/Models/resposta.dto';
+import { SituacioDTO } from '../../../../Situacions/Model/situacio.dto';
 
 export interface AdminDashboardState {
     idCiutatSeleccionada: number | null;

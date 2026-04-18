@@ -1,24 +1,24 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../app.reducers';
+import { AppState } from '../../../../app.reducers';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { selectCiutatIdSeleccionada } from '../../Ciutat/Selectors/ciutats.selector';
+import { selectCiutatIdSeleccionada } from '../../../../Ciutat/Selectors/ciutats.selector';
 import { selectPreguntaIdSeleccionada, selectPreguntes, selectRespostes, selectSituacions } from '../Selectors/adminDashboard.selectors';
-import { LlistableDTO } from '../../Shared/Models/llistable.dto';
-import { PreguntaDTO } from '../../Preguntes/Models/pregunta.dto';
-import { SelectCiutats } from '../../Ciutat/Components/select-ciutats/select-ciutats';
-import { List } from '../../Shared/Components/list/list';
+import { LlistableDTO } from '../../../../Shared/Models/llistable.dto';
+import { PreguntaDTO } from '../../../../Preguntes/Models/pregunta.dto';
+import { SelectCiutats } from '../../../../Ciutat/Components/select-ciutats/select-ciutats';
+import { List } from '../../../../Shared/Components/list/list';
 import * as AdminDashboardActions from '../Actions/adminDashboard.action';
-import * as CiutatsActions from '../../Ciutat/Actions/ciutat.action';
+import * as CiutatsActions from '../../../../Ciutat/Actions/ciutat.action';
 import { Actions, ofType } from '@ngrx/effects';
-import { Card } from '../../Shared/Components/card/card';
-import { ListInCard } from '../../Shared/Components/list-in-card/list-in-card';
+import { Card } from '../../../../Shared/Components/card/card';
+import { ListInCard } from '../../../../Shared/Components/list-in-card/list-in-card';
 import { CommonModule } from '@angular/common';
-import { Submit } from '../../Shared/Components/form-controls/submit/submit';
-import { RespostaDTO } from '../../Respostes/Models/resposta.dto';
-import { SituacioDTO } from '../../Situacions/Model/situacio.dto';
-import { PreguntaForm } from '../../Preguntes/Components/pregunta-form/pregunta-form';
-import { SituacioForm } from '../../Situacions/Components/situacio-form/situacio-form';
+import { Submit } from '../../../../Shared/Components/form-controls/submit/submit';
+import { RespostaDTO } from '../../../../Respostes/Models/resposta.dto';
+import { SituacioDTO } from '../../../../Situacions/Model/situacio.dto';
+import { PreguntaForm } from '../../../../Preguntes/Components/pregunta-form/pregunta-form';
+import { SituacioForm } from '../../../../Situacions/Components/situacio-form/situacio-form';
 
 
 @Component({

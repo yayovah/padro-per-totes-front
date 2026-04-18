@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
-import { PreguntaDTO } from '../../Preguntes/Models/pregunta.dto';
-import { SituacioDTO } from '../../Situacions/Model/situacio.dto';
-import { SituacioToBDDTO } from '../../Situacions/Model/situacioToBD.dto';
-import { RespostaDTO } from '../../Respostes/Models/resposta.dto';
+import { PreguntaDTO } from '../../../../Preguntes/Models/pregunta.dto';
+import { SituacioDTO } from '../../../../Situacions/Model/situacio.dto';
+import { SituacioToBDDTO } from '../../../../Situacions/Model/situacioToBD.dto';
+import { RespostaDTO } from '../../../../Respostes/Models/resposta.dto';
 
 export const getPreguntes = createAction(
   '[AdminDashboard] Get Preguntes',

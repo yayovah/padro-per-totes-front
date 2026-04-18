@@ -3,10 +3,10 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, finalize, map, tap } from 'rxjs/operators';
 import * as AdminDashboardActions from '../Actions/adminDashboard.action';
-import { Pregunta } from '../../Preguntes/Services/pregunta';
-import { Resposta } from '../../Respostes/Services/resposta';
-import * as CiutatActions from '../../Ciutat/Actions/ciutat.action';
-import { Situacio } from '../../Situacions/Services/situacio';
+import { Pregunta } from '../../../../Preguntes/Services/pregunta';
+import { Resposta } from '../../../../Respostes/Services/resposta';
+import * as CiutatActions from '../../../../Ciutat/Actions/ciutat.action';
+import { Situacio } from '../../../../Situacions/Services/situacio';
 
 @Injectable()
 export class AdminDashboardEffects {

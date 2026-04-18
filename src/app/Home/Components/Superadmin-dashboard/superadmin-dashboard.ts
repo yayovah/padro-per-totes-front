@@ -2,20 +2,20 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { List } from '../../../Shared/Components/list/list';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
-import { CiutatDTO } from '../../Models/ciutat.dto';
-import * as CiutatsAction from '../../Actions/ciutat.action'
+import { CiutatDTO } from '../../../Ciutat/Models/ciutat.dto';
+import * as CiutatsAction from '../../../Ciutat/Actions/ciutat.action'
 import { CommonModule } from '@angular/common';
 import { Card } from '../../../Shared/Components/card/card';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { LlistableDTO } from '../../../Shared/Models/llistable.dto';
-import { selectCiutatAdmins, selectCiutatIdSeleccionada, selectCiutats } from '../../Selectors/ciutats.selector';
+import { selectCiutatAdmins, selectCiutatIdSeleccionada, selectCiutats } from '../../../Ciutat/Selectors/ciutats.selector';
 import { UserDTO } from '../../../Shared/Models/user.dto';
 import { ListInCard } from '../../../Shared/Components/list-in-card/list-in-card';
 import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
-import { CiutatForm } from '../ciutat-form/ciutat-form';
+import { CiutatForm } from '../../../Ciutat/Components/ciutat-form/ciutat-form';
 import { Actions, ofType } from '@ngrx/effects';
-import * as CiutatsActions from '../../Actions/ciutat.action';
-import { AddAdmin } from '../add-admin/add-admin';
+import * as CiutatsActions from '../../../Ciutat/Actions/ciutat.action';
+import { AddAdmin } from '../../../Ciutat/Components/add-admin/add-admin';
 
 
 @Component({
