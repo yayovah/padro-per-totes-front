@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthDTO } from '../../Model/auth.dto';
+import { AuthDTO, UserDTO } from '../../Model/auth.dto';
 import { InputEmail } from '../../../Shared/Components/form-controls/input-email/input-email';
 import { InputPassword } from '../../../Shared/Components/form-controls/input-password/input-password';
 import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
 import * as AuthAction from '../../Actions/auth.action';
+import { Auth } from '../../Services/auth';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,8 @@ export class Login {
   email: FormControl;
   password: FormControl;
   loginForm: FormGroup;
+
+  authService = inject(Auth);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,6 +50,21 @@ export class Login {
   }
 
   login(): void {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
+    const credentials: UserDTO = {
+      email: this.email.value,
+      password: this.password.value,
+    };
+
+    this.authService.login(credentials);
+      
+    //this.store.dispatch(AuthAction.login({ credentials }));
+  }
+
+  loginRedux(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
