@@ -42,7 +42,8 @@ export class AdminDashboard {
   private store = inject(Store<AppState>);
   //idCiutatSeleccionada = toSignal(this.store.select(selectCiutatIdSeleccionada), { initialValue: null });  
   idPreguntaSeleccionada = toSignal(this.store.select(selectPreguntaIdSeleccionada), { initialValue: null });  
-  private preguntes = toSignal(this.store.select(selectPreguntes), { initialValue: [] });
+  preguntes = signal<PreguntaDTO[]>([]);
+  //private preguntes = toSignal(this.store.select(selectPreguntes), { initialValue: [] });
   private situacions = toSignal(this.store.select(selectSituacions), { initialValue: [] });
   
   //private respostes = toSignal(this.store.select(selectRespostes), { initialValue: [] });
@@ -78,11 +79,24 @@ export class AdminDashboard {
     ofType(AdminDashboardActions.createPreguntaSuccess),
     takeUntilDestroyed()
   ).subscribe(() => {
-    this.accioActual.set(null)});
+  this.accioActual.set(null)});
 
   actualitzarCiutat(ciutatOutput: CiutatDTO | undefined){
     this.ciutatSeleccionada.set(ciutatOutput ?? null);
-    alert("ciutat seleccionada: " + this.idCiutatSeleccionada());
+    this.carregaPreguntes();
+  }
+
+  carregaPreguntes(){
+    if(this.idCiutatSeleccionada()){
+      this.preguntaService.getPreguntesByCiutat(this.idCiutatSeleccionada()!).subscribe({
+        next: (preguntes) => {
+          this.preguntes.set(preguntes);
+        },
+        error: (error) => {
+          console.error('Error al obtener las preguntas:', error);
+        }
+      });
+    } 
   }
 
   handleAccio(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
