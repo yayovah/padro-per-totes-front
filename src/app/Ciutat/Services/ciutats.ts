@@ -78,8 +78,7 @@ export class Ciutats {
       ));
   }
 
-    deletePermis(ciutatId: number, adminId: number): Observable<any> {
-
+  deletePermis(ciutatId: number, adminId: number): Observable<any> {
     return this.http
       .delete<any>(`${this.url}/ciutat/${ciutatId}/admin/${adminId}`)
         .pipe(catchError((error) => {

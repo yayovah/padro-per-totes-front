@@ -36,6 +36,7 @@ export class SelectCiutats implements OnInit{
   ciutats = signal<CiutatDTO[]>([]);
   idCiutatSeleccionada = signal<number | null>(null);
   
+
   /*
     private store = inject(Store<AppState>);
     private usuaria = toSignal(this.store.select(selectCredentials));
@@ -96,13 +97,14 @@ export class SelectCiutats implements OnInit{
   }*/
 
   submit(){
-    this.store.dispatch(CiutatsAction.selectCiutat({ ciutatId: this.ciutat.value }));
-    console.log('SUBMIT!');
+    this.idCiutatSeleccionada.set(this.ciutat.value);
+//    this.store.dispatch(CiutatsAction.selectCiutat({ ciutatId: this.ciutat.value }));
+//    console.log('SUBMIT!');
   }
 
   getErrorMessage(camp : FormControl, nom : string): string {
     if(camp.hasError('required')) {
-      return "Se requiere selecciona " + nom;
+      return "Se requiere seleccionar " + nom;
     }
     return "";
   }

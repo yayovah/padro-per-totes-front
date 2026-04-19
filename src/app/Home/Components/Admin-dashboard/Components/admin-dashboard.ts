@@ -19,6 +19,7 @@ import { RespostaDTO } from '../../../../Respostes/Models/resposta.dto';
 import { SituacioDTO } from '../../../../Situacions/Model/situacio.dto';
 import { PreguntaForm } from '../../../../Preguntes/Components/pregunta-form/pregunta-form';
 import { SituacioForm } from '../../../../Situacions/Components/situacio-form/situacio-form';
+import { Ciutats } from '../../../../Ciutat/Services/ciutats';
 
 
 @Component({
@@ -28,13 +29,16 @@ import { SituacioForm } from '../../../../Situacions/Components/situacio-form/si
   styleUrl: './admin-dashboard.scss',
 })
 export class AdminDashboard {
+  private selectCiutatService = inject(Ciutats);
+  idCiutatSeleccionada = computed(() => this.ciutatService.idCiutatSeleccionada());
+
   private store = inject(Store<AppState>);
-  idCiutatSeleccionada = toSignal(this.store.select(selectCiutatIdSeleccionada), { initialValue: null });  
+  //idCiutatSeleccionada = toSignal(this.store.select(selectCiutatIdSeleccionada), { initialValue: null });  
   idPreguntaSeleccionada = toSignal(this.store.select(selectPreguntaIdSeleccionada), { initialValue: null });  
   private preguntes = toSignal(this.store.select(selectPreguntes), { initialValue: [] });
-  //private respostes = toSignal(this.store.select(selectRespostes), { initialValue: [] });
   private situacions = toSignal(this.store.select(selectSituacions), { initialValue: [] });
-
+  
+  //private respostes = toSignal(this.store.select(selectRespostes), { initialValue: [] });
   //ciutatAdmins = toSignal(this.store.select(selectCiutatAdmins), { initialValue: [] });
 
   // Creem l'array de llistables a partir de l'array de preguntes
