@@ -1,39 +1,40 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import { Observable, switchMap, take } from 'rxjs';
-import { AppState } from '../../app.reducers';
-import { Store } from '@ngrx/store';
-import { selectAuthToken } from '../../Auth/Selectors/auth.selector';
+import { Auth } from '../../Auth/Services/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthInterceptor implements HttpInterceptor{
-  private store = inject(Store<AppState>);
-  //private access_token = this.store.select(selectAuthToken);
+  private authService = inject(Auth);
+  private accessToken = computed(() => this.authService.credentials()?.token ?? null);
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (req.url.includes('/api/login')) {
+
+    // Llistat de rutes públiques de la API, on no es requereix token:
+    const publicRoutes = [
+      '/api/login',
+    ];
+    // Saltem l'interceptor per la petició a les rutes públiuqes
+    if (publicRoutes.some(route => req.url.includes(route))) {
         return next.handle(req);
     }
 
-    return this.store.select(selectAuthToken).pipe(
-      take(1),
-      switchMap((accessToken)=>{
-        if(accessToken){
-          req = req.clone({
-          setHeaders: {
-            'Content-Type': 'application/json; charset=utf-8',
-              Accept: 'application/json',
-              Authorization: `Bearer ${accessToken}`,
-            }
-          })
+    // Afegim el token, si el tenim, a les peticions cap a la API
+    if(this.accessToken()){
+      req = req.clone({
+      setHeaders: {
+        'Content-Type': 'application/json; charset=utf-8',
+          Accept: 'application/json',
+          Authorization: `Bearer ${this.accessToken()}`,
         }
-        return next.handle(req);
-      }),
-    )
+      })
+    }
+    return next.handle(req);
+
   }  
 }

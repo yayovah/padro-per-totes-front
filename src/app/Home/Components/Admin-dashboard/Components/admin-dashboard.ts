@@ -20,6 +20,9 @@ import { SituacioDTO } from '../../../../Situacions/Model/situacio.dto';
 import { PreguntaForm } from '../../../../Preguntes/Components/pregunta-form/pregunta-form';
 import { SituacioForm } from '../../../../Situacions/Components/situacio-form/situacio-form';
 import { Ciutats } from '../../../../Ciutat/Services/ciutats';
+import { CiutatDTO } from '../../../../Ciutat/Models/ciutat.dto';
+import { Pregunta } from '../../../../Preguntes/Services/pregunta';
+import { Situacio } from '../../../../Situacions/Services/situacio';
 
 
 @Component({
@@ -30,7 +33,11 @@ import { Ciutats } from '../../../../Ciutat/Services/ciutats';
 })
 export class AdminDashboard {
   private selectCiutatService = inject(Ciutats);
-  idCiutatSeleccionada = computed(() => this.ciutatService.idCiutatSeleccionada());
+  ciutatSeleccionada = signal<CiutatDTO | null>(null);
+  idCiutatSeleccionada = computed(() => this.ciutatSeleccionada()?.id ?? null);
+
+  private situacioService = inject(Situacio)
+  private preguntaService = inject(Pregunta);
 
   private store = inject(Store<AppState>);
   //idCiutatSeleccionada = toSignal(this.store.select(selectCiutatIdSeleccionada), { initialValue: null });  
@@ -73,7 +80,10 @@ export class AdminDashboard {
   ).subscribe(() => {
     this.accioActual.set(null)});
 
-    
+  actualitzarCiutat(ciutatOutput: CiutatDTO | undefined){
+    this.ciutatSeleccionada.set(ciutatOutput ?? null);
+    alert("ciutat seleccionada: " + this.idCiutatSeleccionada());
+  }
 
   handleAccio(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
     // Implementa la lògica per gestionar les accions rebudes des del component fill

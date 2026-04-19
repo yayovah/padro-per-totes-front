@@ -1,15 +1,15 @@
 export interface AuthDTO {
   user: UserDTO,
-  access_token: string;
+  token: string;
 }
 
 export interface AuthToken {
-  user_id: number;
-  access_token: string;
+  id: number;
+  token: string;
 }
 
 export interface UserDTO {
-  user_id?: number;
+  id?: number;
   email?: string;
   password?: string;
   rol?: string;

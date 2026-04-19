@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CiutatDTO } from '../../Models/ciutat.dto';
 import { Ciutats } from '../../Services/ciutats';
 import { AppState } from '../../../app.reducers';
@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import * as CiutatsAction from '../../Actions/ciutat.action';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { selectCredentials } from '../../../Auth/Selectors/auth.selector';
 
 @Component({
   selector: 'app-ciutats',
@@ -16,24 +15,17 @@ import { selectCredentials } from '../../../Auth/Selectors/auth.selector';
 })
 export class CiutatsComponent implements OnInit {
   
-  ciutats: CiutatDTO[] = [];
-  
-  constructor(
- //   private ciutatService: Ciutats,
-    private store: Store<AppState>
-  ) {
-       this.ciutats = new Array<CiutatDTO>();
-           this.store
-      .select('ciutats')
-      .subscribe(ciutats => {
-      this.ciutats = ciutats.ciutats;
-      // Afegeix això per veure si arriben les dades al component
-      console.log('Ciutats rebudes:', this.ciutats); 
-      console.log('Credencials a l\'AppState:', selectCredentials(this.store));
-    });
-  }
+  ciutatsService = inject(Ciutats);
+  ciutats  = signal<CiutatDTO[]>([]);
 
   ngOnInit(): void {
-    this.store.dispatch(CiutatsAction.getCiutats());
+    this.ciutatsService.getCiutats().subscribe({
+      next: (ciutats) => {
+        this.ciutats.set(ciutats);
+      },
+      error: (error) => {
+        console.error('Error al obtener las ciudades:', error);
+      }
+    });
   }
 }

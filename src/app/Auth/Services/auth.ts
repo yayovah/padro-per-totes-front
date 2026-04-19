@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { AuthDTO, UserDTO } from '../Model/auth.dto';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -20,11 +20,14 @@ export class Auth {
 
   //Injecció de serveis
   private router = inject(Router);
-  private storage = inject(Storage);
 
   //Signals
-  private credentials = signal<AuthDTO | null>(null);
-  
+  // Credencials accessibles des de l'app
+  public credentials = signal<AuthDTO | null>(null);
+  public accessToken = computed(() => this.credentials()?.token ?? null);
+  public userRol = computed(() => this.credentials()?.user.rol ?? null);
+  public userId = computed(() => this.credentials()?.user.id ?? null);
+
   constructor(private http: HttpClient) {
     //Comprovem si a l'Storage hi ha credencials guardades, si és així les carreguem a la signal
     if(!this.credentials()) {
@@ -72,37 +75,38 @@ export class Auth {
   storageCredentials(): void {
     //Guardem les credencials essencials a l'storage
     //Si no existeix alguna credencials es guarda com a cadena buida '' (storage guarda strings)
-    this.storage.setItem('authToken', this.credentials()?.access_token || '');
-    this.storage.setItem('userRol', this.credentials()?.user.rol || '');
-    this.storage.setItem('userId', this.credentials()?.user.user_id?.toString() || '');
+    localStorage.setItem('authToken', this.credentials()?.token || '');
+    localStorage.setItem('userRol', this.credentials()?.user.rol || '');
+    localStorage.setItem('userId', this.credentials()?.user.id?.toString() || '');
   }
 
   //Esborra les credencials a l'storage
   resetCredentials(): void {
     this.credentials.set(null);
-    this.storage.removeItem('authToken');
-    this.storage.removeItem('userRol');
-    this.storage.removeItem('userId');
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userRol');
+    localStorage.removeItem('userId');
     this.router.navigate(['/login']);
   }
 
   restoreCredentials(): void {
-    const userRol = this.storage.getItem('userRol')? this.storage.getItem('userRol')! : '';
+    const userRol = localStorage.getItem('userRol')? localStorage.getItem('userRol')! : '';
     
-    const userIdStr = this.storage.getItem('userId');
+    const userIdStr = localStorage.getItem('userId');
     const userId = (userIdStr && userIdStr !== '')? parseInt(userIdStr) : null;
 
-    this.storage.getItem('authToken')? this.credentials.set({
-      access_token: this.storage.getItem('authToken')!,
+    localStorage.getItem('authToken')? this.credentials.set({
+      token: localStorage.getItem('authToken')!,
       user: {
         rol: userRol,
-        user_id: userId || undefined
+        id: userId || undefined
       }
     }) : null;
   }
 
   //Porta a la pàgina d'inici segons el rol de l'usuari
   navigateByRol(): void {
+    console.log('Navegando según rol: ', this.userRol());
     switch(this.credentials()?.user.rol || '') {
       case 'usuari':
           this.router.navigate(['/userDash']);
