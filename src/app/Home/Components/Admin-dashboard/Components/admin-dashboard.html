@@ -47,7 +47,10 @@
             }
             @if(accioActual() === 'edit'){
             <app-card [title]="'Modificar la pregunta'" [subtitle]="'Edita los datos de la pregunta'">
-                <app-pregunta-form></app-pregunta-form>
+                <app-pregunta-form
+                    [(preguntaSeleccionada)]="preguntaSeleccionada"
+                    [idCiutatSeleccionada]="idCiutatSeleccionada()"
+                ></app-pregunta-form>
             </app-card>
             }
         }

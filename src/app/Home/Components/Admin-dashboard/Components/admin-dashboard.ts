@@ -38,6 +38,8 @@ export class AdminDashboard {
 
   preguntes = signal<PreguntaDTO[]>([]);
   idPreguntaSeleccionada = signal<number | null>(null);
+  preguntaSeleccionada = computed(() => this.preguntes().find(p => p.id === this.idPreguntaSeleccionada()) ?? null);
+
   situacions = signal<SituacioDTO[]>([]);
   respostes = signal<RespostaDTO[]>([]);
 
