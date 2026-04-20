@@ -1,6 +1,22 @@
 <main>
     <div class="parcial">
         <h2>Padrón para todes</h2>
+    <div class="o-layout-part">
+        <div class="o-heading">
+            <h1>Dashboard</h1>
+            <p>Escoje una ciudad</p>
+            <app-select-ciutats
+                (ciutatOutput)="actualitzarCiutat($event)"
+            ></app-select-ciutats>
+            @if(idCiutatSeleccionada()){
+            <app-list [title]="'Preguntas'" [items]="preguntesLlistables()" [editable]="true" [back]="false"
+                (accio)="handleAccio($event)" [idSelected]="idCiutatSeleccionada()">
+            </app-list>
+            }
+        </div>
+    </div>
+
+<!--
         <p>Guia de posibles pasos para empadronarte en Tarragona.</p>
         <p>Esta es una guía que explica los posibles pasos a seguir para empadronarte en Tarragona. La guía está diseñada según la experiencia del Grupo de Incidencia política Padró para Totes. 
 Un un grupo de personas vecinas y entidades antirracistas independientes que se reúnen para implementar estrategias colectivas que ayuden a las personas en condición de racialización a empadronarse. 
@@ -8,5 +24,7 @@ La practica de negar el derecho al empadronamiento es Racismo estructural, recue
     </div>
     <div class="parcial">
         <h2>¿Cual es tu dificultad para empadronarte?</h2>
+    </div>
+    -->
     </div>
 </main>
