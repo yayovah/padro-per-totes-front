@@ -23,6 +23,8 @@ import { Ciutats } from '../../../../Ciutat/Services/ciutats';
 import { CiutatDTO } from '../../../../Ciutat/Models/ciutat.dto';
 import { Pregunta } from '../../../../Preguntes/Services/pregunta';
 import { Situacio } from '../../../../Situacions/Services/situacio';
+import { Resposta } from '../../../../Respostes/Services/resposta';
+import { catchError, map } from 'rxjs';
 
 
 @Component({
@@ -33,21 +35,31 @@ import { Situacio } from '../../../../Situacions/Services/situacio';
 })
 export class AdminDashboard {
   private selectCiutatService = inject(Ciutats);
+  private preguntaService = inject(Pregunta);
+  private situacioService = inject(Situacio)
+  private respostaService = inject(Resposta);
+  
   ciutatSeleccionada = signal<CiutatDTO | null>(null);
   idCiutatSeleccionada = computed(() => this.ciutatSeleccionada()?.id ?? null);
 
-  private situacioService = inject(Situacio)
-  private preguntaService = inject(Pregunta);
-
-  private store = inject(Store<AppState>);
-  //idCiutatSeleccionada = toSignal(this.store.select(selectCiutatIdSeleccionada), { initialValue: null });  
-  idPreguntaSeleccionada = toSignal(this.store.select(selectPreguntaIdSeleccionada), { initialValue: null });  
   preguntes = signal<PreguntaDTO[]>([]);
+  idPreguntaSeleccionada = signal<number | null>(null);
+  situacions = signal<SituacioDTO[]>([]);
+  respostes = signal<RespostaDTO[]>([]);
+
+  accioActual= signal<String | null>("");
+  addResposta = signal<boolean>(false);
+  
+  private store = inject(Store<AppState>);
+  //idPreguntaSeleccionada = toSignal(this.store.select(selectPreguntaIdSeleccionada), { initialValue: null });  
+  //idCiutatSeleccionada = toSignal(this.store.select(selectCiutatIdSeleccionada), { initialValue: null });  
   //private preguntes = toSignal(this.store.select(selectPreguntes), { initialValue: [] });
-  private situacions = toSignal(this.store.select(selectSituacions), { initialValue: [] });
+  //private situacions = toSignal(this.store.select(selectSituacions), { initialValue: [] });
   
   //private respostes = toSignal(this.store.select(selectRespostes), { initialValue: [] });
   //ciutatAdmins = toSignal(this.store.select(selectCiutatAdmins), { initialValue: [] });
+
+  // LLISTABLES
 
   // Creem l'array de llistables a partir de l'array de preguntes
  preguntesLlistables = computed<LlistableDTO[]>(() => 
@@ -62,24 +74,20 @@ export class AdminDashboard {
     this.situacions().map((situacio: SituacioDTO) => { return {
       id: situacio.id,
       nom: situacio.resposta?.text ?? ''
-    };
-  }
-  )
+    };})
   );
 
   // ACCIONS
 
   private actions$ = inject(Actions);
-  accioActual= signal<String | null>("");
   
-  addResposta = signal<boolean>(false);
 
   //Per tancar el formulari d'afegir usuari (és l'únic cas en que no hi ciutat seleccionada)
   private successListener = this.actions$.pipe(
     ofType(AdminDashboardActions.createPreguntaSuccess),
     takeUntilDestroyed()
   ).subscribe(() => {
-  this.accioActual.set(null)});
+    this.accioActual.set(null)});
 
   actualitzarCiutat(ciutatOutput: CiutatDTO | undefined){
     this.ciutatSeleccionada.set(ciutatOutput ?? null);
@@ -89,12 +97,8 @@ export class AdminDashboard {
   carregaPreguntes(){
     if(this.idCiutatSeleccionada()){
       this.preguntaService.getPreguntesByCiutat(this.idCiutatSeleccionada()!).subscribe({
-        next: (preguntes) => {
-          this.preguntes.set(preguntes);
-        },
-        error: (error) => {
-          console.error('Error al obtener las preguntas:', error);
-        }
+        next: (preguntes) => this.preguntes.set(preguntes),
+        error: (error) => console.error('Error al obtener las preguntas:', error)
       });
     } 
   }
@@ -106,6 +110,22 @@ export class AdminDashboard {
 
     //Si seleccionem una pregunta...
     if(event.id){
+      switch (event.type) {
+        case 'edit':
+          break;
+        case 'view':
+          this.situacioService.getSituacionsByPregunta(this.idPreguntaSeleccionada()!).subscribe({
+            next: ((situacions) => this.situacions.set(situacions)),
+            error: ((error) => console.error("Error al intentar cargar", error))
+          });
+
+          break;
+        case 'delete':
+          break;
+      }
+
+
+
       this.store.dispatch(AdminDashboardActions.selectPregunta({ preguntaId: event.id }));
       console.log( this.accioActual());
       //Veure llistat de les respostes
