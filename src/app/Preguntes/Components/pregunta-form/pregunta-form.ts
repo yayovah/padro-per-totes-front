@@ -29,20 +29,16 @@ export class PreguntaForm{
   //private store = inject(Store<AppState>);
   //private preguntes = toSignal(this.store.select(selectPreguntes), { initialValue: [] });
   private preguntaService = inject(Pregunta);
+  
+  idCiutatSeleccionada =  input<number | null>(null);
+  preguntaSeleccionada = input<PreguntaDTO | null>(null);
+  idPreguntaSeleccionada = computed(() => this.preguntaSeleccionada()?.id ?? null);
+  preguntaActualitzada = output<PreguntaDTO>();
 
   titol: FormControl;
   text: FormControl;
   preguntaForm: FormGroup;
-
-  preguntaSeleccionada = input<PreguntaDTO | null>(null);
-  idPreguntaSeleccionada = computed(() => this.preguntaSeleccionada()?.id ?? null);
-  idCiutatSeleccionada =  input<number | null>(null);
-
-  preguntaActualitzada = output<PreguntaDTO>();
   
-
-
-
   /*
   idPreguntaSeleccionada = toSignal(this.store.select(selectPreguntaIdSeleccionada), { initialValue: null });
   idCiutatSeleccionada = toSignal(this.store.select(selectCiutatIdSeleccionada), { initialValue: null });
@@ -52,7 +48,7 @@ export class PreguntaForm{
   });
   */
 
-constructor(  
+  constructor(  
     private formBuilder: FormBuilder,
   ){
     //inicialitzem els camps del formulari: email i password

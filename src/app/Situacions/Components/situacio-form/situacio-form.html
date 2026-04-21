@@ -1,20 +1,70 @@
 <form class="o-form-box" [formGroup]="situacioForm" (ngSubmit)="submit()">
     <!-- Resposta -->
-    <app-input-text 
-        label="Escrive una respuesta: " 
-        name="resposta" 
-        [control]="resposta" 
-        placeholder="Buenos Aires"
-        errorMessage="{{ getErrorMessage(resposta, 'Respuesta') }}" 
-        required="required">
-    </app-input-text>
+
+    <div class="o-form-box__header">
+        <h2>Crear o modificar una respuesta</h2>
+        <p>Selecciona una respuesta existente o añade una nueva respuesta a la pregunta seleccionada</p>
+        @if(toggleRespostaFlag()){
+        <app-select 
+            label="Selecciona una respuesta: " 
+            name="resposta" 
+            [control]="resposta"
+            placeholder="Selecciona una respuesta" 
+            errorMessage="{{ getErrorMessage(resposta, 'Respuesta') }}" 
+            required="required"
+            [items]="respostesLlistables()">
+        </app-select>
+        }
+        @else {
+        <app-text-area
+            label="Escrive una respuesta: " 
+            name="resposta" 
+            [control]="resposta" 
+            placeholder="Escibe la respuesta que se mostrará al usuario"
+            errorMessage="{{ getErrorMessage(resposta, 'Respuesta') }}" 
+            required="required">
+        </app-text-area>
+        <app-submit text="Guardar respuesta" (clickEvent)="submitResposta()" [icono]="true"></app-submit>
+        }
+        <app-submit text="{{ toggleRespostaText() }}" (clickEvent)="toggleResposta()" [icono]="true"></app-submit>
+    </div>
 
     <!-- Següent pregunta -->
+    <div class="o-form-box__header">
+        <h2>Crear o seleccionar la siguiente pregunta</h2>
+        <p>Selecciona una pregunta existente o añade una nueva pregunta</p>
+        @if(toggleSeguentPreguntaFlag()){
+        <app-select 
+            label="Selecciona una respuesta: " 
+            name="resposta" 
+            [control]="resposta"
+            placeholder="Selecciona una respuesta" 
+            errorMessage="{{ getErrorMessage(resposta, 'Respuesta') }}" 
+            required="required"
+            [items]="respostesLlistables()">
+        </app-select>
+        }
+        @else {
+        <app-text-area
+            label="Escrive una respuesta: " 
+            name="resposta" 
+            [control]="resposta" 
+            placeholder="Escibe la respuesta que se mostrará al usuario"
+            errorMessage="{{ getErrorMessage(resposta, 'Respuesta') }}" 
+            required="required">
+        </app-text-area>
+        <app-submit text="Guardar pregunta" (clickEvent)="submitSeguentPregunta()" [icono]="true"></app-submit>
+        }
+        <app-submit text="{{ toggleSeguentPreguntaText() }}" (clickEvent)="toggleSeguentPregunta()" [icono]="true"></app-submit>
+    </div>
+
+
+
     <app-select 
         label="Selecciona la pregunta a la que lleva esta respuesta: " 
         name="seguentPregunta" 
         [control]="seguentPregunta"
-        placeholder="Selecciona una respuesta de destino" 
+        placeholder="Selecciona una pregunta de destino" 
         errorMessage="{{ getErrorMessage(seguentPregunta, 'Siguiente pregunta') }}" 
         required="required"
         [items]="preguntesLlistables()">

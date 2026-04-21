@@ -7,11 +7,10 @@ import { SituacioDTO } from '../../../Situacions/Model/situacio.dto';
 import { Pregunta } from '../../../Preguntes/Services/pregunta';
 import { SelectCiutats } from '../../../Ciutat/Components/select-ciutats/select-ciutats';
 import { CommonModule } from '@angular/common';
-import { List } from '../../../Shared/Components/list/list';
 
 @Component({
   selector: 'app-home',
-  imports: [SelectCiutats, List, CommonModule],
+  imports: [SelectCiutats, CommonModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

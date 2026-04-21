@@ -14,10 +14,10 @@ export class Resposta {
   private readonly url = `${this.baseUrl}${this.ciutatsEndpoint}`;
   private http = inject( HttpClient );
 
-    getRespostesByPregunta(preguntaId: number): Observable<RespostaDTO[]>{
-      //Petició a la api
-      return this.http
-      .get<RespostaDTO[]>(`${this.url}/pregunta/${preguntaId}`)
+  getRespostes(): Observable<RespostaDTO[]>{
+    //Petició a la api
+    return this.http    
+      .get<RespostaDTO[]>(this.url)
       .pipe(
         //en cas d'error en la petició
         catchError((error) => {
@@ -25,11 +25,24 @@ export class Resposta {
           return throwError(() => new Error('Error cargando respuestas'));
         })
       );
+  }
+
+    getRespostesByPregunta(preguntaId: number): Observable<RespostaDTO[]>{
+      //Petició a la api
+      return this.http
+        .get<RespostaDTO[]>(`${this.url}/pregunta/${preguntaId}`)
+        .pipe(
+          //en cas d'error en la petició
+          catchError((error) => {
+            console.error('Error recuperando respuestas del servidor:', error);
+            return throwError(() => new Error('Error cargando respuestas'));
+          })
+        );
     }
   
-    createResposta(dadesResposta: Omit<RespostaDTO, 'id'>, preguntaId: number): Observable<RespostaDTO>{
+    createResposta(dadesResposta: Omit<RespostaDTO, 'id'>): Observable<RespostaDTO>{
       return this.http
-        .post<RespostaDTO>(`${this.url}/pregunta/${preguntaId}`, dadesResposta)
+        .post<RespostaDTO>(`${this.url}/resposta/}`, dadesResposta)
         .pipe(
             catchError((error) => {
               console.error(`Error intentando crear la respuesta:`, error);
@@ -39,14 +52,13 @@ export class Resposta {
     }
   
     updateResposta(resposta: RespostaDTO): Observable<RespostaDTO>{
-    return this.http
-      .put<RespostaDTO>(`${this.url}/${resposta.id}`, resposta)
-        .pipe(catchError((error) => {
-          console.error(`Error actualizando la respuesta en el servidor:`, error);
-          return throwError(() => new Error('Error actualizando respuesta'));
-        }
-      ));
-
+      return this.http
+        .put<RespostaDTO>(`${this.url}/${resposta.id}`, resposta)
+          .pipe(catchError((error) => {
+            console.error(`Error actualizando la respuesta en el servidor:`, error);
+            return throwError(() => new Error('Error actualizando respuesta'));
+          }
+        ));
     }
   
     deleteResposta(respostaId: number): Observable<any>{
