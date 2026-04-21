@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input, model, OnInit } from '@angular/core';
+import { Component, computed, effect, inject, input, model, OnInit, output } from '@angular/core';
 import { TextArea } from '../../../Shared/Components/form-controls/text-area/text-area';
 import { InputText } from '../../../Shared/Components/form-controls/input-text/input-text';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -34,9 +34,14 @@ export class PreguntaForm{
   text: FormControl;
   preguntaForm: FormGroup;
 
-  preguntaSeleccionada = model<PreguntaDTO | null>(null);
+  preguntaSeleccionada = input<PreguntaDTO | null>(null);
   idPreguntaSeleccionada = computed(() => this.preguntaSeleccionada()?.id ?? null);
   idCiutatSeleccionada =  input<number | null>(null);
+
+  preguntaActualitzada = output<PreguntaDTO>();
+  
+
+
 
   /*
   idPreguntaSeleccionada = toSignal(this.store.select(selectPreguntaIdSeleccionada), { initialValue: null });
@@ -91,19 +96,25 @@ constructor(
         id: this.idPreguntaSeleccionada()!
       };
       this.preguntaService.updatePregunta(dadesPregunta).subscribe({
-        next: (preguntaActualitzada) => this.preguntaSeleccionada.set(preguntaActualitzada),
+        next: (preguntaActualitzada) => this.actualitzarPregunta(preguntaActualitzada),
         error: (error) => console.error('Error al actualizar la pregunta:', error)
       })
       //this.store.dispatch(AdminDashboardActions.updatePregunta({ dadesPregunta }));
     }
     else{
       this.preguntaService.createPregunta(dadesForm, this.idCiutatSeleccionada()!).subscribe({
-        next: (preguntaCreada) => this.preguntaSeleccionada.set(preguntaCreada),
+        next: (preguntaCreada) => this.actualitzarPregunta(preguntaCreada),
         error: (error) => console.error('Error al crear la pregunta:', error)
       }); 
       //this.store.dispatch(AdminDashboardActions.createPregunta({ dadesPregunta: dadesForm, ciutatId: this.idCiutatSeleccionada()! }));
     }
     
+  }
+
+  actualitzarPregunta(preguntaActualitzada: PreguntaDTO | undefined){
+    if(preguntaActualitzada){
+      this.preguntaActualitzada.emit(preguntaActualitzada);
+    }
   }
 
   getErrorMessage(camp : FormControl, nom : string): string {

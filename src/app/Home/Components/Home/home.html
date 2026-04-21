@@ -9,9 +9,7 @@
                 (ciutatOutput)="actualitzarCiutat($event)"
             ></app-select-ciutats>
             @if(idCiutatSeleccionada()){
-            <app-list [title]="'Preguntas'" [items]="preguntesLlistables()" [editable]="true" [back]="false"
-                (accio)="handleAccio($event)" [idSelected]="idCiutatSeleccionada()">
-            </app-list>
+                <p>preguntaActual().titol</p>
             }
         </div>
     </div>

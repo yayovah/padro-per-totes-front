@@ -78,6 +78,10 @@ export class AdminDashboard {
     } 
   }
 
+  modificarPregunta(preguntaOutput: PreguntaDTO | undefined){
+    this.preguntes.set(this.preguntes().map(p => p.id === preguntaOutput?.id ? preguntaOutput : p));
+  }
+
   handleAccio(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
     // Implementa la lògica per gestionar les accions rebudes des del component fill
     this.accioActual.set(event.type);

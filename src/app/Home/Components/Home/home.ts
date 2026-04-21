@@ -5,10 +5,13 @@ import { RespostaDTO } from '../../../Respostes/Models/resposta.dto';
 import { PreguntaDTO } from '../../../Preguntes/Models/pregunta.dto';
 import { SituacioDTO } from '../../../Situacions/Model/situacio.dto';
 import { Pregunta } from '../../../Preguntes/Services/pregunta';
+import { SelectCiutats } from '../../../Ciutat/Components/select-ciutats/select-ciutats';
+import { CommonModule } from '@angular/common';
+import { List } from '../../../Shared/Components/list/list';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [SelectCiutats, List, CommonModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -47,7 +50,8 @@ si és final (o sigui, no pregunta sinó final d'itinerari, que no té respostes
 
       //Carrega la primera pregunta
       this.preguntaService.getPreguntesByCiutat(this.idCiutatSeleccionada()!).subscribe({
-        next: (pregunta) => this.preguntaActual.set(pregunta ?? null),
+        next: (pregunta) => console.log(pregunta), 
+          //this.preguntaActual.set(pregunta ?? null),
         error: (error) => console.error('Error al obtener las preguntas:', error)
       });
       //Carrega les situacions de la primera pregunta

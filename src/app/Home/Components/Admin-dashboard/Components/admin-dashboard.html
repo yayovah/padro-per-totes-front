@@ -48,8 +48,9 @@
             @if(accioActual() === 'edit'){
             <app-card [title]="'Modificar la pregunta'" [subtitle]="'Edita los datos de la pregunta'">
                 <app-pregunta-form
-                    [(preguntaSeleccionada)]="preguntaSeleccionada"
+                    [preguntaSeleccionada]="preguntaSeleccionada()"
                     [idCiutatSeleccionada]="idCiutatSeleccionada()"
+                    (preguntaActualitzada)="modificarPregunta($event)"
                 ></app-pregunta-form>
             </app-card>
             }
