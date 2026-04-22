@@ -43,6 +43,7 @@
                 [subtitle]="'Escribe una respuesta y selecciona la pregunta a la que dirigirá'">
                 <app-situacio-form></app-situacio-form>
             </app-card>
+            <app-submit (clickEvent)="afegeixResposta(false)" text="Cancelar" [icono]="true"></app-submit>
             }
             }
             @if(accioActual() === 'edit'){

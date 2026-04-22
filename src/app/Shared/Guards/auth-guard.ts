@@ -1,6 +1,5 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { Auth } from '../../Auth/Services/auth';
 //import { selectAuthRol } from '../../Auth/Selectors/auth.selector';
@@ -9,7 +8,6 @@ import { Auth } from '../../Auth/Services/auth';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(Auth);
-  const store = inject(Store);
   const rolNecessari = route.data['rolNecessari'];
 
 

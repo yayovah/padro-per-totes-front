@@ -1,16 +1,10 @@
-import { Component, computed, effect, inject, input, model, OnInit, output } from '@angular/core';
+import { Component, computed, effect, inject, input, output } from '@angular/core';
 import { TextArea } from '../../../Shared/Components/form-controls/text-area/text-area';
 import { InputText } from '../../../Shared/Components/form-controls/input-text/input-text';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.reducers';
-//import { selectPreguntaIdSeleccionada, selectPreguntes } from '../../../Home/Components/Admin-dashboard/Selectors/adminDashboard.selectors';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { PreguntaDTO } from '../../Models/pregunta.dto';
-//import * as AdminDashboardActions from '../../../Home/Components/Admin-dashboard/Actions/adminDashboard.action';
-import { selectCiutatIdSeleccionada } from '../../../Ciutat/Selectors/ciutats.selector';
 import { Pregunta } from '../../Services/pregunta';
 
 @Component({
@@ -26,8 +20,6 @@ import { Pregunta } from '../../Services/pregunta';
   styleUrl: './pregunta-form.scss',
 })
 export class PreguntaForm{
-  //private store = inject(Store<AppState>);
-  //private preguntes = toSignal(this.store.select(selectPreguntes), { initialValue: [] });
   private preguntaService = inject(Pregunta);
   
   idCiutatSeleccionada =  input<number | null>(null);
@@ -39,15 +31,6 @@ export class PreguntaForm{
   text: FormControl;
   preguntaForm: FormGroup;
   
-  /*
-  idPreguntaSeleccionada = toSignal(this.store.select(selectPreguntaIdSeleccionada), { initialValue: null });
-  idCiutatSeleccionada = toSignal(this.store.select(selectCiutatIdSeleccionada), { initialValue: null });
-
-  preguntaSeleccionada = computed<PreguntaDTO | undefined>(() => {
-    return this.preguntes().find(ptegunta => ptegunta.id === this.idPreguntaSeleccionada());
-  });
-  */
-
   constructor(  
     private formBuilder: FormBuilder,
   ){
@@ -95,14 +78,12 @@ export class PreguntaForm{
         next: (preguntaActualitzada) => this.actualitzarPregunta(preguntaActualitzada),
         error: (error) => console.error('Error al actualizar la pregunta:', error)
       })
-      //this.store.dispatch(AdminDashboardActions.updatePregunta({ dadesPregunta }));
     }
     else{
       this.preguntaService.createPregunta(dadesForm, this.idCiutatSeleccionada()!).subscribe({
         next: (preguntaCreada) => this.actualitzarPregunta(preguntaCreada),
         error: (error) => console.error('Error al crear la pregunta:', error)
       }); 
-      //this.store.dispatch(AdminDashboardActions.createPregunta({ dadesPregunta: dadesForm, ciutatId: this.idCiutatSeleccionada()! }));
     }
     
   }

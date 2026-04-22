@@ -1,15 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject, OnInit } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { InputText } from '../../../Shared/Components/form-controls/input-text/input-text';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.reducers';
 import { CiutatDTO } from '../../Models/ciutat.dto';
-
-import * as CiutatsAction from '../../Actions/ciutat.action';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { selectCiutatIdSeleccionada, selectCiutats } from '../../Selectors/ciutats.selector';
+import { Ciutats } from '../../Services/ciutats';
 
 @Component({
   selector: 'app-ciutat-form',
@@ -23,17 +19,17 @@ import { selectCiutatIdSeleccionada, selectCiutats } from '../../Selectors/ciuta
   styleUrl: './ciutat-form.scss',
 })
 export class CiutatForm {
-  private store = inject(Store<AppState>);
-  private ciutats = toSignal(this.store.select(selectCiutats), { initialValue: [] });
-  ciutat: FormControl;
-  provincia: FormControl;
-  ciutatForm: FormGroup;
-  idCiutatSeleccionada = toSignal(this.store.select(selectCiutatIdSeleccionada), { initialValue: null });
-
+  ciutatsService = inject(Ciutats);
+  ciutats = signal<CiutatDTO[]>([]);
+  idCiutatSeleccionada = signal<number | null>(null);
   ciutatSeleccionada = computed<CiutatDTO | undefined>(() => {
     return this.ciutats().find(ciutat => ciutat.id === this.idCiutatSeleccionada());
   });
-
+  
+  ciutat: FormControl;
+  provincia: FormControl;
+  ciutatForm: FormGroup;
+  
   constructor(  
     private formBuilder: FormBuilder,
   ){
@@ -76,10 +72,16 @@ export class CiutatForm {
         ...dadesForm,
         id: this.idCiutatSeleccionada()!
       };
-      this.store.dispatch(CiutatsAction.updateCiutat({ dadesCiutat }));
+      this.ciutatsService.updateCiutat(dadesCiutat).subscribe({
+        next: (ciutatActualitzada) => this.idCiutatSeleccionada.set(ciutatActualitzada.id),
+        error: (error) => console.error("Error al intentar actualizar la ciudad", error)
+      }); 
     }
     else{
-      this.store.dispatch(CiutatsAction.createCiutat({ dadesCiutat: dadesForm }));
+      this.ciutatsService.createCiutat(dadesForm).subscribe({
+        next: (novaCiutat) => this.idCiutatSeleccionada.set(novaCiutat.id),
+        error: (error) => console.error("Error al intentar crear la ciudad", error)
+      });
     }
     
   }

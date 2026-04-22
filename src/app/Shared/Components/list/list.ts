@@ -22,7 +22,10 @@ export class List {
   @Input() back: boolean = true;
   @Output() accio = new EventEmitter<{ type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }>();
 
+  
+
   onAccio(type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any): void {
+    this.idSelected = id;
     this.accio.emit({ type, id });
   }
 

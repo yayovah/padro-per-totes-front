@@ -83,6 +83,11 @@ export class SituacioForm {
     return this.toggleRespostaFlag() ? "Seleccionar respuesta existente" : "Añadir nueva respuesta";
   });
 
+  toggleSeguentPreguntaFlag = signal<boolean>(false);
+  toggleSeguentPreguntaText = computed<string>(() => {
+    return this.toggleSeguentPreguntaFlag() ? "Seleccionar siguiente pregunta" : "Añadir nueva pregunta";
+  });
+
 constructor(  
     private formBuilder: FormBuilder,
   ){
@@ -119,7 +124,7 @@ constructor(
   }
 
   submit(): void {
-    if (this.situacioForm.invalid) {
+ /*   if (this.situacioForm.invalid) {
       this.situacioForm.markAllAsTouched();
       return;
     }
@@ -148,7 +153,7 @@ constructor(
         error: (error) => console.error('Error al crear la situacio:', error)
       });
       //this.store.dispatch(AdminDashboardActions.createSituacio({ dadesSituacio: dadesForm, resposta: this.resposta.value }));
-    }
+    }*/
     
   }
 
@@ -166,6 +171,20 @@ constructor(
     });
   }
 
+  submitSeguentPregunta(): void {
+/*    if (this.seguentPregunta.invalid) {
+      this.seguentPregunta.markAsTouched();
+      return;
+    }
+    this.preguntaService.createPregunta({text: this.seguentPregunta.value}).subscribe({
+      next: (preguntaCreada) => {
+        this.idPreguntaSeleccionada.set(preguntaCreada.id);
+        this.totesLesPreguntes.update(preguntes => [...preguntes, preguntaCreada]);
+      },
+      error: (error) => console.error('Error al crear la pregunta:', error)
+    });*/
+  }
+
   getErrorMessage(camp : FormControl, nom : string): string {
     if(camp.hasError('required')) {
       return "Se requiere rellenar el campo " + nom;
@@ -177,5 +196,7 @@ constructor(
     this.toggleRespostaFlag.set(!this.toggleRespostaFlag());
   }
 
-
+  toggleSeguentPregunta(): void {
+    this.toggleSeguentPreguntaFlag.set(!this.toggleSeguentPreguntaFlag());
+  }
 }

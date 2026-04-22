@@ -6,9 +6,6 @@ import { CommonModule } from '@angular/common';
 import { Select } from '../../../Shared/Components/form-controls/select/select';
 import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { Permis } from '../../Services/permis';
-import * as CiutatsAction from '../../Actions/ciutat.action';
-import { AppState } from '../../../app.reducers';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-add-admin',
@@ -23,7 +20,7 @@ import { Store } from '@ngrx/store';
 })
 export class AddAdmin implements OnInit{
   private AuthService = inject(Auth);
-  private store = inject(Store<AppState>);
+  private permisService = inject(Permis);
   
   private nousAdmins = signal<any[]>([]);
   nousAdminsLlistables = computed<LlistableDTO[]>(() => 
@@ -52,12 +49,8 @@ export class AddAdmin implements OnInit{
   }
   
   ngOnInit(){
-    this.AuthService.getUsersByRol('admin').subscribe(
-      (users) => {
-        this.nousAdmins.set(users);
-      //  console.log(users);
-      }
-    );   
+    this.AuthService.getUsersByRol('admin')
+      .subscribe((users) => this.nousAdmins.set(users));   
   }
 
   submit(){
@@ -66,15 +59,12 @@ export class AddAdmin implements OnInit{
       return;
     }
 
-
-    console.log('ciutat ',this.idCiutatSeleccionada);
     if(this.idCiutatSeleccionada){
-      this.store.dispatch(
-        CiutatsAction.addAdminToCiutat(
-          { ciutatId: this.idCiutatSeleccionada, adminId: this.admin.value }
-        ));
+      this.permisService.createPermis(this.idCiutatSeleccionada, this.admin.value).subscribe({
+        next: () => this.nousAdmins.update(admins => admins.filter(admin => admin.id !== this.admin.value)),
+        error: (error) => console.error("Error al intentar añadir el permiso", error)
+      });
     }
-
   }
 
   getErrorMessage(camp : FormControl, nom : string): string {

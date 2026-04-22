@@ -71,7 +71,6 @@ export class SelectCiutats implements OnInit{
         this.ciutats.set(ciutats);
       });
     }
-    
   }
 
   submit(){

@@ -59,6 +59,10 @@ export class Auth {
       .subscribe();
   }
 
+  logout(): void {
+    this.resetCredentials();
+  }
+
   //Demana el rol de l'usuari a la API
   getUsersByRol(rol: string): Observable<AuthDTO[]> {
     return this.http
