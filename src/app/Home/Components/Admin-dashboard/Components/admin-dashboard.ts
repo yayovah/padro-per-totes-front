@@ -158,7 +158,7 @@ export class AdminDashboard {
     } 
   }
 
-  actualitarPreguntes(preguntaActual: PreguntaDTO | undefined){
+  actualitzarPregunta(preguntaActual: PreguntaDTO | undefined){
     if(preguntaActual){
       if(this.accioActual() === 'edit'){
         this.adminDashService.preguntes
@@ -177,7 +177,7 @@ export class AdminDashboard {
             this.adminDashService.idSituacioSeleccionada()?
               this.adminDashService.accioActual.set('edit'):
               this.adminDashService.accioActual.set('add');
-            this.adminDashService.idPreguntaSeguent.set(preguntaActual.id);
+            this.idPreguntaSeguent.set(preguntaActual.id);
             break;
         }
       }
@@ -225,12 +225,6 @@ export class AdminDashboard {
   }
 
   afegeixResposta(toggle: boolean =true){
-    if(toggle){
-      console.log("Afegint resposta a la pregunta " + this.idPreguntaSeleccionada());
-    }
-    else{      
-      console.log("Cancel·lant afegir resposta a la pregunta " + this.idPreguntaSeleccionada());
-    }
-    this.addResposta.set(toggle);
+    this.adminDashService.accioActual.set("add");
   }
 }

@@ -24,9 +24,13 @@ export class PreguntaForm{
   private preguntaService = inject(Pregunta);
   private adminDashService = inject(AdminDashService);
   
-  idCiutatSeleccionada =  input<number | null>(null);
-  preguntaSeleccionada = input<PreguntaDTO | null>(null);
-  idPreguntaSeleccionada = computed(() => this.preguntaSeleccionada()?.id ?? null);
+  ciutatSeleccionada = computed(() => this.adminDashService.ciutatSeleccionada());
+  idCiutatSeleccionada = computed(() => this.ciutatSeleccionada()?.id ?? null);
+
+  preguntes = computed(() => this.adminDashService.preguntes());
+  idPreguntaSeleccionada = computed(() => this.adminDashService.idPreguntaSeleccionada());
+  preguntaSeleccionada = computed(() => this.preguntes().find(p => p.id === this.idPreguntaSeleccionada()) ?? null);
+  
   preguntaActualitzada = output<PreguntaDTO>();
 
   titol: FormControl;
@@ -82,6 +86,7 @@ export class PreguntaForm{
       })
     }
     else{
+
       this.preguntaService.createPregunta(dadesForm, this.idCiutatSeleccionada()!).subscribe({
         next: (preguntaCreada) => this.actualitzarPregunta(preguntaCreada),
         error: (error) => console.error('Error al crear la pregunta:', error)

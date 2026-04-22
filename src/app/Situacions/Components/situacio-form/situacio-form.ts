@@ -46,16 +46,23 @@ export class SituacioForm {
   private situacioService = inject(Situacio);
   private respostaService = inject(Resposta);
   private adminDashService = inject(AdminDashService);
+
+
   
-  preguntes = signal<PreguntaDTO[]>([]);
-  situacions = signal<SituacioDTO[]>([]);
-  respostes = signal<RespostaDTO[]>([]);
+  situacions = computed(() => this.adminDashService.situacions());
+  respostes = computed(() => this.adminDashService.respostes());
+  accioActual = computed(() => this.adminDashService.accioActual());
+  
+  ciutatSeleccionada = computed(() => this.adminDashService.ciutatSeleccionada());
+  idCiutatSeleccionada = computed(() => this.ciutatSeleccionada()?.id ?? null);
+
+  preguntes = computed(() => this.adminDashService.preguntes());
+  idPreguntaSeleccionada = computed(() => this.adminDashService.idPreguntaSeleccionada());
+  preguntaSeleccionada = computed(() => this.preguntes().find(p => p.id === this.idPreguntaSeleccionada()) ?? null);
+  
+  idSituacioSeleccionada = computed(()  => this.adminDashService.idSituacioSeleccionada())
+
   totesLesRespostes = signal<RespostaDTO[]>([]);
-  
-  idPreguntaSeleccionada = input<number | null>(null);
-  idCiutatSeleccionada = input<number | null>(null);
-  idSituacioSeleccionada = input<number | null>(null);
-  
   idRespostaSeleccionada = signal<number | null>(null);
 
   situacioSeleccionada = computed<SituacioDTO | undefined>(() => {
