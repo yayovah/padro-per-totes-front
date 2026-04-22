@@ -17,4 +17,7 @@ export class AdminDashService {
   
   ciutatSeleccionada = signal<CiutatDTO | null>(null);
   idPreguntaSeleccionada = signal<number | null>(null);
+  idSituacioSeleccionada = signal<number | null>(null);
+
+  accioActual= signal<String | null>("");  
 }

@@ -11,6 +11,8 @@ import { LlistableDTO } from '../../../Shared/Models/llistable.dto';
 import { Situacio } from '../../Services/situacio';
 import { Resposta } from '../../../Respostes/Services/resposta';
 import { RespostaDTO } from '../../../Respostes/Models/resposta.dto';
+import { PreguntaForm } from "../../../Preguntes/Components/pregunta-form/pregunta-form";
+import { AdminDashService } from '../../../Home/Services/admin-dash.service';
 //import { selectCiutatIdSeleccionada } from '../../../Ciutat/Selectors/ciutats.selector';
 //import { Store } from '@ngrx/store';
 //import { AppState } from '../../../app.reducers';
@@ -26,8 +28,9 @@ import { RespostaDTO } from '../../../Respostes/Models/resposta.dto';
     InputText,
     TextArea,
     Select,
-    Submit
-  ],
+    Submit,
+    PreguntaForm
+],
   templateUrl: './situacio-form.html',
   styleUrl: './situacio-form.scss',
 })
@@ -42,6 +45,7 @@ export class SituacioForm {
   idSituacioSeleccionada = toSignal(this.store.select(selectSituacioIdSeleccionada), { initialValue: null }); */
   private situacioService = inject(Situacio);
   private respostaService = inject(Resposta);
+  private adminDashService = inject(AdminDashService);
   
   preguntes = signal<PreguntaDTO[]>([]);
   situacions = signal<SituacioDTO[]>([]);

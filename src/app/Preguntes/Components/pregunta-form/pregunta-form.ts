@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { PreguntaDTO } from '../../Models/pregunta.dto';
 import { Pregunta } from '../../Services/pregunta';
+import { AdminDashService } from '../../../Home/Services/admin-dash.service';
 
 @Component({
   selector: 'app-pregunta-form',
@@ -21,6 +22,7 @@ import { Pregunta } from '../../Services/pregunta';
 })
 export class PreguntaForm{
   private preguntaService = inject(Pregunta);
+  private adminDashService = inject(AdminDashService);
   
   idCiutatSeleccionada =  input<number | null>(null);
   preguntaSeleccionada = input<PreguntaDTO | null>(null);
@@ -85,7 +87,6 @@ export class PreguntaForm{
         error: (error) => console.error('Error al crear la pregunta:', error)
       }); 
     }
-    
   }
 
   actualitzarPregunta(preguntaActualitzada: PreguntaDTO | undefined){

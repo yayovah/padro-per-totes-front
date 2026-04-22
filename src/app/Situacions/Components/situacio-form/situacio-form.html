@@ -3,7 +3,7 @@
 
     <div class="o-form-box__header">
         <h2>Crear o modificar una respuesta</h2>
-        <p>Selecciona una respuesta existente o añade una nueva respuesta a la pregunta seleccionada</p>
+<!--        <p>Selecciona una respuesta existente o añade una nueva respuesta a la pregunta seleccionada</p>
         @if(toggleRespostaFlag()){
         <app-select 
             label="Selecciona una respuesta: " 
@@ -15,7 +15,7 @@
             [items]="respostesLlistables()">
         </app-select>
         }
-        @else {
+        @else {-->
         <app-text-area
             label="Escrive una respuesta: " 
             name="resposta" 
@@ -25,7 +25,7 @@
             required="required">
         </app-text-area>
         <app-submit text="Guardar respuesta" (clickEvent)="submitResposta()" [icono]="true"></app-submit>
-        }
+        <!--}-->
         <app-submit text="{{ toggleRespostaText() }}" (clickEvent)="toggleResposta()" [icono]="true"></app-submit>
     </div>
 
@@ -41,18 +41,11 @@
             placeholder="Selecciona una respuesta" 
             errorMessage="{{ getErrorMessage(resposta, 'Respuesta') }}" 
             required="required"
-            [items]="respostesLlistables()">
+            [items]="preguntesLlistables()">
         </app-select>
         }
         @else {
-        <app-text-area
-            label="Escrive una respuesta: " 
-            name="resposta" 
-            [control]="resposta" 
-            placeholder="Escibe la respuesta que se mostrará al usuario"
-            errorMessage="{{ getErrorMessage(resposta, 'Respuesta') }}" 
-            required="required">
-        </app-text-area>
+        <app-pregunta-form></app-pregunta-form>>
         <app-submit text="Guardar pregunta" (clickEvent)="submitSeguentPregunta()" [icono]="true"></app-submit>
         }
         <app-submit text="{{ toggleSeguentPreguntaText() }}" (clickEvent)="toggleSeguentPregunta()" [icono]="true"></app-submit>

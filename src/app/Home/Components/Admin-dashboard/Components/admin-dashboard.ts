@@ -36,24 +36,19 @@ export class AdminDashboard {
   private situacioService = inject(Situacio)
   private respostaService = inject(Resposta);
   
-  //ciutatSeleccionada = signal<CiutatDTO | null>(null);
+  situacions = computed(() => this.adminDashService.situacions());
+  respostes = computed(() => this.adminDashService.respostes());
+  accioActual = computed(() => this.adminDashService.accioActual());
+  
   ciutatSeleccionada = computed(() => this.adminDashService.ciutatSeleccionada());
   idCiutatSeleccionada = computed(() => this.ciutatSeleccionada()?.id ?? null);
 
-  //preguntes = signal<PreguntaDTO[]>([]);
   preguntes = computed(() => this.adminDashService.preguntes());
-
-  //idPreguntaSeleccionada = signal<number | null>(null);
   idPreguntaSeleccionada = computed(() => this.adminDashService.idPreguntaSeleccionada());
   preguntaSeleccionada = computed(() => this.preguntes().find(p => p.id === this.idPreguntaSeleccionada()) ?? null);
   
-  //situacions = signal<SituacioDTO[]>([]);
-  situacions = computed(() => this.adminDashService.situacions());
+  idPreguntaSeguent = signal<number | null>(null);
   
-  //respostes = signal<RespostaDTO[]>([]);
-  respostes = computed(() => this.adminDashService.respostes());
-
-  accioActual= signal<String | null>("");
   addResposta = signal<boolean>(false);
   
   // LLISTABLES
@@ -74,6 +69,78 @@ export class AdminDashboard {
     };})
   );
 
+
+  //Estats
+  /*
+    veure ciutar: mostra les preguntes de la ciutat, sense cap pregunta seleccionada
+         idCiutatSeleccionada
+         accioActual = null
+
+    afegir pregunta: mostra el formulari per crear una nova pregunta, sense cap pregunta seleccionada
+          idCiutatSeleccionada
+          accioActual = 'add'
+        ->porta a veure pregunta
+
+    veure pregunta: mostra les situacions de la pregunta seleccionada, sense cap situacio seleccionada
+          idCiutatSeleccionada
+          idPreguntaSeleccionada
+          accioActual = 'view'
+        ->porta a editar/afegir/eliminar situacio seleccionada
+
+    editar pregunta: mostra el formulari de la pregunta seleccionada
+          idCiutatSeleccionada
+          idPreguntaSeleccionada
+          accioActual = 'edit'
+        ->porta a veure pregunta
+
+    eliminar pregunta: no mostra, actua
+          idCiutatSeleccionada
+          idPreguntaSeleccionada
+          accioActual = 'delete'
+      ->torna a VEURE CIUTAT
+
+    afegir situacio: mostra el formulari per crear una nova situacio, sense cap situacio seleccionada
+          idCiutatSeleccionada
+          idPreguntaSeleccionada
+          accioActual = 'add'
+          
+          Per gurdar:
+          idPreguntaSeguentSeleccionada
+          textResposta requerit
+        
+          ->porta a veure pregunta
+
+        **afegir pregunta següent: mostra el formulari per crear una nova pregunta
+            idCiutatSeleccionada
+            idPreguntaSeleccionada
+            accioActual = 'addPregunta'
+          ->porta a afegir situacio
+
+    editar situacio: mostra el formulari de la situacio seleccionada
+          idCiutatSeleccionada
+          idPreguntaSeleccionada
+          idSituacioSeleccionada
+          accioActual = 'edit'
+        ->porta a veure pregunta
+
+        **afegir pregunta següent: mostra el formulari per crear una nova pregunta
+            idCiutatSeleccionada
+            idPreguntaSeleccionada
+            idSituacioSeleccionada
+            accioActual = 'addPregunta'
+          ->porta a editar situacio
+
+    eliminar situacio: no mostra, actua
+          idCiutatSeleccionada
+          idPreguntaSeleccionada
+          idSituacioSeleccionada
+          accioActual = 'delete'
+      ->torna a VEURE PREGUNTA
+
+
+
+  */
+
   actualitzarCiutat(ciutatOutput: CiutatDTO | undefined){
     this.adminDashService.ciutatSeleccionada.set(ciutatOutput ?? null);
     //this.ciutatSeleccionada.set(ciutatOutput ?? null);
@@ -91,13 +158,36 @@ export class AdminDashboard {
     } 
   }
 
-  modificarPregunta(preguntaOutput: PreguntaDTO | undefined){
-    //this.preguntes.set(this.preguntes().map(p => p.id === preguntaOutput?.id ? preguntaOutput : p));
-    this.adminDashService.preguntes.update(preguntes => preguntes.map(p => p.id === preguntaOutput?.id ? preguntaOutput : p));
+  actualitarPreguntes(preguntaActual: PreguntaDTO | undefined){
+    if(preguntaActual){
+      if(this.accioActual() === 'edit'){
+        this.adminDashService.preguntes
+          .update(preguntes => preguntes.map(p => p.id === preguntaActual.id ? preguntaActual : p));
+        this.adminDashService.accioActual.set('view');
+      }
+      else{
+        this.adminDashService.preguntes
+          .update(preguntes => [...preguntes, preguntaActual]);
+        switch(this.accioActual()){
+          case 'add':
+            this.adminDashService.accioActual.set('view');
+            this.adminDashService.idPreguntaSeleccionada.set(preguntaActual.id);
+            break;
+          case 'addPregunta':
+            this.adminDashService.idSituacioSeleccionada()?
+              this.adminDashService.accioActual.set('edit'):
+              this.adminDashService.accioActual.set('add');
+            this.adminDashService.idPreguntaSeguent.set(preguntaActual.id);
+            break;
+        }
+      }
+    }
   }
 
   handleAccio(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
-    this.accioActual.set(event.type);
+
+    //this.accioActual.set(event.type);
+    this.adminDashService.accioActual.set(event.type);
     //this.idPreguntaSeleccionada.set(event.id ?? null);
     this.adminDashService.idPreguntaSeleccionada.set(event.id ?? null);
     
