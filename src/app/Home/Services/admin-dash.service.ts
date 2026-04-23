@@ -23,6 +23,12 @@ export class AdminDashService {
 
   constructor(){
     effect(()=> {
+        this.monitor();
+      }
+    )
+  }
+
+  monitor(){
       console.log("----------------ADMIN SERVICE -------------");
       console.log("usuari ", this.usuari());
       console.log("preguntes ", this.preguntes());
@@ -32,9 +38,6 @@ export class AdminDashService {
       console.log("idPreguntaSeleccionada ", this.idPreguntaSeleccionada());
       console.log("idSituacioSeleccionada ", this.idSituacioSeleccionada());
       console.log("accioActual ", this.accioActual());
-      console.log("----------------FINAL SERVICE -------------");
-      
-      }
-    )
+      console.log("----------------FINAL SERVICE -------------");  
   }
 }
