@@ -7,6 +7,7 @@ import { SituacioDTO } from '../../../Situacions/Model/situacio.dto';
 import { Pregunta } from '../../../Preguntes/Services/pregunta';
 import { SelectCiutats } from '../../../Ciutat/Components/select-ciutats/select-ciutats';
 import { CommonModule } from '@angular/common';
+import { HomeService } from '../../Services/home.service';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,16 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home.scss',
 })
 export class Home {
+  private homeService = inject(HomeService);
+
+  ciutatSeleccionada = computed(() => this.homeService.ciutatSeleccionada());
+  idCiutatSeleccionada = computed(() => this.ciutatSeleccionada()?.id ?? null);
+
+
+
+
+
+
   private ciutatsService = inject(Ciutats);
   ciutats = signal<CiutatDTO[]>([]);
   ciutatSeleccionada = signal<CiutatDTO | null>(null);
@@ -33,7 +44,7 @@ export class Home {
   }
 
   actualitzarCiutat(ciutatOutput: CiutatDTO | undefined){
-    this.ciutatSeleccionada.set(ciutatOutput ?? null);
+    this.homeService.ciutatSeleccionada.set(ciutatOutput ?? null);
     this.carregaSituacionsInicials();
   }
 

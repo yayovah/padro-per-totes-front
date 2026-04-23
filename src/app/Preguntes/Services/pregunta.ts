@@ -15,11 +15,9 @@ export class Pregunta {
   private http = inject( HttpClient );
 
   getPreguntesByCiutat(ciutatId: number): Observable<PreguntaDTO[]>{
-        //Petició a la api
         return this.http
         .get<PreguntaDTO[]>(`${this.url}/ciutat/${ciutatId}`)
         .pipe(
-          //en cas d'error en la petició
           catchError((error) => {
             console.error('Error recuperando preguntas del servidor:', error);
             return throwError(() => new Error('Error cargando preguntas'));
@@ -58,4 +56,16 @@ export class Pregunta {
         }        
       ));
   }
+
+  getPrimeraPregunta(ciutatId: number): Observable<PreguntaDTO[]>{
+    return this.http
+    .get<PreguntaDTO[]>(`${this.url}/ciutat/${ciutatId}/primera`)
+    .pipe(
+      catchError((error) => {
+        console.error('Error recuperando preguntas del servidor:', error);
+        return throwError(() => new Error('Error cargando preguntas'));
+      })
+    );
+  }
+
 }
