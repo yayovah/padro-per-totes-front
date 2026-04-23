@@ -1,5 +1,4 @@
 import { Component, computed, effect, inject, input, OnInit, signal } from '@angular/core';
-import { InputText } from '../../../Shared/Components/form-controls/input-text/input-text';
 import { TextArea } from '../../../Shared/Components/form-controls/text-area/text-area';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -25,7 +24,6 @@ import { AdminDashService } from '../../../Home/Services/admin-dash.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    InputText,
     TextArea,
     Select,
     Submit,

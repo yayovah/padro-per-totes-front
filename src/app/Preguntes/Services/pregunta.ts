@@ -68,4 +68,15 @@ export class Pregunta {
     );
   }
 
+  getPreguntaById(preguntaId: number): Observable<PreguntaDTO>{
+    return this.http
+      .get<PreguntaDTO>(`${this.url}/${preguntaId}`)
+      .pipe(
+          catchError((error) => {
+            console.error(`Error intentando eliminar la pregunta:`, error);
+            return throwError(() => new Error('Error eliminando pregunta'));
+        }        
+      ));
+  }
+
 }
