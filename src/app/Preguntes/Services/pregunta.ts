@@ -57,9 +57,9 @@ export class Pregunta {
       ));
   }
 
-  getPrimeraPregunta(ciutatId: number): Observable<PreguntaDTO[]>{
+  getPrimeraPregunta(ciutatId: number): Observable<PreguntaDTO>{
     return this.http
-    .get<PreguntaDTO[]>(`${this.url}/ciutat/${ciutatId}/primera`)
+    .get<PreguntaDTO>(`${this.url}/ciutat/${ciutatId}/primera`)
     .pipe(
       catchError((error) => {
         console.error('Error recuperando preguntas del servidor:', error);
