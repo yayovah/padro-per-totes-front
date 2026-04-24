@@ -95,11 +95,9 @@
                 [subtitle]="'Crea o modifica las distintas respuestas a la pregunta seleccionada '">
                 <div class="o-card-content">
                     @if(situacionsLlistables()){
-
                     <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="true"
                         (accio)="handleAccioSituacions($event)">
                     </app-list-in-card>
-
                     }
                     @else{
                     <p>No hay respuestas para esta pregunta</p>
@@ -124,7 +122,6 @@
             @if(accioActual() === 'edit' ){
             <app-card [title]="'Modificar la pregunta'" [subtitle]="'Edita los datos de la pregunta'">
                 <app-pregunta-form
-
                 ></app-pregunta-form>
             </app-card>
             }
