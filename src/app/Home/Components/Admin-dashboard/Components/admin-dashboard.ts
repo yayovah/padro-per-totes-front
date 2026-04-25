@@ -69,90 +69,15 @@ export class AdminDashboard {
     };})
   );
 
-
-  //Estats
-  /*
-    veure ciutar: mostra les preguntes de la ciutat, sense cap pregunta seleccionada
-         idCiutatSeleccionada
-         accioActual = null
-
-    afegir pregunta: mostra el formulari per crear una nova pregunta, sense cap pregunta seleccionada
-          idCiutatSeleccionada
-          accioActual = 'add'
-        ->porta a veure pregunta
-
-    veure pregunta: mostra les situacions de la pregunta seleccionada, sense cap situacio seleccionada
-          idCiutatSeleccionada
-          idPreguntaSeleccionada
-          accioActual = 'view'
-        ->porta a editar/afegir/eliminar situacio seleccionada
-
-    editar pregunta: mostra el formulari de la pregunta seleccionada
-          idCiutatSeleccionada
-          idPreguntaSeleccionada
-          accioActual = 'edit'
-        ->porta a veure pregunta
-
-    eliminar pregunta: no mostra, actua
-          idCiutatSeleccionada
-          idPreguntaSeleccionada
-          accioActual = 'delete'
-      ->torna a VEURE CIUTAT
-
-    afegir situacio: mostra el formulari per crear una nova situacio, sense cap situacio seleccionada
-          idCiutatSeleccionada
-          idPreguntaSeleccionada
-          accioActual = 'add'
-          
-          Per gurdar:
-          idPreguntaSeguentSeleccionada
-          textResposta requerit
-        
-          ->porta a veure pregunta
-
-        **afegir pregunta següent: mostra el formulari per crear una nova pregunta
-            idCiutatSeleccionada
-            idPreguntaSeleccionada
-            accioActual = 'addPregunta'
-          ->porta a afegir situacio
-
-    editar situacio: mostra el formulari de la situacio seleccionada
-          idCiutatSeleccionada
-          idPreguntaSeleccionada
-          idSituacioSeleccionada
-          accioActual = 'edit'
-        ->porta a veure pregunta
-
-        **afegir pregunta següent: mostra el formulari per crear una nova pregunta
-            idCiutatSeleccionada
-            idPreguntaSeleccionada
-            idSituacioSeleccionada
-            accioActual = 'addPregunta'
-          ->porta a editar situacio
-
-    eliminar situacio: no mostra, actua
-          idCiutatSeleccionada
-          idPreguntaSeleccionada
-          idSituacioSeleccionada
-          accioActual = 'delete'
-      ->torna a VEURE PREGUNTA
-
-
-
-  */
-
   actualitzarCiutat(ciutatOutput: CiutatDTO | undefined){
     this.adminDashService.ciutatSeleccionada.set(ciutatOutput ?? null);
-    //this.ciutatSeleccionada.set(ciutatOutput ?? null);
     this.carregaPreguntes();
   }
 
   carregaPreguntes(){
     if(this.idCiutatSeleccionada()){
       this.preguntaService.getPreguntesByCiutat(this.idCiutatSeleccionada()!).subscribe({
-        next: (preguntes) => 
-          //this.preguntes.set(preguntes),
-          this.adminDashService.preguntes.set(preguntes),
+        next: (preguntes) => this.adminDashService.preguntes.set(preguntes),
         error: (error) => console.error('Error al obtener las preguntas:', error)
       });
     } 
@@ -185,15 +110,11 @@ export class AdminDashboard {
   }
 
   handleAccio(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
-
-    //this.accioActual.set(event.type);
     this.adminDashService.accioActual.set(event.type);
-    //this.idPreguntaSeleccionada.set(event.id ?? null);
     this.adminDashService.idPreguntaSeleccionada.set(event.id ?? null);
     
     //Si és el cas d'afegir preguntes, eliminem la pregunta seleccionada
     if(this.accioActual() === 'add'){
-      //this.idPreguntaSeleccionada.set(null);
       this.adminDashService.idPreguntaSeleccionada.set(null);
     }
    
@@ -201,7 +122,6 @@ export class AdminDashboard {
       if(event.type === 'view'){
         this.situacioService.getSituacionsByPregunta(this.idPreguntaSeleccionada()!).subscribe({
           next: ((situacions) => 
-            //this.situacions.set(situacions)),
             this.adminDashService.situacions.set(situacions)),
           error: ((error) => console.error("Error al intentar cargar", error))
         });
@@ -209,9 +129,7 @@ export class AdminDashboard {
       if(event.type === 'delete'){
         this.preguntaService.deletePregunta(this.idPreguntaSeleccionada()!).subscribe({
           next: () => {
-            //this.preguntes.set(this.preguntes().filter(p => p.id !== this.idPreguntaSeleccionada()));
             this.adminDashService.preguntes.update(preguntes => preguntes.filter(p => p.id !== this.idPreguntaSeleccionada()));
-            //this.idPreguntaSeleccionada.set(null);
             this.adminDashService.idPreguntaSeleccionada.set(null);
           },
           error: (error) => console.error("Error al intentar eliminar la pregunta", error)
@@ -221,10 +139,22 @@ export class AdminDashboard {
   }
 
   handleAccioSituacions(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
-    console.log(event);
+    if(event.type === 'delete' && event.id){
+      this.situacioService.deleteSituacio(event.id).subscribe({
+        next: (a) => {
+          console.log('situacio eliminada', a);
+          this.adminDashService.situacions.update((situacions) => situacions.filter((sit) => sit.id !== event.id));
+        },
+        error: (error) =>console.error(error)
+      })
+    }
   }
 
   afegeixResposta(toggle: boolean =true){
     this.adminDashService.accioActual.set("add");
+  }
+
+  cancelarNovaResposta(){
+    this.adminDashService.accioActual.set('view');
   }
 }

@@ -8,16 +8,7 @@ import { PreguntaDTO } from '../../../Preguntes/Models/pregunta.dto';
 import { SituacioDTO } from '../../Model/situacio.dto';
 import { LlistableDTO } from '../../../Shared/Models/llistable.dto';
 import { Situacio } from '../../Services/situacio';
-import { Resposta } from '../../../Respostes/Services/resposta';
-import { RespostaDTO } from '../../../Respostes/Models/resposta.dto';
-import { PreguntaForm } from "../../../Preguntes/Components/pregunta-form/pregunta-form";
 import { AdminDashService } from '../../../Home/Services/admin-dash.service';
-//import { selectCiutatIdSeleccionada } from '../../../Ciutat/Selectors/ciutats.selector';
-//import { Store } from '@ngrx/store';
-//import { AppState } from '../../../app.reducers';
-//import { toSignal } from '@angular/core/rxjs-interop';
-//import * as AdminDashboardActions from '../../../Home/Components/Admin-dashboard/Actions/adminDashboard.action';
-//import { selectPreguntaIdSeleccionada, selectPreguntes, selectSituacioIdSeleccionada, selectSituacions } from '../../../Home/Components/Admin-dashboard/Selectors/adminDashboard.selectors';
 
 @Component({
   selector: 'app-situacio-form',
@@ -26,26 +17,14 @@ import { AdminDashService } from '../../../Home/Services/admin-dash.service';
     ReactiveFormsModule,
     TextArea,
     Select,
-    Submit,
-    PreguntaForm
-],
+    Submit
+  ],
   templateUrl: './situacio-form.html',
   styleUrl: './situacio-form.scss',
 })
 export class SituacioForm {
-  //Store
-/*   private store = inject(Store<AppState>);
-  private preguntes = toSignal(this.store.select(selectPreguntes), { initialValue: [] });
-  private situacions = toSignal(this.store.select(selectSituacions), { initialValue: [] });
-  
-  idPreguntaSeleccionada = toSignal(this.store.select(selectPreguntaIdSeleccionada), { initialValue: null });
-  idCiutatSeleccionada = toSignal(this.store.select(selectCiutatIdSeleccionada), { initialValue: null });
-  idSituacioSeleccionada = toSignal(this.store.select(selectSituacioIdSeleccionada), { initialValue: null }); */
   private situacioService = inject(Situacio);
-  private respostaService = inject(Resposta);
   private adminDashService = inject(AdminDashService);
-
-
   
   situacions = computed(() => this.adminDashService.situacions());
   respostes = computed(() => this.adminDashService.respostes());
@@ -59,10 +38,6 @@ export class SituacioForm {
   preguntaSeleccionada = computed(() => this.preguntes().find(p => p.id === this.idPreguntaSeleccionada()) ?? null);
   
   idSituacioSeleccionada = computed(()  => this.adminDashService.idSituacioSeleccionada())
-
-  totesLesRespostes = signal<RespostaDTO[]>([]);
-  idRespostaSeleccionada = signal<number | null>(null);
-
   situacioSeleccionada = computed<SituacioDTO | undefined>(() => {
     return this.situacions().find(situacio => situacio.id === this.idSituacioSeleccionada());
   });
@@ -71,14 +46,7 @@ export class SituacioForm {
   preguntesLlistables = computed<LlistableDTO[]>(() => 
     this.preguntes().map((pregunta: PreguntaDTO) => ({
       id: pregunta.id,
-      nom: pregunta.text
-    }))
-  );
-
-  respostesLlistables = computed<LlistableDTO[]>(() => 
-    this.respostes().map((resposta: RespostaDTO) => ({
-      id: resposta.id,
-      nom: resposta.text
+      nom: pregunta.titol
     }))
   );
 
@@ -87,15 +55,6 @@ export class SituacioForm {
   seguentPregunta: FormControl;
   situacioForm: FormGroup;
 
-  toggleRespostaFlag = signal<boolean>(false);
-  toggleRespostaText = computed<string>(() => {
-    return this.toggleRespostaFlag() ? "Seleccionar respuesta existente" : "Añadir nueva respuesta";
-  });
-
-  toggleSeguentPreguntaFlag = signal<boolean>(false);
-  toggleSeguentPreguntaText = computed<string>(() => {
-    return this.toggleSeguentPreguntaFlag() ? "Seleccionar siguiente pregunta" : "Añadir nueva pregunta";
-  });
 
 constructor(  
     private formBuilder: FormBuilder,
@@ -125,73 +84,30 @@ constructor(
     });
   }
 
-  ngOnInit(): void {
-    this.respostaService.getRespostes().subscribe({
-      next: (respostes) => this.totesLesRespostes.set(respostes),
-      error: (error) => console.error('Error al obtener las respuestas:', error)
-    });
-  }
-
-  submit(): void {
- /*   if (this.situacioForm.invalid) {
+  submitSituacio(): void {
+    if (this.situacioForm.invalid) {
       this.situacioForm.markAllAsTouched();
       return;
     }
-    const dadesResposta = {
-      text: this.resposta.value,
+    const dades = {
+      resposta:{text: this.resposta.value}, 
+      situacio:{
+        pregunta: this.idPreguntaSeleccionada(),
+        ciutat: this.idCiutatSeleccionada(),
+        seguent_pregunta: this.seguentPregunta.value
+      }
     }
-    const dadesForm =  {
-      seguent_preguntaId: this.seguentPregunta.value,
-      ciutatId: this.idCiutatSeleccionada()!,
-      preguntaId: this.idPreguntaSeleccionada()!,
-    }
-    if(this.idSituacioSeleccionada()){
-      const dadesSituacio : any =  {
-        ...dadesForm,
-        id: this.idSituacioSeleccionada()!
-      };
-      this.situacioService.updateSituacio(dadesSituacio, dadesResposta).subscribe({
-        next: (situacioActualitzada) => console.log(situacioActualitzada),
-        error: (error) => console.error('Error al actualizar la situacio:', error)
-      })
-      //this.store.dispatch(AdminDashboardActions.updateSituacio({ dadesSituacio }));
-    }
-    else{
-      this.situacioService.createSituacio(dadesForm, dadesResposta).subscribe({
-        next: (situacioCreada) => console.log(situacioCreada),
-        error: (error) => console.error('Error al crear la situacio:', error)
-      });
-      //this.store.dispatch(AdminDashboardActions.createSituacio({ dadesSituacio: dadesForm, resposta: this.resposta.value }));
-    }*/
-    
-  }
-
-  submitResposta(): void {
-    if (this.resposta.invalid) {
-      this.resposta.markAsTouched();
-      return;
-    }
-    this.respostaService.createResposta({text: this.resposta.value}).subscribe({
-      next: (respostaCreada) => {
-        this.idRespostaSeleccionada.set(respostaCreada.id);
-        this.totesLesRespostes.update(respostes => [...respostes, respostaCreada]);
+    this.situacioService.createSituacio(dades).subscribe({
+      next: (situacioCreada) => {
+        //this.adminDashService.idSituacioSeleccionada.set(situacioCreada.id);
+        console.log(situacioCreada);
+        this.adminDashService.situacions.set([...this.adminDashService.situacions(), situacioCreada]);
+        this.adminDashService.accioActual.set('view');
       },
-      error: (error) => console.error('Error al crear la respuesta:', error)
+      error: (error) => {
+        console.error('Error al crear la respuesta:', error);
+      }
     });
-  }
-
-  submitSeguentPregunta(): void {
-/*    if (this.seguentPregunta.invalid) {
-      this.seguentPregunta.markAsTouched();
-      return;
-    }
-    this.preguntaService.createPregunta({text: this.seguentPregunta.value}).subscribe({
-      next: (preguntaCreada) => {
-        this.idPreguntaSeleccionada.set(preguntaCreada.id);
-        this.totesLesPreguntes.update(preguntes => [...preguntes, preguntaCreada]);
-      },
-      error: (error) => console.error('Error al crear la pregunta:', error)
-    });*/
   }
 
   getErrorMessage(camp : FormControl, nom : string): string {
@@ -201,11 +117,4 @@ constructor(
     return "";
   }
 
-  toggleResposta(): void {
-    this.toggleRespostaFlag.set(!this.toggleRespostaFlag());
-  }
-
-  toggleSeguentPregunta(): void {
-    this.toggleSeguentPreguntaFlag.set(!this.toggleSeguentPreguntaFlag());
-  }
 }

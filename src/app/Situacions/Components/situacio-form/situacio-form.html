@@ -1,8 +1,5 @@
-<form class="o-form-box" [formGroup]="situacioForm" (ngSubmit)="submit()">
+<form class="o-form-box" [formGroup]="situacioForm" (ngSubmit)="submitSituacio()">
     <!-- Resposta -->
-
-    <div class="o-form-box__header">
-        <h2>Escrive una respuesta</h2>
         <app-text-area
             label="Escrive una respuesta: " 
             name="resposta" 
@@ -12,25 +9,16 @@
             required="required">
         </app-text-area>
 <!-- Següent pregunta -->
-<h2>Crear o seleccionar la siguiente pregunta</h2>
-        <p>Selecciona una pregunta existente o añade una nueva pregunta</p>
-        @if(toggleSeguentPreguntaFlag()){
+
         <app-select 
-            label="Selecciona una respuesta: " 
-            name="resposta" 
-            [control]="resposta"
+            label="Seleccionar la siguiente pregunta: " 
+            name="seguentPregunta" 
+            [control]="seguentPregunta"
             placeholder="Selecciona una respuesta" 
-            errorMessage="{{ getErrorMessage(resposta, 'Respuesta') }}" 
+            errorMessage="{{ getErrorMessage(seguentPregunta, 'Siguiente pregunta') }}" 
             required="required"
             [items]="preguntesLlistables()">
         </app-select>
-        }
-        @else {
-        <app-pregunta-form></app-pregunta-form>>
-        <app-submit text="Guardar pregunta" (clickEvent)="submitSeguentPregunta()" [icono]="true"></app-submit>
-        }
-        <app-submit text="{{ toggleSeguentPreguntaText() }}" (clickEvent)="toggleSeguentPregunta()" [icono]="true"></app-submit>
 
-        <app-submit text="Guardar respuesta" (clickEvent)="submitResposta()" [icono]="true"></app-submit>
-    </div>
+        <app-submit text="Guardar respuesta" [icono]="true"></app-submit>
 </form>

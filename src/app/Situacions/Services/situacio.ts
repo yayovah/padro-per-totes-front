@@ -31,20 +31,19 @@ export class Situacio {
       );
     }
   
-    createSituacio(dadesSituacio: Omit<SituacioToBDDTO, 'id'>, resposta: string): Observable<any>{
-      const situacioToBD = {
-        
+    //createSituacio(dadesSituacio: Omit<SituacioToBDDTO, 'id'>, resposta: string): Observable<any>{
+      createSituacio(dades: any): Observable<any>{
+     /*  const situacioToBD = {
         resposta: {text: resposta},
         situacio: {//dadesSituacio,
           ciutat: dadesSituacio.ciutatId,
           pregunta: dadesSituacio.preguntaId,
-          resposta: dadesSituacio.respostaId,
           seguent_pregunta: dadesSituacio.preguntaId
         }
       }
-      console.log(situacioToBD);
+      console.log(situacioToBD); */
       return this.http
-        .put<SituacioDTO>(`${this.respostesUrl}/pregunta/${dadesSituacio.preguntaId}`, situacioToBD)
+        .post<SituacioDTO>(`${this.url}`, dades)
         .pipe(
             catchError((error) => {
               console.error(`Error intentando crear la respuesta/situación:`, error);

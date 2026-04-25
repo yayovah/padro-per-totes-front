@@ -4,12 +4,7 @@ import { RespostaDTO } from "../../Respostes/Models/resposta.dto";
 
 export interface SituacioDTO {
     id: number;
-  /*  ciutatId: number;
-    preguntaId: number;
-    respostaId?:number;
-    seguentPreguntaId?:number;*/
     posicio?:number;
-
     ciutat:CiutatDTO;
     pregunta:PreguntaDTO;
     resposta?:RespostaDTO;

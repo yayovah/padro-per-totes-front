@@ -1,22 +1,25 @@
 <form class="o-form-box" [formGroup]="preguntaForm" (ngSubmit)="submit()">
-    
+        
+    <app-text-area 
+        label="Escrive el texto que acompañará la pregunta: " 
+        name="text" 
+        [control]="text"
+        placeholder="La provence" 
+        errorMessage="{{ getErrorMessage(text, 'Texto de la pregunta') }}" 
+        required="required" 
+        class="c-textarea-pregunta"
+        >
+    </app-text-area>
+
     <app-input-text 
-        label="Escrive el titulo de la pregunta: " 
+        label="Escrive la pregunta: " 
         name="titol" 
         [control]="titol" 
         placeholder="Tu pregunta aquí"
         errorMessage="{{ getErrorMessage(titol, 'Título') }}" 
         required="required">
     </app-input-text>
-    
-    <app-text-area 
-        label="Escrive la pregunta: " 
-        name="text" 
-        [control]="text"
-        placeholder="La provence" 
-        errorMessage="{{ getErrorMessage(text, 'Texto de la pregunta') }}" 
-        required="required" >
-    </app-text-area>
+
     
     <app-submit text="Guardar"></app-submit>
 </form>

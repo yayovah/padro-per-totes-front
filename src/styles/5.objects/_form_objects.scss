@@ -11,9 +11,9 @@
 
 .o-form-box{
     display: flex;
-    width: 544px;
     padding: var(  --padding-md);
     flex-direction: column;
+    flex-grow: 1;
     gap: var(--gap-md);
     border-radius: var(--Corner-Large, 16px);
     border: 1px solid var(--Gradient-Clar-Groc, #FDDA5A);
