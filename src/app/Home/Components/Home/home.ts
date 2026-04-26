@@ -10,16 +10,21 @@ import { HomeService } from '../../Services/home.service';
 import { LlistableDTO } from '../../../Shared/Models/llistable.dto';
 import { ListInCard } from '../../../Shared/Components/list-in-card/list-in-card';
 import { Card } from '../../../Shared/Components/card/card';
+import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
+import { Auth } from '../../../Auth/Services/auth';
+import { ModalService } from '../../../Shared/Components/modal/modal.service';
 
 @Component({
   selector: 'app-home',
-  imports: [SelectCiutats, CommonModule, ListInCard, Card],
+  imports: [SelectCiutats, CommonModule, ListInCard, Card, Submit],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
 export class Home {
   private homeService = inject(HomeService);
   private preguntaService = inject(Pregunta);
+  private authService = inject(Auth);
+  private modalService = inject(ModalService);
   
   //private ciutatsService = inject(Ciutats);
 
@@ -83,6 +88,12 @@ export class Home {
       this.homeService.idSituacioSeleccionada.set(event.id);
       //Afegeix la següent pregunta
       this.homeService.idPreguntaSeleccionada.set(this.homeService.situacioSeleccionada()?.seguent_pregunta?.id!);
+    }
+  }
+
+  baixarPdf(){
+    if(!this.authService.credentials()?.user.email){
+        this.modalService.openRegistre();
     }
   }
 }

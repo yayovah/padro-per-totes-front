@@ -126,4 +126,8 @@ export class Auth {
           break;
     }
   }
+
+  register(user: UserDTO){
+    return user;
+  }
 }
