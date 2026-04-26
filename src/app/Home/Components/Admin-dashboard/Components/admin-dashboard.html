@@ -17,23 +17,34 @@
     <div class="o-layout-part">
         @if(idPreguntaSeleccionada()){
             @if(accioActual()=='view'){
+
             <app-card [title]="'Respuestas'"
                 [subtitle]="'Crea o modifica las distintas respuestas a la pregunta seleccionada '">
                 <div class="o-card-content">
-                    @if(situacionsLlistables()){
+                    @if(situacionsLlistables().length>0){
                     <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="true"
                         (accio)="handleAccioSituacions($event)">
                     </app-list-in-card>
                     }
                     @else{
-                    <p>No hay respuestas para esta pregunta</p>
+                    <div class="o-form-box">
+                        <p>Todavía no hay respuestas para esta pregunta.</p>
+                    
+                    <p>Si no añades ninguna respuesta, se considerará que es un <b>final de itinerario</b></p>
+                    </div>
                     }
                 </div>
                 <div>
                     <app-submit [text]="'Nueva respuesta'" (clickEvent)="afegeixResposta()" [icono]="true">
                     </app-submit>
                 </div>
+            </app-card>
 
+            <app-card [title]="'Detalle de la pregunta'">
+                <div class="o-form-box">
+                <p>{{ preguntaSeleccionada()?.text }}</p>
+                <h2>{{ preguntaSeleccionada()?.titol }}</h2>
+                </div>
             </app-card>
             }
             <!-- Afegir una nova resposta -->
