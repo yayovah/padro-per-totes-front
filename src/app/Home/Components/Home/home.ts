@@ -32,6 +32,7 @@ export class Home {
 
   situacions = computed(()=>this.homeService.situacions());
   idSituacioSeleccionada = computed(() => this.homeService.idSituacioSeleccionada());
+  situacioSeleccionada = computed(() => this.homeService.situacioSeleccionada());
 
   respostes = signal<RespostaDTO[]>([]);
 
@@ -83,10 +84,6 @@ export class Home {
       //Afegeix la següent pregunta
       this.homeService.idPreguntaSeleccionada.set(this.homeService.situacioSeleccionada()?.seguent_pregunta?.id!);
     }
-  }
-
-  afegeixPregunta(){
-
   }
 }
 

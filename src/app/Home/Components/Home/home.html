@@ -35,6 +35,7 @@
                     
                     <app-card [title]="preguntaSeleccionada()!.titol" 
                         [subtitle]="preguntaSeleccionada()!.text">
+                        @if(idPreguntaSeleccionada()! > 0){
                         <div class="o-card-content">
                             @if(situacionsLlistables()){
                                 <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="false"
@@ -45,6 +46,11 @@
                                 <p>No hay respuestas para esta pregunta</p>
                             }
                         </div>
+                        }
+                        @else {
+                            <!-- FINAL --> 
+
+                        }
                     </app-card>
                 }
             </div>

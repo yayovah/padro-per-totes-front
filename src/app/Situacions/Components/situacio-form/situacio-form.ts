@@ -43,11 +43,14 @@ export class SituacioForm {
   });
 
    // Creem l'array de llistables a partir de l'array de ciutats
-  preguntesLlistables = computed<LlistableDTO[]>(() => 
-    this.preguntes().map((pregunta: PreguntaDTO) => ({
-      id: pregunta.id,
-      nom: pregunta.titol
-    }))
+  preguntesLlistables = computed<LlistableDTO[]>(() => {
+      let llistat = this.preguntes().map((pregunta: PreguntaDTO) => ({
+        id: pregunta.id,
+        nom: pregunta.titol
+      }));
+      llistat = [...llistat, {id: -1, nom: "No hay más preguntas - FINAL"}];
+      return llistat;
+    }
   );
 
   //elements formulari
