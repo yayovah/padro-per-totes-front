@@ -35,22 +35,22 @@
                     
                     <app-card [title]="preguntaSeleccionada()!.titol" 
                         [subtitle]="preguntaSeleccionada()!.text">
-                        @if(idPreguntaSeleccionada()! > 0){
                         <div class="o-card-content">
-                            @if(situacionsLlistables()){
+                            @if(situacionsLlistables().length>0){
                                 <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="false"
                                     (accio)="seleccionaResposta($event)">
                                 </app-list-in-card>
                             }
                             @else{
-                                <p>No hay respuestas para esta pregunta</p>
+                            <!-- FINAL --> 
+                             <div class="o-form-box">
+                            <h2>Esta es toda la información según tu situación.</h2>
+                            <p>A continuación puedes descargarla en formato PDF</p>
+                            <app-submit (clickEvent)="baixarPdf()" text="Bajar en pdf"></app-submit>
+                            </div>
                             }
                         </div>
-                        }
-                        @else {
-                            <!-- FINAL --> 
-                            <app-submit (clickEvent)="baixarPdf()" text="Bajar en pdf"></app-submit>
-                        }
+
                     </app-card>
                 }
             </div>

@@ -42,10 +42,13 @@ export class ModalService {
         this.modalTipe.set('info');
         const message = "Registrate para poder volver a consultar toda la información o descargartela en PDF.";
         this.modalMessage.set(message);
-        return registreUsuari();
+        return this.registreUsuari();
     }
 
-    registreUsuari
+    registreUsuari(){
+        let user : UserDTO = {id: 0, email : '', nom: '' };
+        return user;
+    }
 
     closeModal(): void {
         this.modalTipe.set('');

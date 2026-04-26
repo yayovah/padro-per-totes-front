@@ -93,7 +93,7 @@ export class Home {
 
   baixarPdf(){
     if(!this.authService.credentials()?.user.email){
-        this.modalService.openRegistre();
+        this.modalService.showRegistre();
     }
   }
 }
