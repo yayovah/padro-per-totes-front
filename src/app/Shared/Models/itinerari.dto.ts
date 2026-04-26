@@ -2,7 +2,7 @@ import { SituacioDTO } from "../../Situacions/Model/situacio.dto";
 
 export interface ItinerariDTO {
     id?: number;
-    ciutat?: number;
+    ciutat: number;
     usuariaId?: number;
 }
 
@@ -13,7 +13,7 @@ export interface ItinerariSeguitDTO{
 
 export interface PasDTO {
     id?: number,
-    itinerariId?: number,
-    preguntaId: number,
-    respostaId: number,
+    itinerari: number,
+    pregunta: number,
+    resposta: number,
 }

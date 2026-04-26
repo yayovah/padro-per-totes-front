@@ -1,25 +1,28 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { ItinerariDTO, PasDTO } from '../../Shared/Models/itinerari.dto';
+import { ItinerariDTO, ItinerariSeguitDTO, PasDTO } from '../../Shared/Models/itinerari.dto';
 import { UserDTO } from '../../Auth/Model/auth.dto';
 import { PreguntaDTO } from '../../Preguntes/Models/pregunta.dto';
 import { SituacioDTO } from '../../Situacions/Model/situacio.dto';
 import { CiutatDTO } from '../../Ciutat/Models/ciutat.dto';
 import { Situacio } from '../../Situacions/Services/situacio';
 import { Pregunta } from '../../Preguntes/Services/pregunta';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HomeService {
-  private situacioService = inject(Situacio)
-  private preguntaService = inject(Pregunta)
+  private situacioService = inject(Situacio);
+  private preguntaService = inject(Pregunta);
   
   usuari = signal<UserDTO | null>(null);
-  itinerari = signal<ItinerariDTO | null>(null);
-  passos  = signal<PasDTO[] | null>(null);
   preguntes = signal<PreguntaDTO[]>([]);
   situacions = signal<SituacioDTO[]>([]);
-
+  
+  itinerariSeguit  = signal<ItinerariSeguitDTO | null>(null);
+  
   ciutatSeleccionada = signal<CiutatDTO | null>(null);
   idPreguntaSeleccionada = signal<number | null>(null);
   preguntaSeleccionada = computed(() => {
@@ -33,10 +36,13 @@ export class HomeService {
 
   accioActual= signal<String | null>("");  
 
-  constructor(){
+  private readonly baseUrl = environment.apiUrl;
+  private readonly pdfEndpoint = '/itinerariPdf';
+  private readonly url = `${this.baseUrl}${this.pdfEndpoint}`;
+
+  constructor(private http: HttpClient){
     effect(()=> {
-        this.monitor();
-        //this.carregaSituacions(this.idPreguntaSeleccionada());
+        //this.monitor();
       }
     )
   }
@@ -46,8 +52,7 @@ export class HomeService {
       console.log("usuari ", this.usuari());
       console.log("preguntes ", this.preguntes());
       console.log("situacions ", this.situacions());
-      console.log("itinerari ", this.itinerari());
-      console.log("passos ", this.passos());
+      console.log("itinerari ", this.itinerariSeguit());
       console.log("ciutatSeleccionada ", this.ciutatSeleccionada());
       console.log("idSituacioSeleccionada ", this.idSituacioSeleccionada());
       console.log("preguntaSeleccionada ", this.preguntaSeleccionada());
@@ -81,6 +86,16 @@ export class HomeService {
       });
       this.carregaSituacions();
     }
+  }
+
+  baixarPDFdeAPI(id: number) : Observable<any>{
+    return this.http.get<any>(`${this.url}/${id}`, {responseType: 'blob' as 'json'}).pipe(
+          //en cas d'error en la petició
+          catchError((error) => {
+            console.error('Error en descargar el PDF del servidor:', error);
+            return throwError(() => new Error('Error en el PDF'));
+          })
+    );
   }
 }
 

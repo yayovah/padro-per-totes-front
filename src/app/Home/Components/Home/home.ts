@@ -13,6 +13,8 @@ import { Card } from '../../../Shared/Components/card/card';
 import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { Auth } from '../../../Auth/Services/auth';
 import { ModalService } from '../../../Shared/Components/modal/modal.service';
+import { ItinerariService } from '../../Services/itinerari.service';
+import { PasDTO } from '../../../Shared/Models/itinerari.dto';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +25,7 @@ import { ModalService } from '../../../Shared/Components/modal/modal.service';
 export class Home {
   private homeService = inject(HomeService);
   private preguntaService = inject(Pregunta);
+  private itinerariService = inject(ItinerariService);
   private authService = inject(Auth);
   private modalService = inject(ModalService);
   
@@ -40,6 +43,9 @@ export class Home {
   situacioSeleccionada = computed(() => this.homeService.situacioSeleccionada());
 
   respostes = signal<RespostaDTO[]>([]);
+
+  itinerari = computed(() => this.homeService.itinerariSeguit());
+  idItinerari = computed(() => this.itinerari()?.itinerari.id);
 
     // Creem l'array de llistables a partir de l'array de preguntes
    preguntesLlistables = computed<LlistableDTO[]>(() => 
@@ -72,6 +78,10 @@ export class Home {
 
   carregaSituacionsInicials(){
     if(this.idCiutatSeleccionada()){
+      this.itinerariService.createItinerari({ciutat: this.idCiutatSeleccionada()!}).subscribe({
+        next: (itinerari) => this.homeService.itinerariSeguit.set({itinerari : itinerari}),
+        error: (error) => console.error(error)
+      });
       this.preguntaService.getPrimeraPregunta(this.idCiutatSeleccionada()!).subscribe({
         next: (pregunta) => {
           this.homeService.idPreguntaSeleccionada.set(pregunta.id);
@@ -86,12 +96,40 @@ export class Home {
   seleccionaResposta(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
     if(event.id){
       this.homeService.idSituacioSeleccionada.set(event.id);
+      this.guardaPas();
       //Afegeix la següent pregunta
       this.homeService.idPreguntaSeleccionada.set(this.homeService.situacioSeleccionada()?.seguent_pregunta?.id!);
     }
   }
 
+  guardaPas(){
+    const pas:PasDTO = {
+      itinerari: this.idItinerari()!,
+      pregunta: this.idPreguntaSeleccionada()!,
+      resposta: this.situacioSeleccionada()?.resposta?.id!
+    }
+    console.log("PAS A API --> ", pas);
+    this.itinerariService.createPas(pas).subscribe({
+      next: (pas) => {
+        this.homeService.itinerariSeguit.set({itinerari:this.itinerari()?.itinerari!, passos: [...this.itinerari()?.passos || [], pas]});
+      },
+      error: (error) => console.error(error)
+    });
+  }
+  
+
   baixarPdf(){
+        //Petició a la api
+    this.homeService.baixarPDFdeAPI(this.idItinerari()!).subscribe({
+      next: (pdf) => {
+        console.log('descarregant...');
+        const file = new Blob([pdf], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL); // Això obrirà el PDF en una nova pestanya
+      },
+      error: (error) => console.error(error)
+      
+    })
     if(!this.authService.credentials()?.user.email){
         this.modalService.showRegistre();
     }
