@@ -1,0 +1,20 @@
+<main class="c-login-main">
+    <div class="c-login-container">
+        <div class="o-heading">
+            <h1>Registro</h1>
+            <p>Introduce tus datos para el registro en administración</p>
+        </div>
+        <form class="o-form-box" [formGroup]="registreForm" (ngSubmit)="registre()">
+            <app-input-email label="Escrive tu correo electrónico: " name="email" [control]="email"
+                placeholder="correu@domini.ext" errorMessage="{{ getErrorMessage(email, 'Email') }}"
+                required="required">
+            </app-input-email>
+            <app-input-password label="Escrive una contraseña: " name="password" [control]="password"
+                errorMessage="{{ getErrorMessage(password, 'Password') }}" required="required"></app-input-password>
+            <app-submit text="Envía"></app-submit>
+            <app-input-password label="Confirma la contraseña: " name="confirmPassword" [control]="confirmPassword"
+                errorMessage="{{ getErrorMessage(password, 'Password') }}" required="required"></app-input-password>
+            <app-submit text="Envía"></app-submit>
+        </form>
+    </div>
+</main>

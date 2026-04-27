@@ -2,9 +2,8 @@
         <!--ESQUERRA-->
             <div class="o-layout-part">
                 <div class="o-heading">
-                    
                     @if(!ciutatSeleccionada()){
-                        <h1>Padrón para todxs</h1>
+                    <h1>Padrón para todxs</h1>
                     <p>Escoje una ciudad</p>
                     <app-select-ciutats
                         (ciutatOutput)="actualitzarCiutat($event)"
@@ -32,7 +31,6 @@
             @if(idCiutatSeleccionada()){
             <div class="o-layout-part">
                 @if(preguntaSeleccionada()){
-                    
                     <app-card [title]="preguntaSeleccionada()!.titol" 
                         [subtitle]="preguntaSeleccionada()!.text">
                         <div class="o-card-content">
@@ -44,13 +42,12 @@
                             @else{
                             <!-- FINAL --> 
                              <div class="o-form-box">
-                            <h2>Esta es toda la información según tu situación.</h2>
-                            <p>A continuación puedes descargarla en formato PDF</p>
+                                <h2>Esta es toda la información según tu situación.</h2>
+                                <p>A continuación puedes descargarla en formato PDF</p>
                             <app-submit (clickEvent)="baixarPdf()" text="Bajar en pdf"></app-submit>
                             </div>
                             }
                         </div>
-
                     </app-card>
                 }
             </div>
