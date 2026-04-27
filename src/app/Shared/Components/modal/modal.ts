@@ -12,5 +12,9 @@ export class Modal {
   modalService = inject(ModalService);
   //Valors del modal al Servei (tipus i meiisatge)
   modalTipe = computed(() => this.modalService.modalTipe());
-  modalMessage = computed(() => this.modalService.modalMessage());  
+  modalMessage = computed(() => this.modalService.modalMessage()); 
+  
+  close(): void {
+    this.modalService.close();
+  }
 }

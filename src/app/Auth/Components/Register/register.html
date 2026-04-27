@@ -5,6 +5,10 @@
             <p>Introduce tus datos para el registro en administración</p>
         </div>
         <form class="o-form-box" [formGroup]="registreForm" (ngSubmit)="registre()">
+            <app-input-email label="Escrive tu nombre: " name="name" [control]="name"
+                placeholder="correu@domini.ext" errorMessage="{{ getErrorMessage(name, 'Nombre') }}"
+                required="required">
+            </app-input-email>
             <app-input-email label="Escrive tu correo electrónico: " name="email" [control]="email"
                 placeholder="correu@domini.ext" errorMessage="{{ getErrorMessage(email, 'Email') }}"
                 required="required">

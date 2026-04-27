@@ -15,3 +15,16 @@ export interface UserDTO {
   rol?: string;
 }
  
+export interface RegisterDto {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+}
+
+export interface resetPswDTO{
+  token: string;
+  email: string;
+  password?: string;
+  password_confirmation?: string;
+}

@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { AuthDTO, UserDTO } from '../Model/auth.dto';
+import { AuthDTO, RegisterDto, resetPswDTO, UserDTO } from '../Model/auth.dto';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
@@ -127,7 +127,27 @@ export class Auth {
     }
   }
 
-  register(user: UserDTO){
-    return user;
+  registre(data: RegisterDto) {
+    return this.http.post<boolean>(`${this.url}/register`, data);
   }
+
+ /*  recuperarContrasenya(email: string) {
+    return this.http.post(`${this.url}/forgot-password`, { email });
+  }
+
+  resetContrasenya(resetPsw: resetPswDTO) {
+    return this.http.post(`${this.url}/reset-password`, resetPsw);
+  }
+
+  canviarContrassenya(oldPassword:string, password: string, password_confirmation: string){
+     return this.http.post(`${this.url}/canviaPsw`, {
+      oldPassword,
+      password,
+      password_confirmation
+    });
+  }
+
+  eliminarCompte(){
+     return this.http.delete(`${this.url}/deleteAccount`);
+  } */
 }
