@@ -6,6 +6,7 @@ import { Ciutats } from './Ciutat/Services/ciutats';
 import { CiutatsComponent } from './Ciutat/Components/ciutats/ciutats';
 import { authGuard } from './Shared/Guards/auth-guard';
 import { AdminDashboard } from './Home/Components/Admin-dashboard/Components/admin-dashboard';
+import { Register } from './Auth/Components/Register/register';
 
 
 export const routes: Routes = [
@@ -16,6 +17,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: Login,
+  },
+  {
+    path: 'registro',
+    component: Register,
   },
   {
     path: 'ciutats',

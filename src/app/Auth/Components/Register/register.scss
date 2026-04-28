@@ -1,0 +1,18 @@
+.c-registre-main{
+    display: flex;
+    padding: var(--padding-xl) var(--padding-xl);
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap-lg);
+    flex: 1 0 0;
+    align-self: stretch;
+}
+
+.c-registre-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: var(--gap-lg);
+    width: 544px;
+}

@@ -1,23 +1,22 @@
-<main class="c-login-main">
-    <div class="c-login-container">
+<main class="c-registre-main">
+    <div class="c-registre-container">
         <div class="o-heading">
             <h1>Registro</h1>
             <p>Introduce tus datos para el registro en administración</p>
         </div>
-        <form class="o-form-box" [formGroup]="registreForm" (ngSubmit)="registre()">
-            <app-input-email label="Escrive tu nombre: " name="name" [control]="name"
-                placeholder="correu@domini.ext" errorMessage="{{ getErrorMessage(name, 'Nombre') }}"
+        <form class="o-form-box" [formGroup]="registreForm" (ngSubmit)="submit()">
+            <app-input-text label="Escrive tu nombre: " name="name" [control]="name"
+                placeholder="Aquí tu nombre" errorMessage="{{ getErrorMessage(name, 'Nombre') }}"
                 required="required">
-            </app-input-email>
+            </app-input-text>
             <app-input-email label="Escrive tu correo electrónico: " name="email" [control]="email"
-                placeholder="correu@domini.ext" errorMessage="{{ getErrorMessage(email, 'Email') }}"
+                placeholder="correo@dominio.ext" errorMessage="{{ getErrorMessage(email, 'Email') }}"
                 required="required">
             </app-input-email>
             <app-input-password label="Escrive una contraseña: " name="password" [control]="password"
-                errorMessage="{{ getErrorMessage(password, 'Password') }}" required="required"></app-input-password>
-            <app-submit text="Envía"></app-submit>
+                errorMessage="{{ getErrorMessage(password, 'Contraseña') }}" required="required"></app-input-password>
             <app-input-password label="Confirma la contraseña: " name="confirmPassword" [control]="confirmPassword"
-                errorMessage="{{ getErrorMessage(password, 'Password') }}" required="required"></app-input-password>
+                errorMessage="{{ getErrorMessage(password, 'Confirmar contraseña, ') }}" required="required"></app-input-password>
             <app-submit text="Envía"></app-submit>
         </form>
     </div>

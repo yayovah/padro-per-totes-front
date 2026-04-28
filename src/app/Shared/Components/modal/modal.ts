@@ -15,6 +15,6 @@ export class Modal {
   modalMessage = computed(() => this.modalService.modalMessage()); 
   
   close(): void {
-    this.modalService.close();
+    this.modalService.closeModal();
   }
 }

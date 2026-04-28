@@ -5,20 +5,22 @@ import { RegisterDto, UserDTO } from '../../Model/auth.dto';
 import { InputEmail } from '../../../Shared/Components/form-controls/input-email/input-email';
 import { InputText } from '../../../Shared/Components/form-controls/input-text/input-text';
 import { ModalService } from '../../../Shared/Components/modal/modal.service';
+import { InputPassword } from '../../../Shared/Components/form-controls/input-password/input-password';
+import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 
 @Component({
   selector: 'app-register',
-  imports: [InputEmail, InputText, InputEmail],
+  imports: [InputEmail, InputText, InputPassword, Submit],
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
 export class Register {
 
+  registreForm: FormGroup;
   name: FormControl;
   email: FormControl;
   password: FormControl;
   confirmPassword: FormControl;
-  registreForm: FormGroup;
 
   authService = inject(Auth);
   modalService = inject(ModalService);
