@@ -1,3 +1,5 @@
+import { PreguntaDTO } from "../../Preguntes/Models/pregunta.dto";
+import { RespostaDTO } from "../../Respostes/Models/resposta.dto";
 import { SituacioDTO } from "../../Situacions/Model/situacio.dto";
 
 export interface ItinerariDTO {
@@ -16,4 +18,9 @@ export interface PasDTO {
     itinerari: number,
     pregunta: number,
     resposta: number,
+}
+
+export interface PasTextDTO {
+    pregunta: PreguntaDTO,
+    resposta: RespostaDTO,
 }

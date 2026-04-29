@@ -14,7 +14,7 @@ import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { Auth } from '../../../Auth/Services/auth';
 import { ModalService } from '../../../Shared/Components/modal/modal.service';
 import { ItinerariService } from '../../Services/itinerari.service';
-import { PasDTO } from '../../../Shared/Models/itinerari.dto';
+import { PasDTO, PasTextDTO } from '../../../Shared/Models/itinerari.dto';
 
 @Component({
   selector: 'app-home',
@@ -46,6 +46,8 @@ export class Home {
 
   itinerari = computed(() => this.homeService.itinerariSeguit());
   idItinerari = computed(() => this.itinerari()?.itinerari.id);
+
+  passos = signal<PasTextDTO[]>([]);
 
     // Creem l'array de llistables a partir de l'array de preguntes
    preguntesLlistables = computed<LlistableDTO[]>(() => 
@@ -108,6 +110,12 @@ export class Home {
       pregunta: this.idPreguntaSeleccionada()!,
       resposta: this.situacioSeleccionada()?.resposta?.id!
     }
+    const pasText:PasTextDTO = {
+      pregunta: this.situacioSeleccionada()?.pregunta!,
+      resposta: this.situacioSeleccionada()?.resposta!
+    }
+    this.passos.update((passos) => [...passos, pasText]);
+    
     console.log("PAS A API --> ", pas);
     this.itinerariService.createPas(pas).subscribe({
       next: (pas) => {

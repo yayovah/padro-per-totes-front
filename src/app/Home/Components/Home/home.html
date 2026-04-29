@@ -31,24 +31,39 @@
             @if(idCiutatSeleccionada()){
             <div class="o-layout-part">
                 @if(preguntaSeleccionada()){
+                    @if(situacionsLlistables().length>0){
                     <app-card [title]="preguntaSeleccionada()!.titol" 
                         [subtitle]="preguntaSeleccionada()!.text">
                         <div class="o-card-content">
-                            @if(situacionsLlistables().length>0){
-                                <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="false"
-                                    (accio)="seleccionaResposta($event)">
-                                </app-list-in-card>
-                            }
-                            @else{
-                            <!-- FINAL --> 
-                             <div class="o-form-box">
-                                <h2>Esta es toda la información según tu situación.</h2>
-                                <p>A continuación puedes descargarla en formato PDF</p>
-                            <app-submit (clickEvent)="baixarPdf()" text="Bajar en pdf"></app-submit>
-                            </div>
-                            }
+                            <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="false"
+                                (accio)="seleccionaResposta($event)">
+                            </app-list-in-card>
                         </div>
                     </app-card>
+                    }
+                    @else{
+                    <!-- FINAL --> 
+                    <app-card [title]="'Tus preguntas y respuestas'">
+                        <div class="o-card-content">
+                            <h2>Esta es toda la información según tu situación.</h2>
+                            @for(pas of passos(); track $index){
+                                <div>
+                                    <p>{{ pas.pregunta.text }}</p>
+                                </div>
+                                <div>
+                                    <div>Pregunta {{ $index + 1 }}</div>
+                                    <p>{{ pas.pregunta.titol }}</p>
+                                </div>
+                                <div>
+                                    <p>{{ pas.resposta.text }}</p>
+                                </div>
+                            }
+                            
+                            <p>A continuación puedes descargarla en formato PDF</p>
+                        <app-submit (clickEvent)="baixarPdf()" text="Bajar en pdf"></app-submit>
+                        </div>
+                    </app-card>
+                    }
                 }
             </div>
         }
