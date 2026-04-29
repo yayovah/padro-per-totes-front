@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { ModalService } from '../../Shared/Components/modal/modal.service';
 
 
 @Injectable({
@@ -15,11 +16,14 @@ export class Auth {
   private readonly baseUrl = environment.apiUrl;
   private readonly loginEndpoint = '/login';
   private readonly loginUrl = `${this.baseUrl}${this.loginEndpoint}`;
+  private readonly registerEndpoint = '/register';
+  private readonly registerUrl = `${this.baseUrl}${this.registerEndpoint}`;
   private readonly usersEndpoint = '/users';
   private readonly url = `${this.baseUrl}${this.usersEndpoint}`;
 
   //Injecció de serveis
   private router = inject(Router);
+    modalService = inject(ModalService);
 
   //Signals
   // Credencials accessibles des de l'app
@@ -32,6 +36,7 @@ export class Auth {
     //Comprovem si a l'Storage hi ha credencials guardades, si és així les carreguem a la signal
     if(!this.credentials()) {
       this.restoreCredentials();
+      console.log(this.credentials);
     }
   }
 
@@ -46,12 +51,7 @@ export class Auth {
     this.http
       .post<AuthDTO>(this.loginUrl, auth)
       .pipe(
-        tap( credentials => {
-          this.credentials.set(credentials);
-          this.storageCredentials();
-          this.navigateByRol();
-        }),
-        
+        tap( credentials => this.acredita(credentials)),
         catchError((error) => {
           //Mostrar un modal, quan estigui el servei fet
           throw new Error('Error haciendo login: ' + error.message);
@@ -61,6 +61,12 @@ export class Auth {
 
   logout(): void {
     this.resetCredentials();
+  }
+
+  acredita(credentials: AuthDTO){
+    this.credentials.set(credentials);
+    this.storageCredentials();
+    this.navigateByRol();
   }
 
   //Demana el rol de l'usuari a la API
@@ -113,7 +119,7 @@ export class Auth {
     console.log('Navegando según rol: ', this.userRol());
     switch(this.credentials()?.user.rol || '') {
       case 'usuari':
-          this.router.navigate(['/userDash']);
+          this.router.navigate(['/home']);
           break;
       case 'admin':
           this.router.navigate(['/adminDash']);
@@ -122,13 +128,26 @@ export class Auth {
           this.router.navigate(['/superadminDash']);
           break;
       default:
-          this.router.navigate(['/userDash']);
+          this.router.navigate(['/home']);
           break;
     }
   }
 
-  registre(data: RegisterDto) {
-    return this.http.post<boolean>(`${this.url}/register`, data);
+  registre(data: RegisterDto): void{
+    this.http.post<AuthDTO>(this.registerUrl, data)
+    .pipe(
+      tap((credentials) => {
+        console.log("Credentials rebudes", credentials);
+          this.acredita(credentials);
+          this.modalService.showModalOk("Registro efectuado correctamente");
+        }
+      ),
+      catchError((error) => {
+        //Mostrar un modal, quan estigui el servei fet
+        this.modalService.showModalError(error);
+        throw new Error('Error registrando nuva usuária: ' + error.message);
+      }))
+    .subscribe();
   }
 
  /*  recuperarContrasenya(email: string) {

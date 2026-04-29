@@ -1,16 +1,16 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth } from '../../Services/auth';
 import { RegisterDto, UserDTO } from '../../Model/auth.dto';
 import { InputEmail } from '../../../Shared/Components/form-controls/input-email/input-email';
 import { InputText } from '../../../Shared/Components/form-controls/input-text/input-text';
-import { ModalService } from '../../../Shared/Components/modal/modal.service';
 import { InputPassword } from '../../../Shared/Components/form-controls/input-password/input-password';
 import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 
 @Component({
   selector: 'app-register',
-  imports: [InputEmail, InputText, InputPassword, Submit],
+  imports: [InputEmail, InputText, InputPassword, Submit, 
+    ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
@@ -23,7 +23,7 @@ export class Register {
   confirmPassword: FormControl;
 
   authService = inject(Auth);
-  modalService = inject(ModalService);
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,7 +56,9 @@ export class Register {
   }
   
   submit(){
+    alert("submited");
     if (this.registreForm.invalid) {
+      console.error("INVALID!");
       this.registreForm.markAllAsTouched();
       return;
     }
@@ -65,15 +67,10 @@ export class Register {
       email: this.email.value,
       password: this.password.value,
       password_confirmation: this.confirmPassword.value,
+      rol: 'admin',
     };
-
-    this.authService.registre(credentials).subscribe({
-      next: () => this.modalService.showModalOk("Registro efectuado correctamente"),
-      error: (error) => {
-        console.error(error);
-        this.modalService.showModalError(error);
-      }
-    })
+    console.log("abans de cridar al authService ", credentials);
+    this.authService.registre(credentials);
   }
 
   getErrorMessage(camp : FormControl, nom : string): string {

@@ -1,6 +1,11 @@
 <form class="o-form-box" [formGroup]="selectCiutatForm" (ngSubmit)="submit()">
+    @if(ciutatsLlistables().length>0){
     <app-select label="Selecciona una ciudad: " name="ciutat" [control]="ciutat"
         errorMessage="{{ getErrorMessage(ciutat, 'Ciudad') }}" required="required" [items]="ciutatsLlistables()">
     </app-select>
     <app-submit text="Seleccionar"></app-submit>
+    }
+    @else{
+        <p>Todavía no tienes acceso a ninguna ciudad. Contacta tu administrador.</p>
+    }
 </form>

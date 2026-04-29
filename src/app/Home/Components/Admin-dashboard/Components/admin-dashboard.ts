@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Ciutats } from '../../../../Ciutat/Services/ciutats';
@@ -20,6 +20,7 @@ import { Submit } from '../../../../Shared/Components/form-controls/submit/submi
 import { PreguntaForm } from '../../../../Preguntes/Components/pregunta-form/pregunta-form';
 import { SituacioForm } from '../../../../Situacions/Components/situacio-form/situacio-form';
 import { AdminDashService } from '../../../Services/admin-dash.service';
+import { ModalService } from '../../../../Shared/Components/modal/modal.service';
 
 
 @Component({
@@ -28,13 +29,15 @@ import { AdminDashService } from '../../../Services/admin-dash.service';
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.scss',
 })
-export class AdminDashboard {
-//  private selectCiutatService = inject(Ciutats);
+export class AdminDashboard implements OnInit{
+  //private selectCiutatService = inject(Ciutats);
   private adminDashService = inject(AdminDashService);
 
   private preguntaService = inject(Pregunta);
   private situacioService = inject(Situacio)
   private respostaService = inject(Resposta);
+
+  private modalService = inject(ModalService);
   
   situacions = computed(() => this.adminDashService.situacions());
   respostes = computed(() => this.adminDashService.respostes());
@@ -42,6 +45,7 @@ export class AdminDashboard {
   
   ciutatSeleccionada = computed(() => this.adminDashService.ciutatSeleccionada());
   idCiutatSeleccionada = computed(() => this.ciutatSeleccionada()?.id ?? null);
+  
 
   preguntes = computed(() => this.adminDashService.preguntes());
   idPreguntaSeleccionada = computed(() => this.adminDashService.idPreguntaSeleccionada());
@@ -68,6 +72,11 @@ export class AdminDashboard {
       nom: situacio.resposta?.text ?? ''
     };})
   );
+
+  ngOnInit(){
+    console.log("bienve");
+    this.modalService.showModalOk("Bienvenido al panel de administración");
+  }
 
   actualitzarCiutat(ciutatOutput: CiutatDTO | undefined){
     this.adminDashService.ciutatSeleccionada.set(ciutatOutput ?? null);

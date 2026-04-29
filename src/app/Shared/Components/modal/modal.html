@@ -1,3 +1,24 @@
+@if(modalTipe() && modalMessage()){
 <div class="c-modal">
-    <ng-content></ng-content>
+    <!-- <ng-content></ng-content> -->
+     <div class="o-card-div">
+        <div class="c-modal-content">
+        @switch(modalTipe()){
+            @case ('ok'){
+                <i class="fa-solid fa-circle-check"></i>
+                <h1>Ok!</h1>
+            }
+            @case ('error'){
+                <i class="fa-solid fa-circle-info"></i>
+                <h1>Error!</h1>
+            }
+            @case ('info'){
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <h1>Info:</h1>
+            }
+        }
+        <p>{{ modalMessage() }}</p>
+        </div>
+     </div>
 </div>
+}
