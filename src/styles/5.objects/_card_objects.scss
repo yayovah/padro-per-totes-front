@@ -14,3 +14,13 @@
     }
 }
 
+.o-badge{
+    color: var(--Clar-700, #9F9F9F);
+    display: flex;
+    padding: var(--paddings-pad-topbottom-badges, 2px) var(--paddings-pad-leftright-badges, 8px);
+    align-items: center;
+    gap: var(--gaps-gap-badges, 4px);
+    border-radius: 16px;
+    background: var(--Clar-25, #FFE1F3);
+    width: auto !important;
+}

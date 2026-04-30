@@ -15,3 +15,46 @@ main{
     gap: 32px;
     flex: 1 0 0;
 }
+
+.u-card-content{
+    display: flex;
+    flex-direction: column;
+    gap: 16px !important;
+}
+
+.c-pregunta{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 32px;
+    align-self: stretch;
+
+    .u-pregunta-text{
+        width: 100%;
+        flex: 1;
+        align-self: stretch;
+        color: var(--Negre, #121926);
+        font-family: "Plus Jakarta Sans";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 20px; /* 142.857% */
+    }
+}
+
+.c-detall{
+    color: var(--Clar-700, #9F9F9F);
+    font-size: 14px;
+    padding-left: 128px;
+}
+
+.c-explicacio{
+    color: var(--Negre, #121926);
+    /* Padró/Text/18/Regular */
+    font-family: "Plus Jakarta Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px; /* 155.556% */
+}
+

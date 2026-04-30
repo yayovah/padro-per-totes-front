@@ -44,18 +44,20 @@
                     @else{
                     <!-- FINAL --> 
                     <app-card [title]="'Tus preguntas y respuestas'">
-                        <div class="o-card-content">
-                            <h2>Esta es toda la información según tu situación.</h2>
+                        <div class="u-card-content">
+                            <!-- <h2>Esta es toda la información según tu situación.</h2> -->
                             @for(pas of passos(); track $index){
                                 <div>
                                     <p>{{ pas.pregunta.text }}</p>
                                 </div>
                                 <div>
-                                    <div>Pregunta {{ $index + 1 }}</div>
-                                    <p>{{ pas.pregunta.titol }}</p>
-                                </div>
-                                <div>
-                                    <p>{{ pas.resposta.text }}</p>
+                                    <div class="c-pregunta">
+                                        <div class="o-badge">Pregunta {{ $index + 1 }}</div>
+                                        <div class="u-pregunta-text">{{ pas.pregunta.titol }}</div>
+                                    </div>
+                                    <div class="c-detall">
+                                        <p>{{ pas.resposta.text }}</p>
+                                    </div>
                                 </div>
                             }
                             
