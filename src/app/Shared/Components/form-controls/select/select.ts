@@ -16,4 +16,12 @@ export class Select {
   @Input() errorMessage = "";
   @Input() name = "";
   @Input() required = "required";
+
+  requiredText : string = "";
+
+  constructor(){
+    if(this.required === "required"){
+      this.requiredText = "required";
+    }
+  }
 }

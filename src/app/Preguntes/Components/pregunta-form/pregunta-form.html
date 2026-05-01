@@ -19,6 +19,17 @@
         errorMessage="{{ getErrorMessage(titol, 'Título') }}" 
         required="required">
     </app-input-text>
+    
+    <app-select 
+        label="Puedes seleccionar una imagen: " 
+        name="imatge" 
+        [control]="imatge"
+        placeholder="Selecciona una imagen" 
+        required="none"
+        [items]="imatges()">
+    </app-select>
+
+
 
     
     <app-submit text="Guardar"></app-submit>

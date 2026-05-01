@@ -7,6 +7,9 @@ import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { PreguntaDTO } from '../../Models/pregunta.dto';
 import { Pregunta } from '../../Services/pregunta';
 import { AdminDashService } from '../../../Home/Services/admin-dash.service';
+import { LlistableDTO } from '../../../Shared/Models/llistable.dto';
+import { Imtages } from '../../../Shared/Services/imtages';
+import { Select } from '../../../Shared/Components/form-controls/select/select';
 
 @Component({
   selector: 'app-pregunta-form',
@@ -15,7 +18,8 @@ import { AdminDashService } from '../../../Home/Services/admin-dash.service';
     ReactiveFormsModule,
     InputText,
     TextArea,
-    Submit
+    Submit,
+    Select
   ],
   templateUrl: './pregunta-form.html',
   styleUrl: './pregunta-form.scss',
@@ -23,6 +27,7 @@ import { AdminDashService } from '../../../Home/Services/admin-dash.service';
 export class PreguntaForm{
   private preguntaService = inject(Pregunta);
   private adminDashService = inject(AdminDashService);
+  private imatgesService = inject(Imtages);
   
   ciutatSeleccionada = computed(() => this.adminDashService.ciutatSeleccionada());
   idCiutatSeleccionada = computed(() => this.ciutatSeleccionada()?.id ?? null);
@@ -33,8 +38,11 @@ export class PreguntaForm{
   
   preguntaActualitzada = output<PreguntaDTO>();
 
+  imatges = computed(() => this.imatgesService.imatgesLlistables());
+
   titol: FormControl;
   text: FormControl;
+  imatge: FormControl;
   preguntaForm: FormGroup;
   
   constructor(  
@@ -47,11 +55,13 @@ export class PreguntaForm{
     this.text = new FormControl('', [
       Validators.required
     ]);
+    this.imatge = new FormControl('');
 
     //Vinculem els camps al Form
     this.preguntaForm = this.formBuilder.group({
       titol: this.titol,
       text: this.text,
+      imatge: this.imatge,
     });
 
     //Si volem editar la pregunta, les dades de la ciutat seleccionada es posen al formulari
@@ -74,6 +84,7 @@ export class PreguntaForm{
     const dadesForm =  {
       titol: this.titol.value,
       text: this.text.value,
+      imatge: this.imatge.value ?? null,
     }
     if(this.idPreguntaSeleccionada()){
       const dadesPregunta : PreguntaDTO =  {
