@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { List } from '../../../Shared/Components/list/list';
 import { CiutatDTO } from '../../../Ciutat/Models/ciutat.dto';
 import { CommonModule } from '@angular/common';
@@ -21,8 +21,8 @@ import { Ciutats } from '../../../Ciutat/Services/ciutats';
 export class SuperadminDashboard{
 
   private ciutats = signal<CiutatDTO[]>([]);
-  ciutatSeleccionada = signal<CiutatDTO | null>(null);
   idCiutatSeleccionada = signal<number | null>(null);
+  ciutatSeleccionada = computed(() => this.ciutats().find((ciutat) => ciutat.id === this.idCiutatSeleccionada()));
 
   ciutatsService = inject(Ciutats);
   ciutatAdmins = signal<UserDTO[]>([]);
@@ -44,6 +44,22 @@ export class SuperadminDashboard{
   
   accioActual= signal<String | null>("");
   addAdmin = signal<boolean>(false);
+
+  constructor(){
+    this.ciutatsService.getCiutats().subscribe({
+      next: (ciutats) => this.ciutats.set(ciutats),
+      error: (error) => console.error(error)
+    });
+
+    effect(() => {
+      console.log("admins", this.ciutatAdmins());
+      console.log("idCiutat", this.idCiutatSeleccionada());
+      console.log("ciutat!", this.ciutatSeleccionada());
+      console.log("fin ---------------");
+    
+    
+    });
+  }
 
 
   handleAccio(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }): void {
