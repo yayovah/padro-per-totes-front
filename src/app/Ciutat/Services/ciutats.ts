@@ -58,7 +58,7 @@ export class Ciutats {
 
   createCiutat(dadesCiutat:  Omit<CiutatDTO, 'id'>){
     return this.http
-      .post<CiutatDTO>(`${this.url}/`, dadesCiutat)
+      .post<CiutatDTO>(`${this.url}`, dadesCiutat)
       .pipe(
           catchError((error) => {
             console.error(`Error intentando crear la ciudad:`, error);
