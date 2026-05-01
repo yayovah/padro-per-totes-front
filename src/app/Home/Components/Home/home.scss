@@ -58,3 +58,15 @@ main{
     line-height: 28px; /* 155.556% */
 }
 
+.c-imatge{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+
+    img{
+        margin: 0 auto;
+        width:100%;
+        max-width: 345px;
+    }
+}

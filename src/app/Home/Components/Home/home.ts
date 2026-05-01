@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { CiutatDTO } from '../../../Ciutat/Models/ciutat.dto';
 import { RespostaDTO } from '../../../Respostes/Models/resposta.dto';
 import { PreguntaDTO } from '../../../Preguntes/Models/pregunta.dto';
@@ -23,7 +23,7 @@ import { Imtages } from '../../../Shared/Services/imtages';
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {
+export class Home{
   private homeService = inject(HomeService);
   private preguntaService = inject(Pregunta);
   private itinerariService = inject(ItinerariService);
@@ -67,23 +67,19 @@ export class Home {
       };})
     );
 
-    imatgeActual = computed(()=>{
-      if(this.preguntaSeleccionada()?.imatge){
-        return this.imatgeService.getImatgeById(this.preguntaSeleccionada()?.imatge!).subscribe({
-          next: (imatge) => imatge.path,
-          error: (error) => null
-      });
-      }
-      return null; 
+    imatgeActual = signal<string | null>(null);
+
+
+  constructor(){
+    effect(() => {
+        this.imatgeService.getImatgeById(this.preguntaSeleccionada()?.imatge!).subscribe({
+          next: (imatge) => this.imatgeActual.set(imatge.path),
+        });
+      
+      console.log("IMATGE ACTUAL:",this.imatgeActual());
     });
 
-/* 
-  ngOnInit(): void {
-    this.ciutatsService.getCiutats().subscribe((ciutats: CiutatDTO[]) => {
-      this.ciutats.set(ciutats);
-    });
-
-  } */
+  }
 
   actualitzarCiutat(ciutatOutput: CiutatDTO | undefined){
     this.homeService.ciutatSeleccionada.set(ciutatOutput ?? null);

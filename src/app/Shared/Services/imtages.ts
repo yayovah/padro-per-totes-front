@@ -45,7 +45,7 @@ export class Imtages{
 
   getImatgeById(imatgeId: number): Observable<imatgeDTO>{
     return this.http
-    .get<imatgeDTO>(`${this.url}${imatgeId}`)
+    .get<imatgeDTO>(`${this.url}/${imatgeId}`)
     .pipe(
       catchError((error) => {
         console.error('Error recuperando imagen del servidor:', error);
