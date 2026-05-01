@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: "http://api.padronparatodxs.es"
+    apiUrl: "http://api.padronparatodxs.es/api/"
 };
