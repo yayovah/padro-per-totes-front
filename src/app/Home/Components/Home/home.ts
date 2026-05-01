@@ -15,6 +15,7 @@ import { Auth } from '../../../Auth/Services/auth';
 import { ModalService } from '../../../Shared/Components/modal/modal.service';
 import { ItinerariService } from '../../Services/itinerari.service';
 import { PasDTO, PasTextDTO } from '../../../Shared/Models/itinerari.dto';
+import { Imtages } from '../../../Shared/Services/imtages';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +29,7 @@ export class Home {
   private itinerariService = inject(ItinerariService);
   private authService = inject(Auth);
   private modalService = inject(ModalService);
+  private imatgeService = inject(Imtages);
   
   //private ciutatsService = inject(Ciutats);
 
@@ -64,6 +66,16 @@ export class Home {
         nom: situacio.resposta?.text ?? ''
       };})
     );
+
+    imatgeActual = computed(()=>{
+      if(this.preguntaSeleccionada()?.imatge){
+        return this.imatgeService.getImatgeById(this.preguntaSeleccionada()?.imatge!).subscribe({
+          next: (imatge) => imatge.path,
+          error: (error) => null
+      });
+      }
+      return null; 
+    });
 
 /* 
   ngOnInit(): void {
