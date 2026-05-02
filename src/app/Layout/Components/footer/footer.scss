@@ -1,6 +1,6 @@
 footer{
-    position: absolute;
-    bottom: 0;
+    //position: absolute;
+    //bottom: 0;
     width: 100%;
     display: flex;
     padding: 32px 60px;
@@ -10,6 +10,10 @@ footer{
     border-top: 10px solid; /* defineix l’amplada del border */
     border-image: var(--gradient-clar-groc) 1;
     background: var(--Blanc, #FFF);
+
+    @media (max-width: 620px) {
+        flex-direction: column;
+    }
 }
 
 .logo{

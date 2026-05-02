@@ -16,10 +16,11 @@ import { ModalService } from '../../../Shared/Components/modal/modal.service';
 import { ItinerariService } from '../../Services/itinerari.service';
 import { PasDTO, PasTextDTO } from '../../../Shared/Models/itinerari.dto';
 import { Imtages } from '../../../Shared/Services/imtages';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'app-home',
-  imports: [SelectCiutats, CommonModule, ListInCard, Card, Submit],
+  imports: [SelectCiutats, CommonModule, ListInCard, Card, Submit, MarkdownModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

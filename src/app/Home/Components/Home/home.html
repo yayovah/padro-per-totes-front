@@ -39,6 +39,7 @@
                     @if(situacionsLlistables().length>0){
                     <app-card [title]="preguntaSeleccionada()!.titol" 
                         [subtitle]="preguntaSeleccionada()!.text">
+                        <markdown [data]="preguntaSeleccionada()!.text"></markdown>
                         <div class="o-card-content">
                             <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="false"
                                 (accio)="seleccionaResposta($event)">
@@ -53,7 +54,7 @@
                             <!-- <h2>Esta es toda la información según tu situación.</h2> -->
                             @for(pas of passos(); track $index){
                                 <div>
-                                    <p>{{ pas.pregunta.text }}</p>
+                                    <markdown [data]="pas.pregunta.text"></markdown>
                                 </div>
                                 <div>
                                     <div class="c-pregunta">

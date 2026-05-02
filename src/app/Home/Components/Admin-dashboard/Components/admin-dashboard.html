@@ -40,12 +40,16 @@
                 </div>
             </app-card>
 
-            <app-card [title]="'Detalle de la pregunta'">
-                <div class="o-form-box">
-                <p>{{ preguntaSeleccionada()?.text }}</p>
-                <h2>{{ preguntaSeleccionada()?.titol }}</h2>
-                </div>
-            </app-card>
+                
+                <app-card [title]="'Detalle de la pregunta'">
+                    <div class="o-form-box">
+                    @if(preguntaSeleccionada(); as seleccionada){
+                    <markdown [data]="seleccionada.text"></markdown>
+                    }
+                    <h2>{{ preguntaSeleccionada()?.titol }}</h2>
+                    </div>
+                </app-card>
+                
             }
             <!-- Afegir una nova resposta -->
             @if(accioActual() === 'add'){

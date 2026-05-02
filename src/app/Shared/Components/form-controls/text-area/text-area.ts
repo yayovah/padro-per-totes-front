@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+//import {MarkdownService} from 'ngx-markdown';
+
 
 @Component({
   selector: 'app-text-area',

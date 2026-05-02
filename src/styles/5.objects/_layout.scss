@@ -6,6 +6,12 @@
     align-items: flex-start;
     gap: var(--gap-xl);
     align-self: stretch;
+
+    @media (max-width: 1250px) {
+        flex-direction: column;
+        padding: 5px;
+        align-items: center;
+    }
 }
 
 .o-layout-part{
@@ -14,4 +20,9 @@
     align-items: flex-start;
     gap: 32px;
     width: 620px;
+
+    @media (max-width: 620px) {
+        width: 350px;
+    }
 }
+

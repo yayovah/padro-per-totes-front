@@ -21,11 +21,12 @@ import { PreguntaForm } from '../../../../Preguntes/Components/pregunta-form/pre
 import { SituacioForm } from '../../../../Situacions/Components/situacio-form/situacio-form';
 import { AdminDashService } from '../../../Services/admin-dash.service';
 import { ModalService } from '../../../../Shared/Components/modal/modal.service';
+import { MarkdownComponent } from 'ngx-markdown';
 
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [SelectCiutats, List, Card, ListInCard, CommonModule, Submit, PreguntaForm, SituacioForm],
+  imports: [SelectCiutats, List, Card, ListInCard, CommonModule, Submit, PreguntaForm, SituacioForm, MarkdownComponent],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.scss',
 })

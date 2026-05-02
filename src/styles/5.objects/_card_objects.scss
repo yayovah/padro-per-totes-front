@@ -12,6 +12,10 @@
     p, div{
         width:100%;
     }
+
+    @media (max-width: 620px) {
+        width: 350px;
+    }
 }
 
 .o-badge{

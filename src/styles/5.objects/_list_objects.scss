@@ -1,5 +1,9 @@
 .o-list{
-    width: 640px;
+    width: 620px;
+
+    @media (max-width: 620px) {
+        width: 350px;
+    }
 }
 
 .o-list-div{
