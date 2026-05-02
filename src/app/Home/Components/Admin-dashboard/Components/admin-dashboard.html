@@ -17,7 +17,6 @@
     <div class="o-layout-part">
         @if(idPreguntaSeleccionada()){
             @if(accioActual()=='view'){
-
             <app-card [title]="'Respuestas'"
                 [subtitle]="'Crea o modifica las distintas respuestas a la pregunta seleccionada '">
                 <div class="o-card-content">
@@ -39,16 +38,15 @@
                     </app-submit>
                 </div>
             </app-card>
-
                 
-                <app-card [title]="'Detalle de la pregunta'">
-                    <div class="o-form-box">
-                    @if(preguntaSeleccionada(); as seleccionada){
-                    <markdown [data]="seleccionada.text"></markdown>
-                    }
-                    <h2>{{ preguntaSeleccionada()?.titol }}</h2>
-                    </div>
-                </app-card>
+            <app-card [title]="'Detalle de la pregunta'">
+                <div class="o-form-box">
+                @if(preguntaSeleccionada(); as seleccionada){
+                <markdown [data]="seleccionada.text"></markdown>
+                }
+                <h2>{{ preguntaSeleccionada()?.titol }}</h2>
+                </div>
+            </app-card>
                 
             }
             <!-- Afegir una nova resposta -->
@@ -59,21 +57,29 @@
             </app-card>
 
 
-            @if(situacionsLlistables().length>0){
-            <div class="c-altresRespostes">
-            <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="false"
-                (accio)="handleAccioSituacions($event)">
-            </app-list-in-card>
-            </div>
-            }
+                @if(situacionsLlistables().length>0){
+                <div class="c-altresRespostes">
+                <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="false"
+                    (accio)="handleAccioSituacions($event)">
+                </app-list-in-card>
+                </div>
+                }
             <app-submit (clickEvent)="cancelarNovaResposta()" text="Cancelar" [icono]="true"></app-submit>
             }
             <!-- Editar una pregunta -->
             @if(accioActual() === 'edit' ){
-            <app-card [title]="'Modificar la pregunta'" [subtitle]="'Edita los datos de la pregunta'">
-                <app-pregunta-form
-                ></app-pregunta-form>
-            </app-card>
+                @if(idSituacioSeleccionada()){
+                <app-card [title]="'Modificar la respuesta'" [subtitle]="'Edita los datos de la respuesta'">
+                    <app-situacio-form
+                    ></app-situacio-form>
+                </app-card>
+                }
+                @else{
+                <app-card [title]="'Modificar la pregunta'" [subtitle]="'Edita los datos de la pregunta'">
+                    <app-pregunta-form
+                    ></app-pregunta-form>
+                </app-card>
+                }
             }
         }
 

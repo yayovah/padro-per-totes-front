@@ -52,6 +52,9 @@ export class AdminDashboard implements OnInit{
   idPreguntaSeleccionada = computed(() => this.adminDashService.idPreguntaSeleccionada());
   preguntaSeleccionada = computed(() => this.preguntes().find(p => p.id === this.idPreguntaSeleccionada()) ?? null);
   
+  idSituacioSeleccionada = computed(() => this.adminDashService.idSituacioSeleccionada());
+  situacioSeleccionada = computed<SituacioDTO | undefined>(() => this.situacions().find(situacio => situacio.id === this.idSituacioSeleccionada()));
+
   idPreguntaSeguent = signal<number | null>(null);
   
   addResposta = signal<boolean>(false);
@@ -149,6 +152,9 @@ export class AdminDashboard implements OnInit{
   }
 
   handleAccioSituacions(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
+    this.adminDashService.accioActual.set(event.type);
+    this.adminDashService.idSituacioSeleccionada.set(event.id ?? null);
+    
     if(event.type === 'delete' && event.id){
       this.situacioService.deleteSituacio(event.id).subscribe({
         next: (a) => {
