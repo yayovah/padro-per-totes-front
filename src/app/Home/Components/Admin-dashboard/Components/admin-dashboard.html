@@ -21,7 +21,7 @@
                 [subtitle]="'Crea o modifica las distintas respuestas a la pregunta seleccionada '">
                 <div class="o-card-content">
                     @if(situacionsLlistables().length>0){
-                    <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="true"
+                    <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="true" [esborrable]="true"
                         (accio)="handleAccioSituacions($event)">
                     </app-list-in-card>
                     }
@@ -59,7 +59,7 @@
 
                 @if(situacionsLlistables().length>0){
                 <div class="c-altresRespostes">
-                <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="false"
+                <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()"
                     (accio)="handleAccioSituacions($event)">
                 </app-list-in-card>
                 </div>

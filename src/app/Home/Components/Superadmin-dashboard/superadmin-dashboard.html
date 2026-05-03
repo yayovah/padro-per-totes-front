@@ -14,7 +14,7 @@
         <app-card [title]="ciutatSeleccionada()?.nom" [subtitle]="'Gestiona la administración de esta ciudad'">
             <div class="o-card-content">
                 @if(adminsLlistables()){
-                <app-list-in-card [title]="'Administradors de la ciutat'" [items]="adminsLlistables()" [editable]="true"
+                <app-list-in-card [title]="'Administradors de la ciutat'" [items]="adminsLlistables()" [esborrable]="true"
                     (accio)="handleAccioAdmins($event)">
                 </app-list-in-card>
                 }

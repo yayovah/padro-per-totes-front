@@ -14,7 +14,7 @@
                             <app-card [title]="ciutatSeleccionada()?.nom" 
                                 [subtitle]="' '">
                                 <div class="o-card-content">
-                                    <app-list-in-card [title]="'Responde a la pregunta:'" [items]="preguntesLlistables()" [editable]="false"
+                                    <app-list-in-card [title]="'Responde a la pregunta:'" [items]="preguntesLlistables()" [editable]="false" [esborrable]="false"
                                         >
                                     </app-list-in-card>
                                 </div>
@@ -41,7 +41,7 @@
                         [subtitle]="preguntaSeleccionada()!.text">
                         <markdown [data]="preguntaSeleccionada()!.text"></markdown>
                         <div class="o-card-content">
-                            <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="false"
+                            <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="false" [esborrable]="false"
                                 (accio)="seleccionaResposta($event)">
                             </app-list-in-card>
                         </div>

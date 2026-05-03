@@ -17,6 +17,7 @@ export class ListInCard {
   @Input() items: LlistableDTO[] = [];
   @Input() tipus: string = '';
   @Input() editable: boolean = false;
+  @Input() esborrable: boolean = false;
   @Output() accio = new EventEmitter<{ type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }>();
 
   onAccio(type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any): void {
