@@ -10,6 +10,7 @@ import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { CiutatForm } from '../../../Ciutat/Components/ciutat-form/ciutat-form';
 import { AddAdmin } from '../../../Ciutat/Components/add-admin/add-admin';
 import { Ciutats } from '../../../Ciutat/Services/ciutats';
+import { SuperadminDashService } from '../../Services/superadmin-dash.service';
 
 
 @Component({
@@ -19,32 +20,34 @@ import { Ciutats } from '../../../Ciutat/Services/ciutats';
   styleUrl: './superadmin-dashboard.scss',
 })
 export class SuperadminDashboard{
-
-  private ciutats = signal<CiutatDTO[]>([]);
-  idCiutatSeleccionada = signal<number | null>(null);
-  ciutatSeleccionada = computed(() => this.ciutats().find((ciutat) => ciutat.id === this.idCiutatSeleccionada()));
-
+  suepradminDashService = inject(SuperadminDashService);
   ciutatsService = inject(Ciutats);
-  ciutatAdmins = signal<UserDTO[]>([]);
+
+  ciutats = this.suepradminDashService.ciutats();
+
+  idCiutatSeleccionada = this.suepradminDashService.idCiutatSeleccionada();
+  ciutatSeleccionada = this.suepradminDashService.ciutatSeleccionada();
+  
+  admins = this.suepradminDashService.admins();
+  ciutatAdmins = this.suepradminDashService.ciutatAdmins();
+  
+  accioActual = this.suepradminDashService.accioActual();
 
   // Creem l'array de llistables a partir de l'array de ciutats
   ciutatsLlistables = computed<LlistableDTO[]>(() => 
-    this.ciutats().map((ciutat: CiutatDTO) => ({
+    this.ciutats.map((ciutat: CiutatDTO) => ({
       id: ciutat.id,
       nom: ciutat.nom
     }))
   );
 
   adminsLlistables = computed<LlistableDTO[]>(() => 
-    this.ciutatAdmins().map((admin: UserDTO) => ({
+    this.ciutatAdmins.map((admin: UserDTO) => ({
       id: admin.id,
       nom: admin.email
     }))
   );
   
-  accioActual= signal<String | null>("");
-  addAdmin = signal<boolean>(false);
-
   constructor(){
     this.ciutatsService.getCiutats().subscribe({
       next: (ciutats) => this.ciutats.set(ciutats),
@@ -52,13 +55,15 @@ export class SuperadminDashboard{
     });
 
     effect(() => {
+      this.monitor();
+    });
+  }
+
+  monitor(){
       console.log("admins", this.ciutatAdmins());
       console.log("idCiutat", this.idCiutatSeleccionada());
       console.log("ciutat!", this.ciutatSeleccionada());
       console.log("fin ---------------");
-    
-    
-    });
   }
 
 
@@ -93,6 +98,7 @@ export class SuperadminDashboard{
   }
 
   afegeixAdmin(){
+    this.
       this.addAdmin.set(true);
   }
 }

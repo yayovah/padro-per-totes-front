@@ -64,12 +64,13 @@ export class PreguntaForm{
       imatge: this.imatge,
     });
 
-    //Si volem editar la pregunta, les dades de la ciutat seleccionada es posen al formulari
+    //Si volem editar la pregunta, les dades de la pregunta seleccionada es posen al formulari
     effect(() => {
       if(this.preguntaSeleccionada()){
         this.preguntaForm.patchValue({
           titol: this.preguntaSeleccionada()!.titol,
-          text: this.preguntaSeleccionada()!.text
+          text: this.preguntaSeleccionada()!.text,
+          imatge: this.preguntaSeleccionada()!.imatge,
         })
       }
     });

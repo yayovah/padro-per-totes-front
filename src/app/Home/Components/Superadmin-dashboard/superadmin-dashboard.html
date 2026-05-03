@@ -29,7 +29,7 @@
 
         </app-card>
         <!-- Formulari per afegir administradores -->
-        @if(addAdmin()){
+        @if(idCiutatSeleccionada() && (accioActual() === 'add')){
         <app-card [title]="'Nueva administradora'"
             [subtitle]="'Selecciona una administradora para añadir a esta ciudad'">
             <app-add-admin [idCiutatSeleccionada]="idCiutatSeleccionada()"></app-add-admin>
