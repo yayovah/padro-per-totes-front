@@ -101,8 +101,6 @@ constructor(
     }
     this.situacioService.createSituacio(dades).subscribe({
       next: (situacioCreada) => {
-        //this.adminDashService.idSituacioSeleccionada.set(situacioCreada.id);
-        console.log(situacioCreada);
         this.adminDashService.situacions.set([...this.adminDashService.situacions(), situacioCreada]);
         this.adminDashService.accioActual.set('view');
       },

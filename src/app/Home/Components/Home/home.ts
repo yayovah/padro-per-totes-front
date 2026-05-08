@@ -119,7 +119,6 @@ export class Home{
         //Petició a la api
     this.homeService.baixarPDFdeAPI(this.idItinerari()!).subscribe({
       next: (pdf) => {
-        console.log('descarregant...');
         const file = new Blob([pdf], { type: 'application/pdf' });
         const fileURL = URL.createObjectURL(file);
         window.open(fileURL); // Això obrirà el PDF en una nova pestanya

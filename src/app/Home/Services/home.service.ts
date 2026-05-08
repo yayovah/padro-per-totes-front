@@ -121,13 +121,10 @@ export class HomeService {
       resposta: this.situacioSeleccionada()?.resposta!
     }
     this.passos.update((passos) => [...passos, pasText]);
-    console.log("GUARDANT PAS::: ", pas);
-    console.log("GUARDANT PASTEXT::: ", pasText);
     
     this.itinerariService.createPas(pas).subscribe({
-      next: (pas) => {
-        this.itinerariSeguit.set({itinerari:this.itinerariSeguit()?.itinerari!, passos: [...this.itinerariSeguit()?.passos || [], pas]});
-      },
+      next: (pas) => this.itinerariSeguit.set(
+        {itinerari:this.itinerariSeguit()?.itinerari!, passos: [...this.itinerariSeguit()?.passos || [], pas]}),
       error: (error) => this.modalService.showModalError(error)
     });
   }

@@ -68,8 +68,10 @@ export class AddAdmin implements OnInit{
 
     if(this.idCiutatSeleccionada){
       this.permisService.createPermis(this.idCiutatSeleccionada, this.admin.value).subscribe({
-        next: (permis) => this.nouAdmin.emit(permis.user),
-          //this.nousAdmins.update(admins => admins.filter(admin => admin.id !== this.admin.value)),
+        next: (permis) => {
+          this.modalService.showModalOk("Permiso añadido correctamente");
+          this.nouAdmin.emit(permis.user);
+        },
         error: (error) => this.modalService.showModalError("Error al intentar añadir el permiso" , error)
       });
     }

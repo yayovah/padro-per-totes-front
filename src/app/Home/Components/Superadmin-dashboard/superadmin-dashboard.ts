@@ -69,7 +69,7 @@ export class SuperadminDashboard{
       if(this.accioActual() === 'view'){
         this.ciutatsService.getAdminsCiutat(this.idCiutatSeleccionada()!).subscribe({
           next: ((admins) => this.suepradminDashService.ciutatAdmins.set(admins)),
-          error: ((error) => this.modalService.showModalError("Error al intentar cargar" , error))
+          error: ((error) => this.modalService.showModalError("Error al intentar cargar los permisos." , error))
         });
       }
       if(this.accioActual() === 'delete'){

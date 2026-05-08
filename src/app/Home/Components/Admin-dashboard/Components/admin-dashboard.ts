@@ -145,6 +145,7 @@ export class AdminDashboard implements OnInit{
             if(resultat){
               this.preguntaService.deletePregunta(this.idPreguntaSeleccionada()!).subscribe({
                 next: () => {
+                  this.modalService.showModalOk("Pregunta eliminada correctamente");
                   this.adminDashService.preguntes.update(preguntes => preguntes.filter(p => p.id !== this.idPreguntaSeleccionada()));
                   this.adminDashService.idPreguntaSeleccionada.set(null);
                 },
@@ -168,7 +169,10 @@ export class AdminDashboard implements OnInit{
         next: (resultat) => {
           if(resultat){
             this.situacioService.deleteSituacio(event.id).subscribe({
-              next: (a) => this.adminDashService.situacions.update((situacions) => situacions.filter((sit) => sit.id !== event.id)),
+              next: (a) => {
+                this.adminDashService.situacions.update((situacions) => situacions.filter((sit) => sit.id !== event.id));
+                this.modalService.showModalOk("Respuesta eliminada correctamente");
+              },
               error: (error) =>this.modalService.showModalError("Error en eliminar la respuesta: " , error)
             })            
           }
@@ -185,12 +189,3 @@ export class AdminDashboard implements OnInit{
     this.adminDashService.accioActual.set('view');
   }
 }
-
-
-        /* this.modalService.showModalEliminar("¿Seguro?", "Eliminar").subscribe({
-          next: (resultat) => {
-            if(resultat){
-              
-            }
-          }
-        }) */
