@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, output } from '@angular/core';
 import { ModalService } from './modal.service';
 
 @Component({
@@ -11,10 +11,18 @@ export class Modal {
   //Servei del modal
   modalService = inject(ModalService);
   //Valors del modal al Servei (tipus i meiisatge)
-  modalTipe = computed(() => this.modalService.modalTipe());
-  modalMessage = computed(() => this.modalService.modalMessage()); 
-  
+  modalTipo = computed(() => this.modalService.modalTipo());
+  modalMissatge = computed(() => this.modalService.modalMissatge()); 
+  modalTitol = computed(() => this.modalService.modalTitol()); 
+  botonsConfirmacio = computed(() => this.modalService.botonsConfirmacio()); 
+
   close(): void {
     this.modalService.closeModal();
+  }
+
+  returnBoolean(valor: boolean): void {
+    this.modalService.resultatObservable.next(valor);
+    this.modalService.resultatObservable.complete();
+    this.close();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, computed, inject, Input, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, Input, OnInit, output, signal } from '@angular/core';
 import { LlistableDTO } from '../../../Shared/Models/llistable.dto';
 import { Auth } from '../../../Auth/Services/auth';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { Select } from '../../../Shared/Components/form-controls/select/select';
 import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { Permis } from '../../Services/permis';
+import { CiutatDTO } from '../../Models/ciutat.dto';
+import { UserDTO } from '../../../Auth/Model/auth.dto';
 
 @Component({
   selector: 'app-add-admin',
@@ -35,6 +37,8 @@ export class AddAdmin implements OnInit{
 
   @Input() idCiutatSeleccionada: number | null = null;
 
+  nouAdmin = output<UserDTO>();
+
   constructor(
     private formBuilder: FormBuilder,
   ){
@@ -50,7 +54,8 @@ export class AddAdmin implements OnInit{
   
   ngOnInit(){
     this.AuthService.getUsersByRol('admin')
-      .subscribe((users) => this.nousAdmins.set(users));   
+      .subscribe((users) => this.nousAdmins.set(users));
+      //Falta eliminar tots els que ja son admins de la ciutat
   }
 
   submit(){
@@ -61,7 +66,8 @@ export class AddAdmin implements OnInit{
 
     if(this.idCiutatSeleccionada){
       this.permisService.createPermis(this.idCiutatSeleccionada, this.admin.value).subscribe({
-        next: () => this.nousAdmins.update(admins => admins.filter(admin => admin.id !== this.admin.value)),
+        next: (permis) => this.nouAdmin.emit(permis.user),
+          //this.nousAdmins.update(admins => admins.filter(admin => admin.id !== this.admin.value)),
         error: (error) => console.error("Error al intentar añadir el permiso", error)
       });
     }

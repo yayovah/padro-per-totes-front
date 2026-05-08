@@ -4,50 +4,54 @@
             <h1>Dashboard</h1>
             <p>Gestiona las ciudades</p>
             <app-list [title]="'Ciutats'" [items]="ciutatsLlistables()" [editable]="true" [back]="false"
-                (accio)="handleAccio($event)" [idSelected]="idCiutatSeleccionada()">
+                (accio)="handleAccioCiutats($event)" [idSelected]="idCiutatSeleccionada()">
             </app-list>
         </div>
     </div>
     <div class="o-layout-part">
         @if(idCiutatSeleccionada()){
-        @if(accioActual()=='view'){
-        <app-card [title]="ciutatSeleccionada()?.nom" [subtitle]="'Gestiona la administración de esta ciudad'">
-            <div class="o-card-content">
-                @if(adminsLlistables()){
-                <app-list-in-card [title]="'Administradors de la ciutat'" [items]="adminsLlistables()" [esborrable]="true"
-                    (accio)="handleAccioAdmins($event)">
-                </app-list-in-card>
-                }
-                @else{
-                <p>No hay administradoras para esta ciudad</p>
-                }
-            </div>
-            <div>
-                <app-submit [text]="'Nueva administradora'" (clickEvent)="afegeixAdmin()" [icono]="true">
-                </app-submit>
-            </div>
+            @if(accioActual()=='view'){
+            <app-card [title]="ciutatSeleccionada()?.nom" [subtitle]="'Gestiona la administración de esta ciudad'">
+                <div class="o-card-content">
+                    @if(adminsLlistables()){
+                    <app-list-in-card [title]="'Administradors de la ciutat'" [items]="adminsLlistables()" [esborrable]="true"
+                        (accio)="handleAccioAdmins($event)">
+                    </app-list-in-card>
+                    }
+                    @else{
+                    <p>No hay administradoras para esta ciudad</p>
+                    }
+                </div>
+                <div>
+                    <app-submit [text]="'Nueva administradora'" (clickEvent)="afegeixAdmin()" [icono]="true">
+                    </app-submit>
+                </div>
 
-        </app-card>
-        <!-- Formulari per afegir administradores -->
-        @if(idCiutatSeleccionada() && (accioActual() === 'add')){
-        <app-card [title]="'Nueva administradora'"
-            [subtitle]="'Selecciona una administradora para añadir a esta ciudad'">
-            <app-add-admin [idCiutatSeleccionada]="idCiutatSeleccionada()"></app-add-admin>
-        </app-card>
+            </app-card>
+            }
+            <!-- Formulari per afegir administradores -->
+            @if((accioActual() === 'add')){
+            <app-card [title]="'Nueva administradora'"
+                [subtitle]="'Selecciona una administradora para añadir a esta ciudad'">
+                <app-add-admin [idCiutatSeleccionada]="idCiutatSeleccionada()" (nouAdmin)="actualitzaAdmins($event)"></app-add-admin>
+            </app-card>
+            }
+
+
+            @if(accioActual() === 'edit'){
+            <app-card [title]="ciutatSeleccionada()?.nom" [subtitle]="'Edita la ciutat'">
+                <app-ciutat-form
+                    (ciutatActualitzada) = "actualitzaCiutats($event)"
+                ></app-ciutat-form>
+            </app-card>
+            }
         }
 
-
-        }
-        @if(accioActual() === 'edit'){
-        <app-card [title]="ciutatSeleccionada()?.nom" [subtitle]="'Edita la ciutat'">
-            <app-ciutat-form></app-ciutat-form>
-        </app-card>
-        }
-        }
-
-        @if(accioActual() === 'add'){
+        @if(!idCiutatSeleccionada() && accioActual() === 'add'){
         <app-card [title]="'Añadir nueva ciudad'" [subtitle]="'Añade una nueva ciudad a la lista'">
-            <app-ciutat-form></app-ciutat-form>
+            <app-ciutat-form
+                (ciutatActualitzada) = "actualitzaCiutats($event)"
+            ></app-ciutat-form>
         </app-card>
         }
     </div>

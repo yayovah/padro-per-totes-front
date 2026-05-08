@@ -140,13 +140,21 @@ export class AdminDashboard implements OnInit{
         });
       }
       if(event.type === 'delete'){
-        this.preguntaService.deletePregunta(this.idPreguntaSeleccionada()!).subscribe({
-          next: () => {
-            this.adminDashService.preguntes.update(preguntes => preguntes.filter(p => p.id !== this.idPreguntaSeleccionada()));
-            this.adminDashService.idPreguntaSeleccionada.set(null);
-          },
-          error: (error) => console.error("Error al intentar eliminar la pregunta", error)
-        });  
+        this.modalService.showModalEliminar("¿Seguro que quieres eliminar la pregunta?", "Eliminar pregunta").subscribe({
+          next: (resultat) => {
+            if(resultat){
+              this.preguntaService.deletePregunta(this.idPreguntaSeleccionada()!).subscribe({
+                next: () => {
+                  this.adminDashService.preguntes.update(preguntes => preguntes.filter(p => p.id !== this.idPreguntaSeleccionada()));
+                  this.adminDashService.idPreguntaSeleccionada.set(null);
+                },
+                error: (error) => console.error("Error al intentar eliminar la pregunta", error)
+              }); 
+            }
+          }
+        })
+
+ 
       }
     }
   }
@@ -156,12 +164,15 @@ export class AdminDashboard implements OnInit{
     this.adminDashService.idSituacioSeleccionada.set(event.id ?? null);
     
     if(event.type === 'delete' && event.id){
-      this.situacioService.deleteSituacio(event.id).subscribe({
-        next: (a) => {
-          console.log('situacio eliminada', a);
-          this.adminDashService.situacions.update((situacions) => situacions.filter((sit) => sit.id !== event.id));
-        },
-        error: (error) =>console.error(error)
+      this.modalService.showModalEliminar("¿Seguro que quieres eliminar la respuesta?", "Eliminar").subscribe({
+        next: (resultat) => {
+          if(resultat){
+            this.situacioService.deleteSituacio(event.id).subscribe({
+              next: (a) => this.adminDashService.situacions.update((situacions) => situacions.filter((sit) => sit.id !== event.id)),
+              error: (error) =>console.error(error)
+            })            
+          }
+        }
       })
     }
   }
@@ -174,3 +185,12 @@ export class AdminDashboard implements OnInit{
     this.adminDashService.accioActual.set('view');
   }
 }
+
+
+        /* this.modalService.showModalEliminar("¿Seguro?", "Eliminar").subscribe({
+          next: (resultat) => {
+            if(resultat){
+              
+            }
+          }
+        }) */

@@ -1,5 +1,5 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { ItinerariDTO, ItinerariSeguitDTO, PasDTO } from '../../Shared/Models/itinerari.dto';
+import { ItinerariDTO, ItinerariSeguitDTO, PasDTO, PasTextDTO } from '../../Shared/Models/itinerari.dto';
 import { UserDTO } from '../../Auth/Model/auth.dto';
 import { PreguntaDTO } from '../../Preguntes/Models/pregunta.dto';
 import { SituacioDTO } from '../../Situacions/Model/situacio.dto';
@@ -9,6 +9,7 @@ import { Pregunta } from '../../Preguntes/Services/pregunta';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { catchError, Observable, throwError } from 'rxjs';
+import { ItinerariService } from './itinerari.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,23 +17,27 @@ import { catchError, Observable, throwError } from 'rxjs';
 export class HomeService {
   private situacioService = inject(Situacio);
   private preguntaService = inject(Pregunta);
+  private itinerariService = inject(ItinerariService);
   
   usuari = signal<UserDTO | null>(null);
   preguntes = signal<PreguntaDTO[]>([]);
   situacions = signal<SituacioDTO[]>([]);
   
-  itinerariSeguit  = signal<ItinerariSeguitDTO | null>(null);
   
   ciutatSeleccionada = signal<CiutatDTO | null>(null);
   idPreguntaSeleccionada = signal<number | null>(null);
   preguntaSeleccionada = computed(() => {
     return this.preguntes().find(p => p.id == this.idPreguntaSeleccionada()) ?? this.carregaPregunta();
   });
-
+  
   idSituacioSeleccionada = signal<number | null>(null);
   situacioSeleccionada = computed(() => {
     return this.situacions().find(p => p.id == this.idSituacioSeleccionada()) ?? null;
   });
+  
+  itinerariSeguit  = signal<ItinerariSeguitDTO | null>(null);
+  idItinerari = computed(() => this.itinerariSeguit()?.itinerari.id);
+  passos = signal<PasTextDTO[]>([]);
 
   accioActual= signal<String | null>("");  
 
@@ -42,7 +47,7 @@ export class HomeService {
 
   constructor(private http: HttpClient){
     effect(()=> {
-        //this.monitor();
+        this.monitor();
       }
     )
   }
@@ -65,11 +70,10 @@ export class HomeService {
     if(this.idPreguntaSeleccionada()){
       this.situacioService.getSituacionsByPregunta(this.idPreguntaSeleccionada()!).subscribe({
         next: (situacions) => {
-          //const situacionsNoves = situacions.filter(novaSit => !this.situacions().some(situacio => situacio.id === novaSit.id));
-          //this.situacions.set([...this.situacions(), ...situacionsNoves]);
           this.situacions.set(situacions);
+          if(situacions.length === 0){this.carregaPasFinal();}
         },
-        error: ((error) => console.error("Error al intentar cargar", error))
+        error: (error) => console.error("Error al intentar cargar", error)
       });
     }
   }
@@ -97,6 +101,36 @@ export class HomeService {
           })
     );
   }
+
+  carregaPasFinal(){
+    this.passos.update((passos) => 
+      [...passos, { pregunta: this.preguntaSeleccionada()! }]);
+  }
+
+
+  guardaPas(){
+    const pas:PasDTO = {
+      itinerari: this.idItinerari()!,
+      pregunta: this.idPreguntaSeleccionada()!,
+      resposta: this.situacioSeleccionada()?.resposta?.id!
+    }
+    const pasText:PasTextDTO = {
+      pregunta: this.situacioSeleccionada()?.pregunta!,
+      resposta: this.situacioSeleccionada()?.resposta!
+    }
+    this.passos.update((passos) => [...passos, pasText]);
+    console.log("GUARDANT PAS::: ", pas);
+    console.log("GUARDANT PASTEXT::: ", pasText);
+    
+    this.itinerariService.createPas(pas).subscribe({
+      next: (pas) => {
+        this.itinerariSeguit.set({itinerari:this.itinerariSeguit()?.itinerari!, passos: [...this.itinerariSeguit()?.passos || [], pas]});
+      },
+      error: (error) => console.error(error)
+    });
+  }
+  
+
 }
 
   //Estats

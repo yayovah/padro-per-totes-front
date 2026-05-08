@@ -1,47 +1,48 @@
 import { computed, Injectable, signal } from "@angular/core";
 import { UserDTO } from "../../Models/user.dto";
+import { Observable, Subject } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 
 export class ModalService {
-    showSpinner = signal(false);
-    modalTipe = signal('');
-    modalMessage = signal('');
+    //showSpinner = signal<boolean>(false);
+    modalTipo = signal<string>('');
+    modalMissatge = signal<string>('');
+    modalTitol = signal<string>('');
+    botonsConfirmacio = signal<boolean>(false);
+    resultatObservable = new Subject<boolean>();
 
-    icono = computed(() => {
-        switch(this.modalTipe()){
-            case 'ok':
-                break;
-            case 'info':
-                break;
-            case 'error':
-                break;
-            default:
-                break;
-        }
-    }
-        
-    )
-
-    showModalOk(message: string): void {
-        this.modalTipe.set('ok');
-        this.modalMessage.set(message);
+    showModalOk(missatge: string, titol: string ='¡Hecho!'): void {
+        this.modalTipo.set('ok');
+        this.modalMissatge.set(missatge);
+        this.modalTitol.set(titol);
     }
 
-    showModalError(message: string): void {
-        this.modalTipe.set('error');
-        this.modalMessage.set(message);
+    showModalError(missatge: string, titol: string ='¡Error!'): void {
+        this.modalTipo.set('error');
+        this.modalMissatge.set(missatge);
+        this.modalTitol.set(titol);
     }
 
-    showModalInfo(message: string): void {
-        this.modalTipe.set('info');
-        this.modalMessage.set(message);
+    showModalEliminar(missatge: string, titol: string ='¿Seguro que quieres eliminar?'): Observable<boolean> {
+        this.modalTipo.set('delete');
+        this.modalMissatge.set(missatge);
+        this.modalTitol.set(titol);
+        this.botonsConfirmacio.set(true);
+        this.resultatObservable = new Subject<boolean>();
+        return this.resultatObservable.asObservable();
+    }
+
+    showModalInfo(missatge: string, titol: string ='Información:'): void {
+        this.modalTipo.set('info');
+        this.modalMissatge.set(missatge);
+        this.modalTitol.set(titol);
     }
 
     showRegistre(): UserDTO{
-        this.modalTipe.set('info');
-        const message = "Registrate para poder volver a consultar toda la información o descargartela en PDF.";
-        this.modalMessage.set(message);
+        this.modalTipo.set('info');
+        const missatge = "Registrate para poder volver a consultar toda la información o descargartela en PDF.";
+        this.modalMissatge.set(missatge);
         return this.registreUsuari();
     }
 
@@ -51,7 +52,9 @@ export class ModalService {
     }
 
     closeModal(): void {
-        this.modalTipe.set('');
-        this.modalMessage.set('');
+        this.modalTipo.set('');
+        this.modalMissatge.set('');
+        this.modalTitol.set('');
+        this.botonsConfirmacio.set(false);
     }
 }

@@ -1,23 +1,41 @@
-@if(modalTipe() && modalMessage()){
+@if(modalTipo() && modalMissatge()){
 <div class="c-modal"  (click)="close()">
     <!-- <ng-content></ng-content> -->
      <div class="o-card-div">
         <div class="c-modal-content">
-        @switch(modalTipe()){
+        <div class="c-modal-part">
+        @switch(modalTipo()){
             @case ('ok'){
-                <i class="fa-solid fa-circle-check"></i>
-                <h1>Ok!</h1>
+                <div class="c-icon u-icon-ok">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
             }
             @case ('error'){
+                <div class="c-icon u-icon-alert">
                 <i class="fa-solid fa-circle-info"></i>
-                <h1>Error!</h1>
+                </div>
             }
             @case ('info'){
+                <div class="c-icon u-icon-info">
                 <i class="fa-solid fa-circle-exclamation"></i>
-                <h1>Info:</h1>
+                </div>
+            }
+            @case ('delete'){
+                <div class="c-icon u-icon-alert">
+                <i class="fa-solid fa-trash-can"></i>
+                </div>
             }
         }
-        <p>{{ modalMessage() }}</p>
+        <h1>{{ modalTitol() }}</h1>
+        <p>{{ modalMissatge() }}</p>
+        </div>
+
+        @if(botonsConfirmacio()){
+            <div class="c-modal-part">
+                <button (click)="returnBoolean(true);" class="o-submit-button">Aceptar</button>
+                <button (click)="returnBoolean(false);" class="o-submit-button u-alter-button">Cancelar</button>
+            </div>
+        }
         </div>
      </div>
 </div>

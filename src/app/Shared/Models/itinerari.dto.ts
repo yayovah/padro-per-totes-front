@@ -17,10 +17,10 @@ export interface PasDTO {
     id?: number,
     itinerari: number,
     pregunta: number,
-    resposta: number,
+    resposta?: number,
 }
 
 export interface PasTextDTO {
     pregunta: PreguntaDTO,
-    resposta: RespostaDTO,
+    resposta?: RespostaDTO,
 }

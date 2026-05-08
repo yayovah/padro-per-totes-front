@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, OnInit, output, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { InputText } from '../../../Shared/Components/form-controls/input-text/input-text';
 import { Store } from '@ngrx/store';
 import { CiutatDTO } from '../../Models/ciutat.dto';
 import { Ciutats } from '../../Services/ciutats';
+import { ModalService } from '../../../Shared/Components/modal/modal.service';
+import { SuperadminDashService } from '../../../Home/Services/superadmin-dash.service';
 
 @Component({
   selector: 'app-ciutat-form',
@@ -20,15 +22,18 @@ import { Ciutats } from '../../Services/ciutats';
 })
 export class CiutatForm {
   ciutatsService = inject(Ciutats);
+  modalService = inject(ModalService);
+  SuperadminDashService = inject(SuperadminDashService);
+
   ciutats = signal<CiutatDTO[]>([]);
-  idCiutatSeleccionada = signal<number | null>(null);
-  ciutatSeleccionada = computed<CiutatDTO | undefined>(() => {
-    return this.ciutats().find(ciutat => ciutat.id === this.idCiutatSeleccionada());
-  });
+  ciutatSeleccionada = computed(() => this.SuperadminDashService.ciutatSeleccionada());
+  idCiutatSeleccionada = computed(() => this.SuperadminDashService.idCiutatSeleccionada());
   
   ciutat: FormControl;
   provincia: FormControl;
   ciutatForm: FormGroup;
+
+  ciutatActualitzada = output<CiutatDTO>();
   
   constructor(  
     private formBuilder: FormBuilder,
@@ -50,6 +55,7 @@ export class CiutatForm {
     //Si volem editar la ciutat, les dades de la ciutat seleccionada es posen al formulari
     effect(() => {
       if(this.ciutatSeleccionada()){
+        console.log("PATCHING::::")
         this.ciutatForm.patchValue({
           ciutat: this.ciutatSeleccionada()!.nom,
           provincia: this.ciutatSeleccionada()!.provincia
@@ -73,14 +79,24 @@ export class CiutatForm {
         id: this.idCiutatSeleccionada()!
       };
       this.ciutatsService.updateCiutat(dadesCiutat).subscribe({
-        next: (ciutatActualitzada) => this.idCiutatSeleccionada.set(ciutatActualitzada.id),
-        error: (error) => console.error("Error al intentar actualizar la ciudad", error)
+        next: (ciutatAct) => {
+          this.ciutatActualitzada.emit(ciutatAct);
+          this.modalService.showModalOk("Ciudad actualizada correctamente");
+        },
+        error: (error) => {
+          this.modalService.showModalError("Error al intentar actualizar la ciudad" + error);
+          //console.error("Error al intentar actualizar la ciudad", error)
+        }
       }); 
     }
     else{
       this.ciutatsService.createCiutat(dadesForm).subscribe({
-        next: (novaCiutat) => this.idCiutatSeleccionada.set(novaCiutat.id),
-        error: (error) => console.error("Error al intentar crear la ciudad", error)
+        next: (novaCiutat) => {
+          this.ciutatActualitzada.emit(novaCiutat);
+          this.modalService.showModalOk("Ciudad creada correctamente");
+        },
+        error: (error) => this.modalService.showModalError("Error al intentar crear la ciudad" + error)
+          //console.error("Error al intentar crear la ciudad", error)
       });
     }
     

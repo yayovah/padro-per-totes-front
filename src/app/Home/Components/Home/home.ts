@@ -48,9 +48,11 @@ export class Home{
   respostes = signal<RespostaDTO[]>([]);
 
   itinerari = computed(() => this.homeService.itinerariSeguit());
-  idItinerari = computed(() => this.itinerari()?.itinerari.id);
+  idItinerari = computed(() => this.homeService.idItinerari());
 
-  passos = signal<PasTextDTO[]>([]);
+
+  //passos = signal<PasTextDTO[]>([]);
+  passos = computed(() => this.homeService.passos());
 
     // Creem l'array de llistables a partir de l'array de preguntes
    preguntesLlistables = computed<LlistableDTO[]>(() => 
@@ -107,33 +109,11 @@ export class Home{
   seleccionaResposta(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
     if(event.id){
       this.homeService.idSituacioSeleccionada.set(event.id);
-      this.guardaPas();
+      this.homeService.guardaPas();
       //Afegeix la següent pregunta
       this.homeService.idPreguntaSeleccionada.set(this.homeService.situacioSeleccionada()?.seguent_pregunta?.id!);
     }
   }
-
-  guardaPas(){
-    const pas:PasDTO = {
-      itinerari: this.idItinerari()!,
-      pregunta: this.idPreguntaSeleccionada()!,
-      resposta: this.situacioSeleccionada()?.resposta?.id!
-    }
-    const pasText:PasTextDTO = {
-      pregunta: this.situacioSeleccionada()?.pregunta!,
-      resposta: this.situacioSeleccionada()?.resposta!
-    }
-    this.passos.update((passos) => [...passos, pasText]);
-    
-    console.log("PAS A API --> ", pas);
-    this.itinerariService.createPas(pas).subscribe({
-      next: (pas) => {
-        this.homeService.itinerariSeguit.set({itinerari:this.itinerari()?.itinerari!, passos: [...this.itinerari()?.passos || [], pas]});
-      },
-      error: (error) => console.error(error)
-    });
-  }
-  
 
   baixarPdf(){
         //Petició a la api
