@@ -8,6 +8,7 @@ import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
 import { Permis } from '../../Services/permis';
 import { CiutatDTO } from '../../Models/ciutat.dto';
 import { UserDTO } from '../../../Auth/Model/auth.dto';
+import { ModalService } from '../../../Shared/Components/modal/modal.service';
 
 @Component({
   selector: 'app-add-admin',
@@ -23,6 +24,7 @@ import { UserDTO } from '../../../Auth/Model/auth.dto';
 export class AddAdmin implements OnInit{
   private AuthService = inject(Auth);
   private permisService = inject(Permis);
+  private modalService = inject(ModalService);
   
   private nousAdmins = signal<any[]>([]);
   nousAdminsLlistables = computed<LlistableDTO[]>(() => 
@@ -68,7 +70,7 @@ export class AddAdmin implements OnInit{
       this.permisService.createPermis(this.idCiutatSeleccionada, this.admin.value).subscribe({
         next: (permis) => this.nouAdmin.emit(permis.user),
           //this.nousAdmins.update(admins => admins.filter(admin => admin.id !== this.admin.value)),
-        error: (error) => console.error("Error al intentar añadir el permiso", error)
+        error: (error) => this.modalService.showModalError("Error al intentar añadir el permiso" , error)
       });
     }
   }

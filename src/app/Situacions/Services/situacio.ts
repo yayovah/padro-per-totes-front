@@ -5,11 +5,14 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { SituacioDTO } from '../Model/situacio.dto';
 import { SituacioToBDDTO } from '../Model/situacioToBD.dto';
+import { ModalService } from '../../Shared/Components/modal/modal.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Situacio {
+  private modalService = inject(ModalService);
+
   private readonly baseUrl = environment.apiUrl;
   private readonly situacioEndpoint = '/situacions';
   private readonly url = `${this.baseUrl}${this.situacioEndpoint}`;
@@ -25,7 +28,7 @@ export class Situacio {
       .pipe(
         //en cas d'error en la petició
         catchError((error) => {
-          console.error('Error recuperando situaciones del servidor:', error);
+          this.modalService.showModalError('Error recuperando situaciones del servidor:', error);
           return throwError(() => new Error('Error cargando situaciones'));
         })
       );
@@ -46,7 +49,7 @@ export class Situacio {
         .post<SituacioDTO>(`${this.url}`, dades)
         .pipe(
             catchError((error) => {
-              console.error(`Error intentando crear la respuesta/situación:`, error);
+              this.modalService.showModalError(`Error intentando crear la respuesta/situación:`, error);
               return throwError(() => new Error('Error creando respuesta/situación'));
           }
         ));
@@ -63,7 +66,7 @@ export class Situacio {
     return this.http
       .put<SituacioDTO>(`${this.url}/${situacio.id}`, situacio)
         .pipe(catchError((error) => {
-          console.error(`Error actualizando la respuesta/situación en el servidor:`, error);
+          this.modalService.showModalError(`Error actualizando la respuesta/situación en el servidor:`, error);
           return throwError(() => new Error('Error actualizando respuesta/situación'));
         }
       ));
@@ -75,7 +78,7 @@ export class Situacio {
         .delete<number>(`${this.url}/${situacioId}`)
         .pipe(
             catchError((error) => {
-              console.error(`Error intentando eliminar la respuesta/situación:`, error);
+              this.modalService.showModalError(`Error intentando eliminar la respuesta/situación:`, error);
               return throwError(() => new Error('Error eliminando respuesta/situación'));
           }        
         ));

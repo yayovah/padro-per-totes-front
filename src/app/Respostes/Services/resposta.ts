@@ -3,11 +3,13 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { RespostaDTO } from '../Models/resposta.dto';
+import { ModalService } from '../../Shared/Components/modal/modal.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Resposta {
+  private modalService = inject(ModalService);
 
   private readonly baseUrl = environment.apiUrl;
   private readonly ciutatsEndpoint = '/respostes';
@@ -21,7 +23,7 @@ export class Resposta {
       .pipe(
         //en cas d'error en la petició
         catchError((error) => {
-          console.error('Error recuperando respuestas del servidor:', error);
+          this.modalService.showModalError('Error recuperando respuestas del servidor:', error);
           return throwError(() => new Error('Error cargando respuestas'));
         })
       );
@@ -34,7 +36,7 @@ export class Resposta {
         .pipe(
           //en cas d'error en la petició
           catchError((error) => {
-            console.error('Error recuperando respuestas del servidor:', error);
+            this.modalService.showModalError('Error recuperando respuestas del servidor:', error);
             return throwError(() => new Error('Error cargando respuestas'));
           })
         );
@@ -45,7 +47,7 @@ export class Resposta {
         .post<RespostaDTO>(`${this.url}/resposta/}`, dadesResposta)
         .pipe(
             catchError((error) => {
-              console.error(`Error intentando crear la respuesta:`, error);
+              this.modalService.showModalError(`Error intentando crear la respuesta:`, error);
               return throwError(() => new Error('Error creando respuesta'));
           }
         ));
@@ -55,7 +57,7 @@ export class Resposta {
       return this.http
         .put<RespostaDTO>(`${this.url}/${resposta.id}`, resposta)
           .pipe(catchError((error) => {
-            console.error(`Error actualizando la respuesta en el servidor:`, error);
+            this.modalService.showModalError(`Error actualizando la respuesta en el servidor:`, error);
             return throwError(() => new Error('Error actualizando respuesta'));
           }
         ));
@@ -66,7 +68,7 @@ export class Resposta {
         .delete<number>(`${this.url}/${respostaId}`)
         .pipe(
             catchError((error) => {
-              console.error(`Error intentando eliminar la respuesta:`, error);
+              this.modalService.showModalError(`Error intentando eliminar la respuesta:`, error);
               return throwError(() => new Error('Error eliminando respuesta'));
           }        
         ));

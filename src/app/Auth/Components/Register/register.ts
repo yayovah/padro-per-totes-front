@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth } from '../../Services/auth';
-import { RegisterDto, UserDTO } from '../../Model/auth.dto';
+import { RegisterDto } from '../../Model/auth.dto';
 import { InputEmail } from '../../../Shared/Components/form-controls/input-email/input-email';
 import { InputText } from '../../../Shared/Components/form-controls/input-text/input-text';
 import { InputPassword } from '../../../Shared/Components/form-controls/input-password/input-password';
@@ -23,7 +23,7 @@ export class Register {
   confirmPassword: FormControl;
 
   authService = inject(Auth);
-
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,7 +58,6 @@ export class Register {
   submit(){
     alert("submited");
     if (this.registreForm.invalid) {
-      console.error("INVALID!");
       this.registreForm.markAllAsTouched();
       return;
     }
@@ -69,7 +68,6 @@ export class Register {
       password_confirmation: this.confirmPassword.value,
       rol: 'admin',
     };
-    console.log("abans de cridar al authService ", credentials);
     this.authService.registre(credentials);
   }
 

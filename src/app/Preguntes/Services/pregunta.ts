@@ -3,11 +3,13 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { PreguntaDTO } from '../Models/pregunta.dto';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { ModalService } from '../../Shared/Components/modal/modal.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Pregunta {
+  private modalService = inject(ModalService);
 
   private readonly baseUrl = environment.apiUrl;
   private readonly ciutatsEndpoint = '/preguntes';
@@ -19,7 +21,7 @@ export class Pregunta {
         .get<PreguntaDTO[]>(`${this.url}/ciutat/${ciutatId}`)
         .pipe(
           catchError((error) => {
-            console.error('Error recuperando preguntas del servidor:', error);
+            this.modalService.showModalError('Error recuperando preguntas del servidor:', error);
             return throwError(() => new Error('Error cargando preguntas'));
           })
         );
@@ -30,7 +32,7 @@ export class Pregunta {
       .post<PreguntaDTO>(`${this.url}/ciutat/${ciutatId}`, dadesPregunta)
       .pipe(
           catchError((error) => {
-            console.error(`Error intentando crear la pregunta:`, error);
+            this.modalService.showModalError(`Error intentando crear la pregunta:`, error);
             return throwError(() => new Error('Error creando pregunta'));
         }
       ));
@@ -40,7 +42,7 @@ export class Pregunta {
     return this.http
       .put<PreguntaDTO>(`${this.url}/${pregunta.id}`, pregunta)
         .pipe(catchError((error) => {
-          console.error(`Error actualizando la pregunta en el servidor:`, error);
+          this.modalService.showModalError(`Error actualizando la pregunta en el servidor:`, error);
           return throwError(() => new Error('Error actualizando pregunta'));
         }
       ));
@@ -51,7 +53,7 @@ export class Pregunta {
       .delete<number>(`${this.url}/${preguntaId}`)
       .pipe(
           catchError((error) => {
-            console.error(`Error intentando eliminar la pregunta:`, error);
+            this.modalService.showModalError(`Error intentando eliminar la pregunta:`, error);
             return throwError(() => new Error('Error eliminando pregunta'));
         }        
       ));
@@ -62,7 +64,7 @@ export class Pregunta {
     .get<PreguntaDTO>(`${this.url}/ciutat/${ciutatId}/primera`)
     .pipe(
       catchError((error) => {
-        console.error('Error recuperando preguntas del servidor:', error);
+        this.modalService.showModalError('Error recuperando preguntas del servidor:', error);
         return throwError(() => new Error('Error cargando preguntas'));
       })
     );
@@ -73,7 +75,7 @@ export class Pregunta {
       .get<PreguntaDTO>(`${this.url}/${preguntaId}`)
       .pipe(
           catchError((error) => {
-            console.error(`Error intentando eliminar la pregunta:`, error);
+            this.modalService.showModalError(`Error intentando eliminar la pregunta:`, error);
             return throwError(() => new Error('Error eliminando pregunta'));
         }        
       ));

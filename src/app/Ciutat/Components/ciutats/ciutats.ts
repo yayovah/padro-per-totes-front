@@ -3,6 +3,7 @@ import { CiutatDTO } from '../../Models/ciutat.dto';
 import { Ciutats } from '../../Services/ciutats';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ModalService } from '../../../Shared/Components/modal/modal.service';
 
 @Component({
   selector: 'app-ciutats',
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common';
 export class CiutatsComponent implements OnInit {
   
   ciutatsService = inject(Ciutats);
+  modalService = inject(ModalService);
   ciutats  = signal<CiutatDTO[]>([]);
 
   ngOnInit(): void {
@@ -21,7 +23,7 @@ export class CiutatsComponent implements OnInit {
         this.ciutats.set(ciutats);
       },
       error: (error) => {
-        console.error('Error al obtener las ciudades:', error);
+        this.modalService.showModalError('Error al obtener las ciudades:' , error);
       }
     });
   }

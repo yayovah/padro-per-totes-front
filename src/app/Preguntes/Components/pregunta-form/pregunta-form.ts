@@ -10,6 +10,7 @@ import { AdminDashService } from '../../../Home/Services/admin-dash.service';
 import { LlistableDTO } from '../../../Shared/Models/llistable.dto';
 import { Imtages } from '../../../Shared/Services/imtages';
 import { Select } from '../../../Shared/Components/form-controls/select/select';
+import { ModalService } from '../../../Shared/Components/modal/modal.service';
 
 @Component({
   selector: 'app-pregunta-form',
@@ -28,6 +29,7 @@ export class PreguntaForm{
   private preguntaService = inject(Pregunta);
   private adminDashService = inject(AdminDashService);
   private imatgesService = inject(Imtages);
+  private modalService = inject(ModalService);
   
   ciutatSeleccionada = computed(() => this.adminDashService.ciutatSeleccionada());
   idCiutatSeleccionada = computed(() => this.ciutatSeleccionada()?.id ?? null);
@@ -94,14 +96,14 @@ export class PreguntaForm{
       };
       this.preguntaService.updatePregunta(dadesPregunta).subscribe({
         next: (preguntaActualitzada) => this.actualitzarPregunta(preguntaActualitzada),
-        error: (error) => console.error('Error al actualizar la pregunta:', error)
+        error: (error) => this.modalService.showModalError('Error al actualizar la pregunta:' , error)
       })
     }
     else{
 
       this.preguntaService.createPregunta(dadesForm, this.idCiutatSeleccionada()!).subscribe({
         next: (preguntaCreada) => this.actualitzarPregunta(preguntaCreada),
-        error: (error) => console.error('Error al crear la pregunta:', error)
+        error: (error) => this.modalService.showModalError('Error al crear la pregunta:' , error)
       }); 
     }
   }

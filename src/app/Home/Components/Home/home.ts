@@ -93,7 +93,7 @@ export class Home{
     if(this.idCiutatSeleccionada()){
       this.itinerariService.createItinerari({ciutat: this.idCiutatSeleccionada()!}).subscribe({
         next: (itinerari) => this.homeService.itinerariSeguit.set({itinerari : itinerari}),
-        error: (error) => console.error(error)
+        error: (error) => this.modalService.showModalError(error)
       });
       this.preguntaService.getPrimeraPregunta(this.idCiutatSeleccionada()!).subscribe({
         next: (pregunta) => {
@@ -101,7 +101,7 @@ export class Home{
           this.homeService.preguntes.set([pregunta]);
           this.homeService.carregaSituacions();
         },
-        error: (error) => console.error(error)
+        error: (error) => this.modalService.showModalError(error)
       })
     } 
   }
@@ -124,7 +124,7 @@ export class Home{
         const fileURL = URL.createObjectURL(file);
         window.open(fileURL); // Això obrirà el PDF en una nova pestanya
       },
-      error: (error) => console.error(error)
+      error: (error) => this.modalService.showModalError("Error en descargar el pdf: " +error)
       
     })
     if(!this.authService.credentials()?.user.email){

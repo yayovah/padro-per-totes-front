@@ -1,17 +1,20 @@
 
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { UserDTO } from '../../Shared/Models/user.dto';
 import { ItinerariDTO, ItinerariSeguitDTO, PasDTO } from '../../Shared/Models/itinerari.dto';
+import { ModalService } from '../../Shared/Components/modal/modal.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ItinerariService {
   
+  private modalService = inject(ModalService);
+
   private readonly baseUrl = environment.apiUrl;
   private readonly itinerarisEndpoint = '/itineraris';
   private readonly url = `${this.baseUrl}${this.itinerarisEndpoint}`;
@@ -25,7 +28,7 @@ export class ItinerariService {
       .post<ItinerariDTO>(`${this.url}/`, dadesItinerari)
       .pipe(
           catchError((error) => {
-            console.error(`Error intentando crear el itinerario :`, error);
+            this.modalService.showModalError(`Error intentando crear el itinerario :`, error);
             return throwError(() => new Error('Error creando itinerario '));
         }
       ));
@@ -36,7 +39,7 @@ export class ItinerariService {
       .post<PasDTO>(`${this.urlPas}`, dadesPas)
       .pipe(
           catchError((error) => {
-            console.error(`Error intentando crear el paso:`, error);
+            this.modalService.showModalError(`Error intentando crear el paso:`, error);
             return throwError(() => new Error('Error creando paso'));
         }
       ));
@@ -47,7 +50,7 @@ export class ItinerariService {
     .get<ItinerariSeguitDTO>(`${this.url}/${itinerariId}`)
     .pipe(
       catchError((error) => {
-        console.error('Error recuperando itinerario del servidor:', error);
+        this.modalService.showModalError('Error recuperando itinerario del servidor:', error);
         return throwError(() => new Error('Error cargando itinerario'));
       })
     );
@@ -57,7 +60,7 @@ export class ItinerariService {
     return this.http
       .put<ItinerariDTO>(`${this.url}/${dadesItinerari.id}`, dadesItinerari)
         .pipe(catchError((error) => {
-          console.error(`Error actualizando el itinerario en el servidor:`, error);
+          this.modalService.showModalError(`Error actualizando el itinerario en el servidor:`, error);
           return throwError(() => new Error('Error actualizando itinerario'));
         }
       ));

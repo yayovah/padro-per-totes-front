@@ -1,17 +1,20 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { CiutatDTO } from '../Models/ciutat.dto';
 import { environment } from '../../../environments/environment';
+import { ModalService } from '../../Shared/Components/modal/modal.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Permis {
-    private readonly baseUrl = environment.apiUrl;
-    private readonly permisosEndpoint = '/permisos';
-    private readonly url = `${this.baseUrl}${this.permisosEndpoint}`;
+  private modalService = inject(ModalService);
+
+  private readonly baseUrl = environment.apiUrl;
+  private readonly permisosEndpoint = '/permisos';
+  private readonly url = `${this.baseUrl}${this.permisosEndpoint}`;
 
   constructor(private http: HttpClient) {}
   /**
@@ -29,7 +32,7 @@ export class Permis {
     return this.http
       .post<any>(`${this.url}/`, permis)
         .pipe(catchError((error) => {
-          console.error(`Error actualizando permisos en el servidor:`, error);
+          this.modalService.showModalError(`Error actualizando permisos en el servidor:`, error);
           return throwError(() => new Error('Error actualizando permisos'));
         }
       ));

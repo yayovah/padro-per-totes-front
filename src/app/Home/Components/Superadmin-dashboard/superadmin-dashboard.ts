@@ -53,7 +53,7 @@ export class SuperadminDashboard{
   constructor(){
     this.ciutatsService.getCiutats().subscribe({
       next: (ciutats) => this.suepradminDashService.ciutats.set(ciutats),
-      error: (error) => console.error(error)
+      error: (error) => this.modalService.showModalError("No se han podido cargar las ciudades: " , error)
     });
   }
 
@@ -69,7 +69,7 @@ export class SuperadminDashboard{
       if(this.accioActual() === 'view'){
         this.ciutatsService.getAdminsCiutat(this.idCiutatSeleccionada()!).subscribe({
           next: ((admins) => this.suepradminDashService.ciutatAdmins.set(admins)),
-          error: ((error) => console.error("Error al intentar cargar", error))
+          error: ((error) => this.modalService.showModalError("Error al intentar cargar" , error))
         });
       }
       if(this.accioActual() === 'delete'){
@@ -82,7 +82,7 @@ export class SuperadminDashboard{
                   this.suepradminDashService.ciutats.update((ciutats) => ciutats.filter((ciutat) => ciutat.id != this.idCiutatSeleccionada()));
                   this.suepradminDashService.idCiutatSeleccionada.set(null);
                 },
-                error: (error) => this.modalService.showModalError("Error en eliminar la ciudad" + error)
+                error: (error) => this.modalService.showModalError("Error en eliminar la ciudad" , error)
               })
             }
           }
@@ -101,8 +101,11 @@ export class SuperadminDashboard{
         next: (resultat) => {
           if(resultat){
             this.ciutatsService.deletePermis(this.idCiutatSeleccionada()!, event.id).subscribe({
-              next: () => this.suepradminDashService.ciutatAdmins.update(admins => admins.filter(admin => admin.id !== event.id)),
-              error: (error) => console.error("Error al intentar eliminar el permiso", error)
+              next: () => {
+                this.modalService.showModalOk("Permiso eliminado correctamente.");
+                this.suepradminDashService.ciutatAdmins.update(admins => admins.filter(admin => admin.id !== event.id));
+              },
+              error: (error) => this.modalService.showModalError("Error al intentar eliminar el permiso" , error)
             });
           }
       }});
@@ -114,7 +117,6 @@ export class SuperadminDashboard{
   }
 
   actualitzaCiutats(ciutatActualitzada : CiutatDTO){
-    console.log("TORNEM DE CREAR O EDITAR");
     const ciutatsAct = this.suepradminDashService.ciutats().filter((ciutat) => ciutat.id !== ciutatActualitzada.id);
     this.suepradminDashService.ciutats.set([...ciutatsAct, ciutatActualitzada]);
     //Actualitzem la vista mostrant la ciutat creada/actualitzada

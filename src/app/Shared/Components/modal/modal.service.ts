@@ -11,6 +11,7 @@ export class ModalService {
     modalTitol = signal<string>('');
     botonsConfirmacio = signal<boolean>(false);
     resultatObservable = new Subject<boolean>();
+    error = signal<any>('');
 
     showModalOk(missatge: string, titol: string ='¡Hecho!'): void {
         this.modalTipo.set('ok');
@@ -18,10 +19,11 @@ export class ModalService {
         this.modalTitol.set(titol);
     }
 
-    showModalError(missatge: string, titol: string ='¡Error!'): void {
+    showModalError(missatge: string, error: any = '', titol: string ='¡Error!'): void {
         this.modalTipo.set('error');
         this.modalMissatge.set(missatge);
         this.modalTitol.set(titol);
+        this.error.set(error);
     }
 
     showModalEliminar(missatge: string, titol: string ='¿Seguro que quieres eliminar?'): Observable<boolean> {

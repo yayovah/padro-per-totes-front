@@ -14,6 +14,7 @@ export class Modal {
   modalTipo = computed(() => this.modalService.modalTipo());
   modalMissatge = computed(() => this.modalService.modalMissatge()); 
   modalTitol = computed(() => this.modalService.modalTitol()); 
+  error = computed(() => this.modalService.error()); 
   botonsConfirmacio = computed(() => this.modalService.botonsConfirmacio()); 
 
   close(): void {

@@ -84,8 +84,7 @@ export class CiutatForm {
           this.modalService.showModalOk("Ciudad actualizada correctamente");
         },
         error: (error) => {
-          this.modalService.showModalError("Error al intentar actualizar la ciudad" + error);
-          //console.error("Error al intentar actualizar la ciudad", error)
+          this.modalService.showModalError("Error al intentar actualizar la ciudad" , error);
         }
       }); 
     }
@@ -95,8 +94,7 @@ export class CiutatForm {
           this.ciutatActualitzada.emit(novaCiutat);
           this.modalService.showModalOk("Ciudad creada correctamente");
         },
-        error: (error) => this.modalService.showModalError("Error al intentar crear la ciudad" + error)
-          //console.error("Error al intentar crear la ciudad", error)
+        error: (error) => this.modalService.showModalError("Error al intentar crear la ciudad" , error)
       });
     }
     

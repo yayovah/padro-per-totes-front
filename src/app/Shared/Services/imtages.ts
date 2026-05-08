@@ -4,11 +4,13 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { imatgeDTO } from '../Models/imatge.dto';
 import { HttpClient } from '@angular/common/http';
 import { LlistableDTO } from '../Models/llistable.dto';
+import { ModalService } from '../Components/modal/modal.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Imtages{
+  private modalService = inject(ModalService);
   
   private readonly baseUrl = environment.apiUrl;
   private readonly imatgesEndpoint = '/imatges';
@@ -27,7 +29,7 @@ export class Imtages{
   constructor() {
     this.getImatges().subscribe({
       next: (imatges) => this.imatges.set(imatges),
-      error: (error) => console.error("Error en cargar las imatgenes del servidor.", error)
+      error: (error) => this.modalService.showModalError("Error en cargar las imatgenes del servidor.", error)
     });
   }
 
@@ -37,7 +39,7 @@ export class Imtages{
     .get<imatgeDTO[]>(this.url)
     .pipe(
       catchError((error) => {
-        console.error('Error recuperando imagenes del servidor:', error);
+        this.modalService.showModalError('Error recuperando imagenes del servidor:', error);
         return throwError(() => new Error('Error cargando imagenes'));
       })
     );
@@ -48,7 +50,7 @@ export class Imtages{
     .get<imatgeDTO>(`${this.url}/${imatgeId}`)
     .pipe(
       catchError((error) => {
-        console.error('Error recuperando imagen del servidor:', error);
+        this.modalService.showModalError('Error recuperando imagen del servidor:', error);
         return throwError(() => new Error('Error cargando imagen'));
       })
     );

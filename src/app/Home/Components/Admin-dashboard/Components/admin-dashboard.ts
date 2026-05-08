@@ -91,7 +91,7 @@ export class AdminDashboard implements OnInit{
     if(this.idCiutatSeleccionada()){
       this.preguntaService.getPreguntesByCiutat(this.idCiutatSeleccionada()!).subscribe({
         next: (preguntes) => this.adminDashService.preguntes.set(preguntes),
-        error: (error) => console.error('Error al obtener las preguntas:', error)
+        error: (error) => this.modalService.showModalError('Error al obtener las preguntas:', error)
       });
     } 
   }
@@ -136,7 +136,7 @@ export class AdminDashboard implements OnInit{
         this.situacioService.getSituacionsByPregunta(this.idPreguntaSeleccionada()!).subscribe({
           next: ((situacions) => 
             this.adminDashService.situacions.set(situacions)),
-          error: ((error) => console.error("Error al intentar cargar", error))
+          error: ((error) => this.modalService.showModalError("Error al intentar cargar", error))
         });
       }
       if(event.type === 'delete'){
@@ -148,7 +148,7 @@ export class AdminDashboard implements OnInit{
                   this.adminDashService.preguntes.update(preguntes => preguntes.filter(p => p.id !== this.idPreguntaSeleccionada()));
                   this.adminDashService.idPreguntaSeleccionada.set(null);
                 },
-                error: (error) => console.error("Error al intentar eliminar la pregunta", error)
+                error: (error) => this.modalService.showModalError("Error al intentar eliminar la pregunta", error)
               }); 
             }
           }
@@ -169,7 +169,7 @@ export class AdminDashboard implements OnInit{
           if(resultat){
             this.situacioService.deleteSituacio(event.id).subscribe({
               next: (a) => this.adminDashService.situacions.update((situacions) => situacions.filter((sit) => sit.id !== event.id)),
-              error: (error) =>console.error(error)
+              error: (error) =>this.modalService.showModalError("Error en eliminar la respuesta: " , error)
             })            
           }
         }

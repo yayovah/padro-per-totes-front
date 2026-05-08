@@ -1,15 +1,18 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { CiutatDTO } from '../Models/ciutat.dto';
 import { environment } from '../../../environments/environment';
 import { UserDTO } from '../../Shared/Models/user.dto';
+import { ModalService } from '../../Shared/Components/modal/modal.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Ciutats {
+  modalService = inject(ModalService);
+
   private readonly baseUrl = environment.apiUrl;
   private readonly ciutatsEndpoint = '/ciutats';
   private readonly url = `${this.baseUrl}${this.ciutatsEndpoint}`;
@@ -29,7 +32,7 @@ export class Ciutats {
     .pipe(
       //en cas d'error en la petició
       catchError((error) => {
-        console.error('Error recuperando ciudades del servidor:', error);
+        this.modalService.showModalError('Error recuperando ciudades del servidor:', error);
         return throwError(() => new Error('Error fetching ciutat'));
       })
     );
@@ -40,7 +43,7 @@ export class Ciutats {
       .get<any[]>(`${this.url}/${ciutatId}/admins`)
       .pipe(
         catchError((error) => {
-          console.error(`Error recuperando administradores de la ciudad del servidor:`, error);
+         this.modalService.showModalError(`Error recuperando administradores de la ciudad del servidor:`, error);
           return throwError(() => new Error('Error fetching ciutat admins'));
         }
       ));
@@ -50,7 +53,7 @@ export class Ciutats {
     return this.http
       .put<CiutatDTO>(`${this.url}/${dadesCiutat.id}`, dadesCiutat)
         .pipe(catchError((error) => {
-          console.error(`Error actualizando la ciudad en el servidor:`, error);
+          this.modalService.showModalError(`Error actualizando la ciudad en el servidor:`, error);
           return throwError(() => new Error('Error updating ciutat'));
         }
       ));
@@ -61,7 +64,7 @@ export class Ciutats {
       .post<CiutatDTO>(`${this.url}`, dadesCiutat)
       .pipe(
           catchError((error) => {
-            console.error(`Error intentando crear la ciudad:`, error);
+            this.modalService.showModalError(`Error intentando crear la ciudad:`, error);
             return throwError(() => new Error('Error creating ciutat'));
         }
       ));
@@ -72,7 +75,7 @@ export class Ciutats {
       .delete<number>(`${this.url}/${ciutatId}`)
       .pipe(
           catchError((error) => {
-            console.error(`Error intentando eliminar la ciudad:`, error);
+            this.modalService.showModalError(`Error intentando eliminar la ciudad:`, error);
             return throwError(() => new Error('Error deleting ciutat'));
         }        
       ));
@@ -82,7 +85,7 @@ export class Ciutats {
     return this.http
       .delete<any>(`${this.url}/ciutat/${ciutatId}/admin/${adminId}`)
         .pipe(catchError((error) => {
-          console.error(`Error actualizando permisos en el servidor:`, error);
+          this.modalService.showModalError(`Error actualizando permisos en el servidor:`, error);
           return throwError(() => new Error('Error actualizando permisos'));
         }
       ));
@@ -93,7 +96,7 @@ export class Ciutats {
       .get<any>(`${this.url}/administrades/${userId}`)
       .pipe(
         catchError((error) => {
-          console.error(`Error recuperando ciudades administradas del servidor:`, error);
+          this.modalService.showModalError(`Error recuperando ciudades administradas del servidor:`, error);
           return throwError(() => new Error('Error recuperando cudades administradas'));
         }
       ));

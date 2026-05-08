@@ -23,7 +23,7 @@ export class Auth {
 
   //Injecció de serveis
   private router = inject(Router);
-    modalService = inject(ModalService);
+  modalService = inject(ModalService);
 
   //Signals
   // Credencials accessibles des de l'app
@@ -54,7 +54,8 @@ export class Auth {
         tap( credentials => this.acredita(credentials)),
         catchError((error) => {
           //Mostrar un modal, quan estigui el servei fet
-          throw new Error('Error haciendo login: ' + error.message);
+          this.modalService.showModalError('Error haciendo login: ' , error.message)
+          throw new Error(error);
       }))
       .subscribe();
   }
@@ -75,7 +76,7 @@ export class Auth {
       .get<any[]>(`${this.url}/${rol}`)
       .pipe(
         catchError((error) => {
-          console.error(`Error recuperando administradores des del servidor:`, error);
+          this.modalService.showModalError(`Error recuperando administradores des del servidor:` , error);
           return throwError(() => new Error('Error recuperando listado de admins'));
         }
       ));
@@ -144,7 +145,7 @@ export class Auth {
       ),
       catchError((error) => {
         //Mostrar un modal, quan estigui el servei fet
-        this.modalService.showModalError(error);
+        this.modalService.showModalError('Error registrando nuva usuária: ' , error.message);
         throw new Error('Error registrando nuva usuária: ' + error.message);
       }))
     .subscribe();

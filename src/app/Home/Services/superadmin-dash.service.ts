@@ -18,7 +18,7 @@ export class SuperadminDashService {
 
   constructor(){
     effect(()=> {
-        this.monitor();
+        //this.monitor();
       }
     )
   }

@@ -9,6 +9,7 @@ import { SituacioDTO } from '../../Model/situacio.dto';
 import { LlistableDTO } from '../../../Shared/Models/llistable.dto';
 import { Situacio } from '../../Services/situacio';
 import { AdminDashService } from '../../../Home/Services/admin-dash.service';
+import { ModalService } from '../../../Shared/Components/modal/modal.service';
 
 @Component({
   selector: 'app-situacio-form',
@@ -25,6 +26,7 @@ import { AdminDashService } from '../../../Home/Services/admin-dash.service';
 export class SituacioForm {
   private situacioService = inject(Situacio);
   private adminDashService = inject(AdminDashService);
+  private modalService = inject(ModalService);
   
   situacions = computed(() => this.adminDashService.situacions());
   respostes = computed(() => this.adminDashService.respostes());
@@ -105,7 +107,7 @@ constructor(
         this.adminDashService.accioActual.set('view');
       },
       error: (error) => {
-        console.error('Error al crear la respuesta:', error);
+        this.modalService.showModalError('Error al crear la respuesta:', error);
       }
     });
   }

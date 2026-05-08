@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { catchError, Observable, throwError } from 'rxjs';
 import { ItinerariService } from './itinerari.service';
+import { ModalService } from '../../Shared/Components/modal/modal.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class HomeService {
   private situacioService = inject(Situacio);
   private preguntaService = inject(Pregunta);
   private itinerariService = inject(ItinerariService);
+  private modalService = inject(ModalService);
   
   usuari = signal<UserDTO | null>(null);
   preguntes = signal<PreguntaDTO[]>([]);
@@ -73,7 +75,7 @@ export class HomeService {
           this.situacions.set(situacions);
           if(situacions.length === 0){this.carregaPasFinal();}
         },
-        error: (error) => console.error("Error al intentar cargar", error)
+        error: (error) => this.modalService.showModalError("Error al intentar cargar" , error)
       });
     }
   }
@@ -86,7 +88,7 @@ export class HomeService {
             this.preguntes.set([...this.preguntes(), pregunta]);
           }
         },
-        error: ((error) => console.error("Error al intentar cargar", error))
+        error: ((error) => this.modalService.showModalError("Error al intentar cargar", error))
       });
       this.carregaSituacions();
     }
@@ -96,7 +98,7 @@ export class HomeService {
     return this.http.get<any>(`${this.url}/${id}`, {responseType: 'blob' as 'json'}).pipe(
           //en cas d'error en la petició
           catchError((error) => {
-            console.error('Error en descargar el PDF del servidor:', error);
+            this.modalService.showModalError('Error en descargar el PDF del servidor:', error);
             return throwError(() => new Error('Error en el PDF'));
           })
     );
@@ -126,7 +128,7 @@ export class HomeService {
       next: (pas) => {
         this.itinerariSeguit.set({itinerari:this.itinerariSeguit()?.itinerari!, passos: [...this.itinerariSeguit()?.passos || [], pas]});
       },
-      error: (error) => console.error(error)
+      error: (error) => this.modalService.showModalError(error)
     });
   }
   
