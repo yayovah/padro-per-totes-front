@@ -55,7 +55,6 @@ export class CiutatForm {
     //Si volem editar la ciutat, les dades de la ciutat seleccionada es posen al formulari
     effect(() => {
       if(this.ciutatSeleccionada()){
-        console.log("PATCHING::::")
         this.ciutatForm.patchValue({
           ciutat: this.ciutatSeleccionada()!.nom,
           provincia: this.ciutatSeleccionada()!.provincia

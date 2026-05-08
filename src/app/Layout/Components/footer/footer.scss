@@ -1,13 +1,11 @@
 footer{
-    //position: absolute;
-    //bottom: 0;
     width: 100%;
     display: flex;
     padding: 32px 60px;
     justify-content: space-between;
     align-items: center;
     align-self: stretch;
-    border-top: 10px solid; /* defineix l’amplada del border */
+    border-top: 10px solid; 
     border-image: var(--gradient-clar-groc) 1;
     background: var(--Blanc, #FFF);
 

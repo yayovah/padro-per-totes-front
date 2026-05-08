@@ -30,29 +30,17 @@ export class Situacio {
         catchError((error) => {
           this.modalService.showModalError('Error recuperando situaciones del servidor:', error);
           return throwError(() => new Error('Error cargando situaciones'));
-        })
-      );
+        }));
     }
-  
-    //createSituacio(dadesSituacio: Omit<SituacioToBDDTO, 'id'>, resposta: string): Observable<any>{
-      createSituacio(dades: any): Observable<any>{
-     /*  const situacioToBD = {
-        resposta: {text: resposta},
-        situacio: {//dadesSituacio,
-          ciutat: dadesSituacio.ciutatId,
-          pregunta: dadesSituacio.preguntaId,
-          seguent_pregunta: dadesSituacio.preguntaId
-        }
-      }
-      console.log(situacioToBD); */
+
+    createSituacio(dades: any): Observable<any>{
       return this.http
         .post<SituacioDTO>(`${this.url}`, dades)
         .pipe(
-            catchError((error) => {
-              this.modalService.showModalError(`Error intentando crear la respuesta/situación:`, error);
-              return throwError(() => new Error('Error creando respuesta/situación'));
-          }
-        ));
+          catchError((error) => {
+            this.modalService.showModalError(`Error intentando crear la respuesta/situación:`, error);
+            return throwError(() => new Error('Error creando respuesta/situación'));
+        }));
     }
   
     updateSituacio(situacio: SituacioDTO): Observable<SituacioDTO>{
@@ -63,14 +51,13 @@ export class Situacio {
         resposta: situacio.resposta?.id,
         seguent_pregunta: situacio.pregunta.id
       }
-    return this.http
-      .put<SituacioDTO>(`${this.url}/${situacio.id}`, situacio)
-        .pipe(catchError((error) => {
-          this.modalService.showModalError(`Error actualizando la respuesta/situación en el servidor:`, error);
-          return throwError(() => new Error('Error actualizando respuesta/situación'));
-        }
-      ));
-
+      return this.http
+        .put<SituacioDTO>(`${this.url}/${situacio.id}`, situacio)
+          .pipe(catchError((error) => {
+            this.modalService.showModalError(`Error actualizando la respuesta/situación en el servidor:`, error);
+            return throwError(() => new Error('Error actualizando respuesta/situación'));
+          }
+        ));
     }
   
     deleteSituacio(situacioId: number): Observable<any>{
@@ -83,7 +70,6 @@ export class Situacio {
           }        
         ));
     }
-
 }
 
 

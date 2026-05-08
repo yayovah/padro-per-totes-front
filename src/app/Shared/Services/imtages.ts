@@ -34,7 +34,6 @@ export class Imtages{
   }
 
   getImatges(): Observable<imatgeDTO[]>{
-    console.log("carregant preguntes - get imatges");
     return this.http
     .get<imatgeDTO[]>(this.url)
     .pipe(

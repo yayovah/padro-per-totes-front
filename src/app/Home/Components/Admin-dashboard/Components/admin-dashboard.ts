@@ -78,7 +78,6 @@ export class AdminDashboard implements OnInit{
   );
 
   ngOnInit(){
-    console.log("bienve");
     this.modalService.showModalOk("Bienvenido al panel de administración");
   }
 

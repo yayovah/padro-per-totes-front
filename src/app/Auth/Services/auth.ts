@@ -36,7 +36,6 @@ export class Auth {
     //Comprovem si a l'Storage hi ha credencials guardades, si és així les carreguem a la signal
     if(!this.credentials()) {
       this.restoreCredentials();
-      console.log(this.credentials);
     }
   }
 
@@ -117,7 +116,6 @@ export class Auth {
 
   //Porta a la pàgina d'inici segons el rol de l'usuari
   navigateByRol(): void {
-    console.log('Navegando según rol: ', this.userRol());
     switch(this.credentials()?.user.rol || '') {
       case 'usuari':
           this.router.navigate(['/home']);
@@ -138,7 +136,6 @@ export class Auth {
     this.http.post<AuthDTO>(this.registerUrl, data)
     .pipe(
       tap((credentials) => {
-        console.log("Credentials rebudes", credentials);
           this.acredita(credentials);
           this.modalService.showModalOk("Registro efectuado correctamente");
         }
@@ -150,24 +147,4 @@ export class Auth {
       }))
     .subscribe();
   }
-
- /*  recuperarContrasenya(email: string) {
-    return this.http.post(`${this.url}/forgot-password`, { email });
-  }
-
-  resetContrasenya(resetPsw: resetPswDTO) {
-    return this.http.post(`${this.url}/reset-password`, resetPsw);
-  }
-
-  canviarContrassenya(oldPassword:string, password: string, password_confirmation: string){
-     return this.http.post(`${this.url}/canviaPsw`, {
-      oldPassword,
-      password,
-      password_confirmation
-    });
-  }
-
-  eliminarCompte(){
-     return this.http.delete(`${this.url}/deleteAccount`);
-  } */
 }

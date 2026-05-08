@@ -61,10 +61,6 @@ export class SuperadminDashboard{
     this.suepradminDashService.accioActual.set(event.type);
     this.suepradminDashService.idCiutatSeleccionada.set(event.id ?? null);
 
-    //console.log("HANDLE");
-    //console.log(this.accioActual());
-    //console.log(this.idCiutatSeleccionada());
-
     if(this.idCiutatSeleccionada()){
       if(this.accioActual() === 'view'){
         this.ciutatsService.getAdminsCiutat(this.idCiutatSeleccionada()!).subscribe({

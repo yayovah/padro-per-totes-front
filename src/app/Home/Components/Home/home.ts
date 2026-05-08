@@ -78,8 +78,6 @@ export class Home{
         this.imatgeService.getImatgeById(this.preguntaSeleccionada()?.imatge!).subscribe({
           next: (imatge) => this.imatgeActual.set(imatge.path),
         });
-      
-      console.log("IMATGE ACTUAL:",this.imatgeActual());
     });
 
   }
