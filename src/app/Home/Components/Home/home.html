@@ -41,7 +41,7 @@
                         [subtitle]="preguntaSeleccionada()!.text">
                         <markdown [data]="preguntaSeleccionada()!.text"></markdown>
                         <div class="o-card-content">
-                            <app-list-in-card [title]="'Listado de respuestas'" [items]="situacionsLlistables()" [editable]="false" [esborrable]="false"
+                            <app-list-in-card [title]="'Haz click para seleccionar la respuesta'" [items]="situacionsLlistables()" [editable]="false" [esborrable]="false"
                                 (accio)="seleccionaResposta($event)">
                             </app-list-in-card>
                         </div>

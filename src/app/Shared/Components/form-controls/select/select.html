@@ -1,6 +1,6 @@
 <div class="o-input-div">
     <label [for]="name">{{ label }}</label>
-    <select [formControl]="control" [name]="name" {{requiredText}} class="c-select">
+    <select [formControl]="control" [name]="name" {{requiredText}} class="c-select" [title]="label">
         @for(item of items; track item.id) {
         <option [value]="item.id">{{ item.nom }}</option>
         }@empty{

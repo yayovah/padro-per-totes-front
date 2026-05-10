@@ -130,8 +130,3 @@ export class Home{
   }
 }
 
-      /*
-      A DESENVOLUPAR:
-      pensar com se sap la primera pregunta d'una ciutaT!!!
-      si és final (o sigui, no pregunta sinó final d'itinerari, que no té respostes) marcar amb una resposta -1
-      */

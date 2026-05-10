@@ -49,7 +49,6 @@ export class Imtages{
     .get<imatgeDTO>(`${this.url}/${imatgeId}`)
     .pipe(
       catchError((error) => {
-        this.modalService.showModalError('Error recuperando imagen del servidor:', error);
         return throwError(() => new Error('Error cargando imagen'));
       })
     );
