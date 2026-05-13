@@ -65,7 +65,7 @@ export class AddAdmin implements OnInit{
       this.addAdminForm.markAllAsTouched();
       return;
     }
-
+    this.modalService.showModalInfo("Dins del submit");
     if(this.idCiutatSeleccionada){
       this.permisService.createPermis(this.idCiutatSeleccionada, this.admin.value).subscribe({
         next: (permis) => {

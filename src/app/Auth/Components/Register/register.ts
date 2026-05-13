@@ -56,7 +56,6 @@ export class Register {
   }
   
   submit(){
-    alert("submited");
     if (this.registreForm.invalid) {
       this.registreForm.markAllAsTouched();
       return;
