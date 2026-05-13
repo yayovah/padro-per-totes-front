@@ -1,7 +1,14 @@
 <header>
-    <h1 class="o-web-heading">PADRÓN PARA TODES</h1>
-    <div class="idioma">
-        <div>ES</div>
-        <div (click)="logout()">LOGOUT</div>
+    <h1 class="o-web-heading" (click)="inici()">PADRÓN PARA TODES</h1>
+    <div class="c-perfil">
+        <div title="seleccion de indima">ES</div>
+        @if(acreditat()){
+            <div (click)="logout()">
+                <i class="fa-solid fa-right-from-bracket" title="logout"></i>
+            </div>
+        }
+        @else{
+            <div (click)="logout()"><i class="fa-regular fa-circle-user" title="login"></i></div>
+        }
     </div>
 </header>

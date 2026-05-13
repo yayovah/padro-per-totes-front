@@ -6,24 +6,28 @@
         <ul class="o-list">
             @for(item of items; track item.id) {
             <li class="o-list-item" [class.o-list-item-selected]="item.id === idSelected"
-                (click)="onAccio('view', item.id)">
+                (click)="onAccio('view', item.id)" tabindex="0">
                 <!--  <div *ngIf="label" class="o-list-item-name">{{ item.label }}</div>-->
                 <div class="o-list-item-content">{{ item.nom }}</div>
 
                 <div class="o-list-item-actions">
                     @if(editable){
                     <button (click)="$event.stopPropagation(); onAccio('edit', item.id)" class="o-edit-button"><i
-                            class="fa-solid fa-pencil"></i></button>
+                            class="fa-solid fa-pencil"
+                            title="editar elemento"></i></button>
                     <button (click)="$event.stopPropagation(); onAccio('delete', item.id)" class="o-delete-button"><i
-                            class="fa-solid fa-trash-can"></i></button>
+                            class="fa-solid fa-trash-can"
+                            title="borrar elemento"></i></button>
                     }
                     @if(back){
                     <div (click)="$event.stopPropagation(); onAccio('back', item.id)"><i
-                            class="fa-solid fa-arrow-left"></i></div>
+                            class="fa-solid fa-arrow-left"
+                            title="atras"></i></div>
                     }
                     @if(!back){
                     <div (click)="$event.stopPropagation(); onAccio('view', item.id)"><i
-                            class="fa-solid fa-arrow-right"></i></div>
+                            class="fa-solid fa-arrow-right"
+                            title="ver elemento"></i></div>
                     }
                 </div>
             </li>

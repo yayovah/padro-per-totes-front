@@ -18,9 +18,15 @@ export class ListInCard {
   @Input() tipus: string = '';
   @Input() editable: boolean = false;
   @Input() esborrable: boolean = false;
+  @Input() clickable: boolean = true;
+
   @Output() accio = new EventEmitter<{ type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }>();
+  @Input() idSelected?: any;
 
   onAccio(type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any): void {
+    if(id){
+      this.idSelected = id;
+    }
     this.accio.emit({ type, id });
   }
 

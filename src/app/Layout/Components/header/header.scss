@@ -10,3 +10,11 @@ header{
     align-self: stretch;
     background: linear-gradient(270deg, var(--groc) 0%, #FD68C4 99.99%);
 }
+.c-perfil{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    i{
+        cursor: pointer;
+    }
+}

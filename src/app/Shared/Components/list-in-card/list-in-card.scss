@@ -3,6 +3,13 @@
     width: 100%;
 }
 
+.u-clickable{
+    &:hover,&:focus{
+        background: #F4A8CE;
+        cursor: pointer;
+    }
+}
+
 .u-list-espaiat{
     display: flex;
     flex-direction: column;
