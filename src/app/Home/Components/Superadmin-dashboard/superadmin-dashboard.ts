@@ -87,7 +87,7 @@ export class SuperadminDashboard{
     }
 
     if(this.accioActual() === 'add'){
-      this.suepradminDashService.admins.set([]);
+      this.suepradminDashService.ciutatAdmins.set([]);
       this.suepradminDashService.idCiutatSeleccionada.set(null);
     }
   }
