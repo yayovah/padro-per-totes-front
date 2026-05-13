@@ -129,6 +129,9 @@ export class AdminDashboard implements OnInit{
     if(this.accioActual() === 'add'){
       this.adminDashService.idPreguntaSeleccionada.set(null);
     }
+    if(this.accioActual() === 'edit'){
+      this.adminDashService.idSituacioSeleccionada.set(null);
+    }
    
     if(this.idPreguntaSeleccionada()){
       if(event.type === 'view'){
