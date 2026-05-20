@@ -1,10 +1,10 @@
 <form class="o-form-box" [formGroup]="situacioForm" (ngSubmit)="submitSituacio()">
     <!-- Resposta -->
         <app-text-area
-            label="Escrive una respuesta: " 
+            label="Escribe una respuesta: " 
             name="resposta" 
             [control]="resposta" 
-            placeholder="Escibe la respuesta que se mostrará al usuario"
+            placeholder="Escribe la respuesta que se mostrará al usuario"
             errorMessage="{{ getErrorMessage(resposta, 'Respuesta') }}" 
             required="required">
         </app-text-area>

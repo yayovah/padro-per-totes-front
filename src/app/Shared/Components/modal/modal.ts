@@ -17,6 +17,10 @@ export class Modal {
   error = computed(() => this.modalService.error()); 
   botonsConfirmacio = computed(() => this.modalService.botonsConfirmacio()); 
 
+  ngOnInit(){
+    
+  }
+
   close(): void {
     this.modalService.closeModal();
   }

@@ -60,10 +60,10 @@ export class Login {
 
   getErrorMessage(camp : FormControl, nom : string): string {
     if(camp.hasError('required')) {
-      return nom + " is required";
+      return "El campo " + nom + " es obligatorio.";
     }
     if(camp.hasError('email')){
-      return nom + " must be a valid email";
+      return "Tiene que ser un email válido.";
     }
     return "";
   }

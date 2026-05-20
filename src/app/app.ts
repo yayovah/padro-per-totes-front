@@ -15,3 +15,4 @@ export class App {
   protected readonly title = signal('padro-per-totes-front');
   private authService = inject(Auth);
 }
+
