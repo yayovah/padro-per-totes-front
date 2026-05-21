@@ -18,6 +18,8 @@ export class Auth {
   private readonly loginUrl = `${this.baseUrl}${this.loginEndpoint}`;
   private readonly registerEndpoint = '/register';
   private readonly registerUrl = `${this.baseUrl}${this.registerEndpoint}`;
+  private readonly userRegisterEndpoint = '/userRegister';
+  private readonly userRegisterUrl = `${this.baseUrl}${this.userRegisterEndpoint}`;
   private readonly usersEndpoint = '/users';
   private readonly url = `${this.baseUrl}${this.usersEndpoint}`;
 
@@ -147,4 +149,20 @@ export class Auth {
       }))
     .subscribe();
   }
+
+  registreUsuari(data: RegisterDto, itinerariId: number): void{
+    this.http.post<AuthDTO>(`${this.userRegisterUrl}/itinerari/${itinerariId}`, data)
+    .pipe(
+      tap((credentials) => {
+          this.acredita(credentials);
+          this.modalService.showModalOk("Registro efectuado correctamente");
+        }
+      ),  
+      catchError((error) => {
+        //Mostrar un modal, quan estigui el servei fet
+        this.modalService.showModalError('Error registrando nuva usuária: ' , error.message);
+        throw new Error('Error registrando nuva usuária: ' + error.message);
+      }))
+    .subscribe();
+  } 
 }

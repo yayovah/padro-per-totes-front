@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth } from '../../Services/auth';
 import { RegisterDto } from '../../Model/auth.dto';
@@ -23,6 +23,8 @@ export class Register {
   confirmPassword: FormControl;
 
   authService = inject(Auth);
+
+  @Input() itinerariId: number | null = null;
   
 
   constructor(
@@ -60,13 +62,17 @@ export class Register {
       this.registreForm.markAllAsTouched();
       return;
     }
-    const credentials: RegisterDto = {
+    
+    let credentials: RegisterDto = {
       name: this.name.value,
       email: this.email.value,
       password: this.password.value,
       password_confirmation: this.confirmPassword.value,
-      rol: 'admin',
     };
+  if(this.itinerariId){
+    this.authService.registreUsuari(credentials, this.itinerariId);
+  } else {
+    credentials = {...credentials, rol: 'admin'};
     this.authService.registre(credentials);
   }
 
