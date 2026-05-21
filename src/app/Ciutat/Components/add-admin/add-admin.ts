@@ -38,6 +38,7 @@ export class AddAdmin implements OnInit{
   addAdminForm: FormGroup;
 
   @Input() idCiutatSeleccionada: number | null = null;
+  
 
   nouAdmin = output<UserDTO>();
 
