@@ -12,6 +12,7 @@ export class ModalService {
     botonsConfirmacio = signal<boolean>(false);
     resultatObservable = new Subject<boolean>();
     error = signal<any>('');
+    itinerariId = signal<number | null>(null);
 
     showModalOk(missatge: string, titol: string ='¡Hecho!'): void {
         this.modalTipo.set('ok');
@@ -41,17 +42,15 @@ export class ModalService {
         this.modalTitol.set(titol);
     }
 
-    showRegistre(): UserDTO{
+    showRegistre(itinerariId: number): void{
         this.modalTipo.set('info');
-        const missatge = "Registrate para poder volver a consultar toda la información o descargartela en PDF.";
+        this.modalTitol.set('Registrate');
+        const missatge = "Registrate para poder volver a consultar toda la información o descargarla en PDF.";
         this.modalMissatge.set(missatge);
-        return this.registreUsuari();
+        this.itinerariId.set(itinerariId);
     }
 
-    registreUsuari(){
-        let user : UserDTO = {id: 0, email : '', nom: '' };
-        return user;
-    }
+
 
     closeModal(): void {
         this.modalTipo.set('');

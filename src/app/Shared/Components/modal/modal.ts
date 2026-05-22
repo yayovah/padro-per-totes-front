@@ -1,9 +1,10 @@
 import { Component, computed, inject, output } from '@angular/core';
 import { ModalService } from './modal.service';
+import { Register } from '../../../Auth/Components/Register/register';
 
 @Component({
   selector: 'app-modal',
-  imports: [],
+  imports: [Register],
   templateUrl: './modal.html',
   styleUrl: './modal.scss',
 })
@@ -16,13 +17,16 @@ export class Modal {
   modalTitol = computed(() => this.modalService.modalTitol()); 
   error = computed(() => this.modalService.error()); 
   botonsConfirmacio = computed(() => this.modalService.botonsConfirmacio()); 
+  itinerariId = computed(() => this.modalService.itinerariId()); 
 
   ngOnInit(){
     
   }
 
-  close(): void {
-    this.modalService.closeModal();
+  close(tipus: string = ''): void {
+    if(!(this.itinerariId() && tipus === 'general')){
+      this.modalService.closeModal();
+    }
   }
 
   returnBoolean(valor: boolean): void {

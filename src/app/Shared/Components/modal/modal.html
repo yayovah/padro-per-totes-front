@@ -1,6 +1,7 @@
 @if(modalTipo() && modalMissatge()){
-<div class="c-modal"  (click)="close()" (keydown.space)="close()" (keydown.scape)="close()" >
-    <!-- <ng-content></ng-content> -->
+<div class="c-modal"  (click)="close('general')" (keydown.space)="close()" (keydown.scape)="close()" >
+
+
      <div class="o-card-div">
         <div class="c-modal-content">
         <div class="c-modal-part">
@@ -28,6 +29,10 @@
         }
         <h1>{{ modalTitol() }}</h1>
         <p>{{ modalMissatge() }}</p>
+        @if(itinerariId()){
+            <app-register [itinerariId]="itinerariId()"></app-register>
+        }
+        <ng-content></ng-content>
         <small>{{ error() }}</small>
         </div>
 

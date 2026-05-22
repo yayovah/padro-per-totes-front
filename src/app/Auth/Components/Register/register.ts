@@ -61,19 +61,19 @@ export class Register {
     if (this.registreForm.invalid) {
       this.registreForm.markAllAsTouched();
       return;
-    }
-    
+    } 
     let credentials: RegisterDto = {
       name: this.name.value,
       email: this.email.value,
       password: this.password.value,
       password_confirmation: this.confirmPassword.value,
     };
-  if(this.itinerariId){
-    this.authService.registreUsuari(credentials, this.itinerariId);
-  } else {
-    credentials = {...credentials, rol: 'admin'};
-    this.authService.registre(credentials);
+    if(this.itinerariId){
+      this.authService.registreUsuari(credentials, this.itinerariId);
+    } else {
+      credentials = {...credentials, rol: 'admin'};
+      this.authService.registre(credentials);
+    }
   }
 
   getErrorMessage(camp : FormControl, nom : string): string {

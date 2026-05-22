@@ -44,7 +44,7 @@ export class AdminDashService {
 
   //Estats
   /*
-    veure ciutar: mostra les preguntes de la ciutat, sense cap pregunta seleccionada
+    veure ciutat: mostra les preguntes de la ciutat, sense cap pregunta seleccionada
          idCiutatSeleccionada
          accioActual = null
 
@@ -82,25 +82,12 @@ export class AdminDashService {
         
           ->porta a veure pregunta
 
-        **afegir pregunta següent: mostra el formulari per crear una nova pregunta
-            idCiutatSeleccionada
-            idPreguntaSeleccionada
-            accioActual = 'addPregunta'
-          ->porta a afegir situacio
-
     editar situacio: mostra el formulari de la situacio seleccionada
           idCiutatSeleccionada
           idPreguntaSeleccionada
           idSituacioSeleccionada
           accioActual = 'edit'
         ->porta a veure pregunta
-
-        **afegir pregunta següent: mostra el formulari per crear una nova pregunta
-            idCiutatSeleccionada
-            idPreguntaSeleccionada
-            idSituacioSeleccionada
-            accioActual = 'addPregunta'
-          ->porta a editar situacio
 
     eliminar situacio: no mostra, actua
           idCiutatSeleccionada

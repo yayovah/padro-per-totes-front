@@ -1,8 +1,9 @@
 <header>
     <h1 class="o-web-heading" (click)="inici()">PADRÓN PARA TODES</h1>
     <div class="c-perfil">
-        <div title="seleccion de indima">ES</div>
+        
         @if(acreditat()){
+            <div title="Nombre de usuária">{{ this.modalService.credentials()?.user.email }}</div>
             <div (click)="logout()">
                 <i class="fa-solid fa-right-from-bracket" title="logout"></i>
             </div>

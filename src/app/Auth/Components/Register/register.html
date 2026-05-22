@@ -1,9 +1,12 @@
-<main class="c-registre-main">
-    <div class="c-registre-container">
+
+    <main [class.c-registre-main]="!itinerariId" >
+    <div [class.c-registre-container]="!itinerariId">
+        @if(!itinerariId){
         <div class="o-heading">
             <h1>Registro</h1>
             <p>Introduce tus datos para el registro en administración</p>
         </div>
+        }
         <form class="o-form-box" [formGroup]="registreForm" (ngSubmit)="submit()">
             <app-input-text label="Escribe tu nombre: " name="name" [control]="name"
                 placeholder="Aquí tu nombre" errorMessage="{{ getErrorMessage(name, 'Nombre') }}"

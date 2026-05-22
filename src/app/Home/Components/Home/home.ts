@@ -125,7 +125,7 @@ export class Home{
       
     })
     if(!this.authService.credentials()?.user.email){
-        this.modalService.showRegistre();
+        this.modalService.showRegistre(this.idItinerari()!);
     }
   }
 }
