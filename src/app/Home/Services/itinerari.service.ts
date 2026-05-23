@@ -56,6 +56,17 @@ export class ItinerariService {
     );
   }
 
+  getItinerariByUserId(userId: number): Observable<any> {
+    return this.http
+    .get<ItinerariSeguitDTO>(`${this.url}/user/${userId}`)
+    .pipe(
+      catchError((error) => {
+        //this.modalService.showModalError('Error recuperando itinerario del servidor:', error);
+        return throwError(() => new Error('Error cargando itinerario'));
+      })
+    );
+  }
+
   updateItinerari(dadesItinerari: ItinerariDTO): Observable<ItinerariDTO> {
     return this.http
       .put<ItinerariDTO>(`${this.url}/${dadesItinerari.id}`, dadesItinerari)

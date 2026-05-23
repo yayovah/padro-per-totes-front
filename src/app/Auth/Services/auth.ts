@@ -33,6 +33,7 @@ export class Auth {
   public accessToken = computed(() => this.credentials()?.token ?? null);
   public userRol = computed(() => this.credentials()?.user.rol ?? null);
   public userId = computed(() => this.credentials()?.user.id ?? null);
+  public userEmail = computed(() => this.credentials()?.user.email ?? null);
 
   constructor(private http: HttpClient) {
     //Comprovem si a l'Storage hi ha credencials guardades, si és així les carreguem a la signal
@@ -119,8 +120,8 @@ export class Auth {
   //Porta a la pàgina d'inici segons el rol de l'usuari
   navigateByRol(): void {
     switch(this.credentials()?.user.rol || '') {
-      case 'usuari':
-          this.router.navigate(['/home']);
+      case 'user':
+          this.router.navigate(['/']);
           break;
       case 'admin':
           this.router.navigate(['/adminDash']);

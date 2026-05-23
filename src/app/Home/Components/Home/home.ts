@@ -74,6 +74,10 @@ export class Home{
 
 
   constructor(){
+    if(this.authService.credentials()){
+      this.homeService.usuari.set(this.authService.credentials()!.user);
+      this.homeService.carregaItinerari();
+    }
     effect(() => {
         this.imatgeService.getImatgeById(this.preguntaSeleccionada()?.imatge!).subscribe({
           next: (imatge) => this.imatgeActual.set(imatge.path),

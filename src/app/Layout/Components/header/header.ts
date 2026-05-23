@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
   styleUrl: './header.scss',
 })
 export class Header {
-  private authService = inject(Auth);
   private modalService = inject(ModalService);
   private router = inject(Router);
+  authService = inject(Auth);
   
   acreditat = computed(()=> this.authService.credentials()? true : false);
 

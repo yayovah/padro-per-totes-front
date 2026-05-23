@@ -56,6 +56,7 @@ export class ModalService {
         this.modalTipo.set('');
         this.modalMissatge.set('');
         this.modalTitol.set('');
+        this.itinerariId.set(null);
         this.botonsConfirmacio.set(false);
     }
 }

@@ -3,7 +3,7 @@
     <div class="c-perfil">
         
         @if(acreditat()){
-            <div title="Nombre de usuária">{{ this.modalService.credentials()?.user.email }}</div>
+            <div title="Nombre de usuária">{{ this.authService.userEmail()! }}</div>
             <div (click)="logout()">
                 <i class="fa-solid fa-right-from-bracket" title="logout"></i>
             </div>

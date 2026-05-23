@@ -128,6 +128,27 @@ export class HomeService {
       error: (error) => this.modalService.showModalError(error)
     });
   }
+
+  carregaItinerari(){
+      this.itinerariService.getItinerariByUserId(this.usuari()!.id!).subscribe({
+        next: (resposta) => {
+          console.log("itinerari carregat: ", resposta);
+          this.itinerariSeguit.set(resposta);
+          const itinerariCarregat = {
+            id: resposta.id,
+            ciutat: resposta.ciutat,
+            usuarua: resposta.usuaria
+          }
+          if(resposta.passos){
+            this.itinerariSeguit.set({itinerari: itinerariCarregat, passos: resposta.passos});
+          }
+          }
+          //this.ciutatSeleccionada.set({id: itinerari.ciutat, nom: ''});
+          
+        },
+        error: (error) => this.modalService.showModalError(error)
+      });
+  }
   
 
 }
