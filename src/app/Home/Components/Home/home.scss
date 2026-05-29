@@ -68,4 +68,18 @@ main{
         width:100%;
         max-width: 345px;
     }
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.c-resposta{
+    display: flex;
+    padding: var(--padding-sm);
+    align-items: flex-start;
+    gap: var(--gaps-gap-internal-general, 8px);
+    align-self: stretch;
+    background: #EEE;
+    width: 100%;
 }

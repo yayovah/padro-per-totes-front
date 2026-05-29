@@ -30,9 +30,11 @@
         <h1>{{ modalTitol() }}</h1>
         <p>{{ modalMissatge() }}</p>
         @if(itinerariId()){
+        <div class="u-modal-content-form">
             <app-register [itinerariId]="itinerariId()"></app-register>
-        }
-        <ng-content></ng-content>
+        </div>
+        <button (click)="returnBoolean(false);" class="o-submit-button u-alter-button">Cancelar</button>
+    }
         <small>{{ error() }}</small>
         </div>
 

@@ -19,10 +19,6 @@ export class Modal {
   botonsConfirmacio = computed(() => this.modalService.botonsConfirmacio()); 
   itinerariId = computed(() => this.modalService.itinerariId()); 
 
-  ngOnInit(){
-    
-  }
-
   close(tipus: string = ''): void {
     if(!(this.itinerariId() && tipus === 'general')){
       this.modalService.closeModal();

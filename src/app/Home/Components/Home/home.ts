@@ -54,23 +54,25 @@ export class Home{
   //passos = signal<PasTextDTO[]>([]);
   passos = computed(() => this.homeService.passos());
 
-    // Creem l'array de llistables a partir de l'array de preguntes
-   preguntesLlistables = computed<LlistableDTO[]>(() => 
-      this.preguntes().map((pregunta: PreguntaDTO) => ({
-        id: pregunta.id,
-        nom: pregunta.titol,
-      }))
-    );
-  
-    // Creem l'array de llistables a partir de l'array de respostes
-    situacionsLlistables = computed<LlistableDTO[]>(() => 
-      this.situacions().map((situacio: SituacioDTO) => { return {
-        id: situacio.id,
-        nom: situacio.resposta?.text ?? ''
-      };})
-    );
+  jaResposta = signal<string | null>(null);
 
-    imatgeActual = signal<string | null>(null);
+  // Creem l'array de llistables a partir de l'array de preguntes
+  preguntesLlistables = computed<LlistableDTO[]>(() => 
+    this.preguntes().map((pregunta: PreguntaDTO) => ({
+      id: pregunta.id,
+      nom: pregunta.titol,
+    }))
+  );
+
+  // Creem l'array de llistables a partir de l'array de respostes
+  situacionsLlistables = computed<LlistableDTO[]>(() => 
+    this.situacions().map((situacio: SituacioDTO) => { return {
+      id: situacio.id,
+      nom: situacio.resposta?.text ?? ''
+    };})
+  );
+
+  imatgeActual = signal<string | null>(null);
 
 
   constructor(){
@@ -117,17 +119,39 @@ export class Home{
     }
   }
 
+  seleccionaPregunta(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
+    if(event.id && this.itinerari()){
+      const pas = this.passos().find((p) => p.pregunta.id === event.id);
+      console.log("resposta seleccionada: ", pas?.resposta);
+      if(pas){
+        this.jaResposta.set(pas?.resposta?.text ?? null);
+        console.log(this.jaResposta());
+        /*this.homeService.idPreguntaSeleccionada.set(event.id);
+        this.homeService.idSituacioSeleccionada.set(
+          this.homeService.situacions().find((s) => s.resposta?.id === pas.resposta)?.id ?? null
+        );
+        console.log("id situacio: ", this.homeService.idSituacioSeleccionada());*/
+      }
+      else{
+        this.jaResposta.set(null);
+      }
+    }
+  }
+
   baixarPdf(){
-        //Petició a la api
+    //Petició del PDF a la api
     this.homeService.baixarPDFdeAPI(this.idItinerari()!).subscribe({
       next: (pdf) => {
         const file = new Blob([pdf], { type: 'application/pdf' });
         const fileURL = URL.createObjectURL(file);
         window.open(fileURL); // Això obrirà el PDF en una nova pestanya
       },
-      error: (error) => this.modalService.showModalError("Error en descargar el pdf: " +error)
-      
+      error: (error) => this.modalService.showModalError("Error en descargar el pdf: " +error)    
     })
+  }
+
+  guardar(){
+    console.log("GUARDANT.... ", this.authService.credentials(), this.idItinerari());
     if(!this.authService.credentials()?.user.email){
         this.modalService.showRegistre(this.idItinerari()!);
     }

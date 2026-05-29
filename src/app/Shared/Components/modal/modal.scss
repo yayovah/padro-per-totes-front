@@ -21,7 +21,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--size-space-200);
+    gap: var(--size-space-400);
     text-align: center;
 }
 
@@ -58,4 +58,9 @@
 .u-icon-alert{
     background-color: var(--Clar-25, #FFE1F3);
     color: var(--Fosc-600, #E63B91)
+}
+
+.u-modal-content-form{
+    text-align: left;
+    padding: var(--size-space-400);
 }

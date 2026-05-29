@@ -43,6 +43,7 @@ export class ModalService {
     }
 
     showRegistre(itinerariId: number): void{
+        console.log("MOSTRANT MODAL DE REGISTRE.... ", itinerariId);
         this.modalTipo.set('info');
         this.modalTitol.set('Registrate');
         const missatge = "Registrate para poder volver a consultar toda la información o descargarla en PDF.";
@@ -58,5 +59,6 @@ export class ModalService {
         this.modalTitol.set('');
         this.itinerariId.set(null);
         this.botonsConfirmacio.set(false);
+        this.error.set('');
     }
 }

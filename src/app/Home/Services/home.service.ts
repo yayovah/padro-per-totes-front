@@ -55,11 +55,12 @@ export class HomeService {
   }
 
   monitor(){
-      console.log("----------------ADMIN SERVICE -------------");
+      console.log("----------------HOME SERVICE -------------");
       console.log("usuari ", this.usuari());
       console.log("preguntes ", this.preguntes());
       console.log("situacions ", this.situacions());
       console.log("itinerari ", this.itinerariSeguit());
+      console.log("passos ", this.passos());
       console.log("ciutatSeleccionada ", this.ciutatSeleccionada());
       console.log("idSituacioSeleccionada ", this.idSituacioSeleccionada());
       console.log("preguntaSeleccionada ", this.preguntaSeleccionada());
@@ -105,8 +106,9 @@ export class HomeService {
   }
 
   carregaPasFinal(){
-    this.passos.update((passos) => 
-      [...passos, { pregunta: this.preguntaSeleccionada()! }]);
+    /*this.passos.update((passos) => 
+      [...passos, { pregunta: this.preguntaSeleccionada()! }]);*/
+    this.guardaPas();
   }
 
 
@@ -120,7 +122,10 @@ export class HomeService {
       pregunta: this.situacioSeleccionada()?.pregunta!,
       resposta: this.situacioSeleccionada()?.resposta!
     }
-    this.passos.update((passos) => [...passos, pasText]);
+    
+    this.situacioSeleccionada()?
+        this.passos.update((passos) => [...passos, pasText]):
+        this.passos.update((passos) => [...passos, { pregunta: this.preguntaSeleccionada()! }]);
     
     this.itinerariService.createPas(pas).subscribe({
       next: (pas) => this.itinerariSeguit.set(
@@ -137,14 +142,33 @@ export class HomeService {
           const itinerariCarregat = {
             id: resposta.id,
             ciutat: resposta.ciutat,
-            usuarua: resposta.usuaria
-          }
-          if(resposta.passos){
-            this.itinerariSeguit.set({itinerari: itinerariCarregat, passos: resposta.passos});
-          }
-          }
-          //this.ciutatSeleccionada.set({id: itinerari.ciutat, nom: ''});
-          
+            usuaria: resposta.usuaria
+          };
+
+          let passosItinerari: PasDTO[] = [];
+          let ultimaPregunta: number | null = null;
+
+          resposta.passos.map((pas: any) => {
+            const pasText: PasTextDTO = {
+              pregunta: pas.rel_pregunta.text,
+              resposta: pas.rel_resposta ? pas.rel_resposta.text : null
+            }
+            this.passos.update((passos) => [...passos, pasText]);
+            passosItinerari.push({
+              id: pas.id,
+              itinerari: pas.itinerari,
+              pregunta: pas.pregunta,
+              resposta: pas.resposta
+            });
+            this.preguntes.update((preguntes) => [...preguntes, pas.rel_pregunta]);
+            ultimaPregunta = pas.pregunta;
+          });
+
+          this.itinerariSeguit.set({itinerari: itinerariCarregat, passos:passosItinerari});
+          this.ciutatSeleccionada.set(resposta.rel_ciutat);
+          this.idPreguntaSeleccionada.set(ultimaPregunta);
+          this.carregaSituacions();
+
         },
         error: (error) => this.modalService.showModalError(error)
       });
