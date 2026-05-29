@@ -122,19 +122,9 @@ export class Home{
   seleccionaPregunta(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
     if(event.id && this.itinerari()){
       const pas = this.passos().find((p) => p.pregunta.id === event.id);
-      console.log("resposta seleccionada: ", pas?.resposta);
-      if(pas){
-        this.jaResposta.set(pas?.resposta?.text ?? null);
-        console.log(this.jaResposta());
-        /*this.homeService.idPreguntaSeleccionada.set(event.id);
-        this.homeService.idSituacioSeleccionada.set(
-          this.homeService.situacions().find((s) => s.resposta?.id === pas.resposta)?.id ?? null
-        );
-        console.log("id situacio: ", this.homeService.idSituacioSeleccionada());*/
-      }
-      else{
+      pas ? 
+        this.jaResposta.set(pas?.resposta?.text ?? null):
         this.jaResposta.set(null);
-      }
     }
   }
 

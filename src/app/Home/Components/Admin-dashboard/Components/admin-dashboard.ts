@@ -58,6 +58,7 @@ export class AdminDashboard implements OnInit{
   idPreguntaSeguent = signal<number | null>(null);
   
   addResposta = signal<boolean>(false);
+  tornaA = signal<number | null>(null);
   
   // LLISTABLES
 
@@ -105,6 +106,16 @@ export class AdminDashboard implements OnInit{
       else{
         this.adminDashService.preguntes
           .update(preguntes => [...preguntes, preguntaActual]);
+
+        if(this.tornaA()){
+          this.adminDashService.accioActual.set('add');
+          this.adminDashService.idPreguntaSeleccionada.set(this.tornaA());
+        }
+        else{
+          this.adminDashService.accioActual.set('view');
+          this.adminDashService.idPreguntaSeleccionada.set(preguntaActual.id);  
+        }
+/* 
         switch(this.accioActual()){
           case 'add':
             this.adminDashService.accioActual.set('view');
@@ -116,12 +127,18 @@ export class AdminDashboard implements OnInit{
               this.adminDashService.accioActual.set('add');
             this.idPreguntaSeguent.set(preguntaActual.id);
             break;
-        }
+        } */
       }
     }
   }
 
   handleAccio(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
+
+    if(this.idPreguntaSeleccionada() && this.accioActual() === 'add'){
+      //afegir una nova pregunta quan estem creant respostes
+      this.tornaA.set(this.idPreguntaSeleccionada());
+    }
+
     this.adminDashService.accioActual.set(event.type);
     this.adminDashService.idPreguntaSeleccionada.set(event.id ?? null);
     
