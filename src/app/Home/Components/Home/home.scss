@@ -6,6 +6,12 @@ main{
     gap: 64px;
     flex: 1 0 0;
     align-self: stretch;
+
+    @media (max-width: 1250px) {
+        flex-direction: column;
+        padding: 12px;
+        align-items: center;
+    }
 }
 
 .parcial{
