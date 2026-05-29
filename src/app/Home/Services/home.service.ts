@@ -106,8 +106,6 @@ export class HomeService {
   }
 
   carregaPasFinal(){
-    /*this.passos.update((passos) => 
-      [...passos, { pregunta: this.preguntaSeleccionada()! }]);*/
     this.guardaPas();
   }
 
