@@ -138,17 +138,16 @@ export class AdminDashboard implements OnInit{
       //afegir una nova pregunta quan estem creant respostes
       this.tornaA.set(this.idPreguntaSeleccionada());
     }
+    else{
+      //Si és el cas d'afegir preguntes, eliminem la pregunta seleccionada
+      if(this.accioActual() === 'add' || this.accioActual() === 'edit'){
+        this.adminDashService.idPreguntaSeleccionada.set(null);
+      }
+    }
 
     this.adminDashService.accioActual.set(event.type);
     this.adminDashService.idPreguntaSeleccionada.set(event.id ?? null);
     
-    //Si és el cas d'afegir preguntes, eliminem la pregunta seleccionada
-    if(this.accioActual() === 'add'){
-      this.adminDashService.idPreguntaSeleccionada.set(null);
-    }
-    if(this.accioActual() === 'edit'){
-      this.adminDashService.idSituacioSeleccionada.set(null);
-    }
    
     if(this.idPreguntaSeleccionada()){
       if(event.type === 'view'){
