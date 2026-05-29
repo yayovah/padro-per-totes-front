@@ -20,6 +20,7 @@ export class List {
   @Input() title: string = '';
   @Input() editable: boolean = false;
   @Input() back: boolean = true;
+  @Input() buttonText: string = 'Nueva';
   @Output() accio = new EventEmitter<{ type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }>();
 
   

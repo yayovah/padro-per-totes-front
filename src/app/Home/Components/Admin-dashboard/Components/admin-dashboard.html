@@ -8,7 +8,7 @@
             ></app-select-ciutats>
             @if(idCiutatSeleccionada()){
             <app-list [title]="'Preguntas de ' + ciutatSeleccionada()!.nom" [items]="preguntesLlistables()" [editable]="true" [back]="false"
-                (accio)="handleAccio($event)" [idSelected]="idCiutatSeleccionada()">
+                (accio)="handleAccio($event)" [idSelected]="idCiutatSeleccionada()" [buttonText]="'Nueva pregunta'">
             </app-list>
             }
         </div>
