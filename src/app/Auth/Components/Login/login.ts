@@ -20,11 +20,13 @@ import { Auth } from '../../Services/auth';
   styleUrl: './login.scss',
 })
 export class Login {
+  // Servei injectat
+  authService = inject(Auth);
+
+  //Elements del formulari
   email: FormControl;
   password: FormControl;
   loginForm: FormGroup;
-
-  authService = inject(Auth);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,6 +47,7 @@ export class Login {
     });
   }
 
+  //Funció per fer login, enviant les credencials a l'API
   login(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -58,6 +61,7 @@ export class Login {
     this.authService.login(credentials);
   }
 
+  // Funció per mostrar missatges d'error en els camps del formulari
   getErrorMessage(camp : FormControl, nom : string): string {
     if(camp.hasError('required')) {
       return "El campo " + nom + " es obligatorio.";

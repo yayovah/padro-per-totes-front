@@ -16,10 +16,13 @@ import { ModalService } from '../../Shared/Components/modal/modal.service';
   providedIn: 'root',
 })
 export class HomeService {
+  //Serveis injectats
   private situacioService = inject(Situacio);
   private preguntaService = inject(Pregunta);
   private itinerariService = inject(ItinerariService);
   private modalService = inject(ModalService);
+
+  //Variables d'estat
   
   usuari = signal<UserDTO | null>(null);
   preguntes = signal<PreguntaDTO[]>([]);
@@ -43,17 +46,19 @@ export class HomeService {
 
   accioActual= signal<String | null>("");  
 
+  // URL de la API per descarregar el PDF
   private readonly baseUrl = environment.apiUrl;
   private readonly pdfEndpoint = '/itinerariPdf';
   private readonly url = `${this.baseUrl}${this.pdfEndpoint}`;
 
   constructor(private http: HttpClient){
     effect(()=> {
-        this.monitor();
+        //this.monitor(); //Descomentar per monitoritzr l'estat del servei
       }
     )
   }
 
+  // Funció per monitoritzar l'estat del servei
   monitor(){
       console.log("----------------HOME SERVICE -------------");
       console.log("usuari ", this.usuari());
@@ -68,6 +73,8 @@ export class HomeService {
       //console.log("accioActual ", this.accioActual());
       console.log("----------------FINAL SERVICE -------------");  
   }
+
+  //Funcions del taulell d'usuària
 
   carregaSituacions(){
     if(this.idPreguntaSeleccionada()){

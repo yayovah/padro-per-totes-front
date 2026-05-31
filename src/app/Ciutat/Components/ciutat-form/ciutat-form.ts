@@ -21,18 +21,22 @@ import { SuperadminDashService } from '../../../Home/Services/superadmin-dash.se
   styleUrl: './ciutat-form.scss',
 })
 export class CiutatForm {
+  // Serveis injectats
   ciutatsService = inject(Ciutats);
   modalService = inject(ModalService);
   SuperadminDashService = inject(SuperadminDashService);
 
+  // Dades de les ciutats
   ciutats = signal<CiutatDTO[]>([]);
   ciutatSeleccionada = computed(() => this.SuperadminDashService.ciutatSeleccionada());
   idCiutatSeleccionada = computed(() => this.SuperadminDashService.idCiutatSeleccionada());
   
+  // Elements del formulari
   ciutat: FormControl;
   provincia: FormControl;
   ciutatForm: FormGroup;
 
+  // Output per enviar la ciutat actualitzada al component pare 
   ciutatActualitzada = output<CiutatDTO>();
   
   constructor(  
@@ -63,6 +67,7 @@ export class CiutatForm {
     });
   }
 
+  //Funció per crear o editar la ciutat segons si hi ha una ciutat seleccionada o no.
   submit(): void {
     if (this.ciutatForm.invalid) {
       this.ciutatForm.markAllAsTouched();
@@ -72,6 +77,7 @@ export class CiutatForm {
       nom: this.ciutat.value,
       provincia: this.provincia.value,
     }
+    //En cas de que hi hagi una ciutat seleccionada, s'actualitza
     if(this.idCiutatSeleccionada()){
       const dadesCiutat : CiutatDTO =  {
         ...dadesForm,
@@ -87,6 +93,7 @@ export class CiutatForm {
         }
       }); 
     }
+    //Si no hi ha ciutat seleccionada, se'n crea una de nova
     else{
       this.ciutatsService.createCiutat(dadesForm).subscribe({
         next: (novaCiutat) => {
@@ -99,6 +106,7 @@ export class CiutatForm {
     
   }
 
+  // Funció per mostrar missatges d'error en els camps del formulari
   getErrorMessage(camp : FormControl, nom : string): string {
     if(camp.hasError('required')) {
       return "Se requiere rellenar el campo " + nom;

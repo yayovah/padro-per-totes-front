@@ -10,7 +10,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './input-email.scss',
 })
 export class InputEmail {
-  @Input() label = "";
+    /* Paramtres d'entrada al component SUBMIT */
+  @Input() label = "";  
   @Input() type = "";
   @Input() control! : FormControl;
   @Input() placeholder = "";

@@ -11,20 +11,17 @@ import { ModalService } from '../../Shared/Components/modal/modal.service';
   providedIn: 'root',
 })
 export class Ciutats {
+  //Servei injectat
   modalService = inject(ModalService);
 
+  //Definició de la URL base i endpoints
   private readonly baseUrl = environment.apiUrl;
   private readonly ciutatsEndpoint = '/ciutats';
   private readonly url = `${this.baseUrl}${this.ciutatsEndpoint}`;
 
   constructor(private http: HttpClient) {}
-  /**
-   * Obtenir llistat de ciutats des de la API
-   * 
-   * @returns CiutatDTO[] : array de ciutats des de la API
-   * @throws Error en cas d'error en la petició
-   *  
-   */
+  
+  //Funció per obtenir totes les ciutats 
   getCiutats(): Observable<CiutatDTO[]> {
     //Petició a la api
     return this.http
@@ -38,6 +35,9 @@ export class Ciutats {
     );
   }
 
+  /*** FUNCIONS D'ADMINISTRACIÓ : CRIDES A LA API */
+
+  //Funció per obtenir els administradors d'una ciutat 
   getAdminsCiutat(ciutatId: number): Observable<any[]> {
     return this.http
       .get<any[]>(`${this.url}/${ciutatId}/admins`)
@@ -49,6 +49,7 @@ export class Ciutats {
       ));
   }
 
+  //Funció per actualitzar una ciutat
   updateCiutat(dadesCiutat: CiutatDTO): Observable<CiutatDTO> {
     return this.http
       .put<CiutatDTO>(`${this.url}/${dadesCiutat.id}`, dadesCiutat)
@@ -59,6 +60,7 @@ export class Ciutats {
       ));
   }
 
+  //Funció per crear una nova ciutat
   createCiutat(dadesCiutat:  Omit<CiutatDTO, 'id'>){
     return this.http
       .post<CiutatDTO>(`${this.url}`, dadesCiutat)
@@ -70,6 +72,7 @@ export class Ciutats {
       ));
   }
 
+  //Funció per eliminar una ciutat
   deleteCiutat(ciutatId: number){
     return this.http
       .delete<number>(`${this.url}/${ciutatId}`)

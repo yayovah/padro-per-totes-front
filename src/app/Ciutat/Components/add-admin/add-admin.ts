@@ -22,10 +22,12 @@ import { ModalService } from '../../../Shared/Components/modal/modal.service';
   styleUrl: './add-admin.scss',
 })
 export class AddAdmin implements OnInit{
+  // Serveis injectats
   private AuthService = inject(Auth);
   private permisService = inject(Permis);
   private modalService = inject(ModalService);
   
+  // Dades dels usuaris administradors
   private nousAdmins = signal<any[]>([]);
   nousAdminsLlistables = computed<LlistableDTO[]>(() => 
     this.nousAdmins().map((users) => ({
@@ -34,12 +36,14 @@ export class AddAdmin implements OnInit{
     }))
   );
 
+  // Elements del formulari
   admin: FormControl;
   addAdminForm: FormGroup;
 
+  // Input per rebre la id de la ciutat seleccionada
   @Input() idCiutatSeleccionada: number | null = null;
   
-
+  // Output per enviar el nou admin creat al component pare
   nouAdmin = output<UserDTO>();
 
   constructor(
@@ -55,18 +59,19 @@ export class AddAdmin implements OnInit{
     });
   }
   
+  //En iniciar el component, obtenim tots els usuaris que son admins per poder-los seleccionar al formulari
   ngOnInit(){
     this.AuthService.getUsersByRol('admin')
       .subscribe((users) => this.nousAdmins.set(users));
       //Falta eliminar tots els que ja son admins de la ciutat
   }
 
+  //Funció per crear un nou admin per la ciutat seleccionada
   submit(){
     if (this.addAdminForm.invalid) {
       this.addAdminForm.markAllAsTouched();
       return;
     }
-    //this.modalService.showModalInfo("Dins del submit");
     if(this.idCiutatSeleccionada){
       this.permisService.createPermis(this.idCiutatSeleccionada, this.admin.value).subscribe({
         next: (permis) => {
@@ -78,6 +83,7 @@ export class AddAdmin implements OnInit{
     }
   }
 
+  // Funció per mostrar missatges d'error en els camps del formulari
   getErrorMessage(camp : FormControl, nom : string): string {
     if(camp.hasError('required')) {
       return "Se requiere selecciona " + nom;

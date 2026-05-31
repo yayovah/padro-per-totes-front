@@ -18,11 +18,12 @@ export class SuperadminDashService {
 
   constructor(){
     effect(()=> {
-        //this.monitor();
+        //this.monitor(); //Descomentar per monitoritzr l'estat del servei
       }
     )
   }
 
+  // Funció per monitoritzar l'estat del servei
   monitor(){
       console.log("---------------- SUPERADMIN SERVICE -------------");
       console.log("ciutatSeleccionada ", this.ciutatSeleccionada());

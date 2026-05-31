@@ -43,14 +43,7 @@ export class Situacio {
         }));
     }
   
-    updateSituacio(situacio: SituacioDTO): Observable<SituacioDTO>{
-      const situacioToBD = {
-        id: situacio.id,
-        ciutat: situacio.ciutat.id,
-        pregunta: situacio.pregunta.id,
-        resposta: situacio.resposta?.id,
-        seguent_pregunta: situacio.pregunta.id
-      }
+    updateSituacio(situacio: any): Observable<SituacioDTO>{
       return this.http
         .put<SituacioDTO>(`${this.url}/${situacio.id}`, situacio)
           .pipe(catchError((error) => {

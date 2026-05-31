@@ -6,6 +6,8 @@ import { Observable, Subject } from "rxjs";
 
 export class ModalService {
     //showSpinner = signal<boolean>(false);
+
+    /* Variables per definir i configurar el modal */
     modalTipo = signal<string>('');
     modalMissatge = signal<string>('');
     modalTitol = signal<string>('');
@@ -13,6 +15,8 @@ export class ModalService {
     resultatObservable = new Subject<boolean>();
     error = signal<any>('');
     itinerariId = signal<number | null>(null);
+
+    /*** Funcions per mostrar diferents tipus de modals */
 
     showModalOk(missatge: string, titol: string ='¡Hecho!'): void {
         this.modalTipo.set('ok');
@@ -51,7 +55,7 @@ export class ModalService {
         this.itinerariId.set(itinerariId);
     }
 
-
+    /* Funció per tancar el modal i restaurar els valors inicials de les variables*/
 
     closeModal(): void {
         this.modalTipo.set('');

@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './input-password.scss',
 })
 export class InputPassword {
+  /* Paramtres d'entrada al component INPUT-PASSWORD */
   @Input() label = "";
   @Input() type = "";
   @Input() control! : FormControl;

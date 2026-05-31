@@ -9,6 +9,9 @@ import { UserDTO } from '../../Shared/Models/user.dto';
   providedIn: 'root',
 })
 export class AdminDashService {
+
+  //Variables d'estat
+
   usuari = signal<UserDTO | null>(null);
   preguntes = signal<PreguntaDTO[]>([]);
   situacions = signal<SituacioDTO[]>([]);
@@ -22,11 +25,12 @@ export class AdminDashService {
 
   constructor(){
     effect(()=> {
-        this.monitor();
+        //this.monitor(); //Descomentar per monitoritzr l'estat del servei
       }
     )
   }
 
+  // Funció per monitoritzar l'estat del servei
   monitor(){
       console.log("----------------ADMIN SERVICE -------------");
       console.log("usuari ", this.usuari());

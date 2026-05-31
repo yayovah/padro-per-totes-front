@@ -15,15 +15,17 @@ import { Submit } from '../../../Shared/Components/form-controls/submit/submit';
   styleUrl: './register.scss',
 })
 export class Register {
+  // Servei injectat
+  authService = inject(Auth);
 
+  //Formulari de registre, amb els camps: name, email, password i confirmPassword
   registreForm: FormGroup;
   name: FormControl;
   email: FormControl;
   password: FormControl;
   confirmPassword: FormControl;
 
-  authService = inject(Auth);
-
+  // Input per rebre l'id de l'itinerari, en cas que el registre sigui per un usuari que vol guardar un itinerari
   @Input() itinerariId: number | null = null;
   
 
@@ -57,6 +59,7 @@ export class Register {
     });
   }
   
+  //Funció per registrar usuàries amb cria a la API
   submit(){
     if (this.registreForm.invalid) {
       this.registreForm.markAllAsTouched();
@@ -68,14 +71,18 @@ export class Register {
       password: this.password.value,
       password_confirmation: this.confirmPassword.value,
     };
+    //Si és un usuari que vol guardar
     if(this.itinerariId){
       this.authService.registreUsuari(credentials, this.itinerariId);
-    } else {
+    } 
+    //Si és el regiustre d'una nova administradora
+    else {
       credentials = {...credentials, rol: 'admin'};
       this.authService.registre(credentials);
     }
   }
 
+  // Funció per mostrar missatges d'error en els camps del formulari
   getErrorMessage(camp : FormControl, nom : string): string {
     if(camp.hasError('required')) {
       return nom + " se requiere";

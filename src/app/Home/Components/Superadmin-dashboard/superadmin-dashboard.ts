@@ -57,6 +57,9 @@ export class SuperadminDashboard{
     });
   }
 
+  //Funcions del taulell de superadministració (ideal passar al servei)
+
+  //Funció auxiliar per gestionar les accions de la llista de ciutats
   handleAccioCiutats(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }): void {
     this.suepradminDashService.accioActual.set(event.type);
     this.suepradminDashService.idCiutatSeleccionada.set(event.id ?? null);
@@ -92,6 +95,7 @@ export class SuperadminDashboard{
     }
   }
 
+  //Funció auxiliar per gestionar les accions de la llista d'administradors d'una ciutat
   handleAccioAdmins(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }): void {
     if(event.id && event.type === 'delete' && this.idCiutatSeleccionada()){
       this.modalService.showModalEliminar("¿Seguro que quieres eliminarle de la administración de esta ciudad?", "Eliminar administradora").subscribe({
@@ -109,10 +113,12 @@ export class SuperadminDashboard{
     }
   }
 
+  //Funció per mostrar el formulari d'afegir administrador
   afegeixAdmin(){
     this.suepradminDashService.accioActual.set('add');
   }
 
+  //Funció per actualitzar la llista de ciutats després d'una creació o actualització i mostrar la ciutat creada/actualitzada
   actualitzaCiutats(ciutatActualitzada : CiutatDTO){
     const ciutatsAct = this.suepradminDashService.ciutats().filter((ciutat) => ciutat.id !== ciutatActualitzada.id);
     this.suepradminDashService.ciutats.set([...ciutatsAct, ciutatActualitzada]);
@@ -120,6 +126,8 @@ export class SuperadminDashboard{
     this.suepradminDashService.idCiutatSeleccionada.set(ciutatActualitzada.id);
     this.suepradminDashService.accioActual.set('view');
   }
+  
+  //Funció per actualitzar la llista d'administradors després d'afegir un nou administrador a una ciutat  
   actualitzaAdmins(nouAdmin : UserDTO){
     const adminsAct = this.suepradminDashService.ciutatAdmins().filter((admin) => admin !== nouAdmin);
     this.suepradminDashService.ciutatAdmins.set([...adminsAct, nouAdmin]);

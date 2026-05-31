@@ -49,6 +49,7 @@ export class Auth {
    * @throws Error en cas d'error en la petició
    *  
    */
+  //Funció per fer login, rep un objecte UserDTO amb les dades d'autenticació de l'usuari
   login(auth: UserDTO): void {
     this.http
       .post<AuthDTO>(this.loginUrl, auth)
@@ -62,10 +63,12 @@ export class Auth {
       .subscribe();
   }
 
+  //Funció per fer logout, esborra les credencials de la signal i de l'storage
   logout(): void {
     this.resetCredentials();
   }
 
+  //Funció auxiliar per al login, que guarda les credencials i dirigeix a la pàgina d'inici segons el rol de l'usuari
   acredita(credentials: AuthDTO){
     this.credentials.set(credentials);
     this.storageCredentials();
@@ -102,9 +105,9 @@ export class Auth {
     this.router.navigate(['/login']);
   }
 
+  //Recupera les credencials de l'storage i les carrega al servei (als signals)
   restoreCredentials(): void {
     const userRol = localStorage.getItem('userRol')? localStorage.getItem('userRol')! : '';
-    
     const userIdStr = localStorage.getItem('userId');
     const userId = (userIdStr && userIdStr !== '')? parseInt(userIdStr) : null;
 
@@ -135,6 +138,7 @@ export class Auth {
     }
   }
 
+  //Funció per registrar un nou administrador, enciant la petició a l'API
   registre(data: RegisterDto): void{
     this.http.post<AuthDTO>(this.registerUrl, data)
     .pipe(
@@ -151,6 +155,7 @@ export class Auth {
     .subscribe();
   }
 
+  //Funció per registrar un nou usuari
   registreUsuari(data: RegisterDto, itinerariId: number): void{
     this.http.post<AuthDTO>(`${this.userRegisterUrl}/itinerari/${itinerariId}`, data)
     .pipe(

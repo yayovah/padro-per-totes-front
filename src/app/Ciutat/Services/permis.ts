@@ -10,20 +10,19 @@ import { ModalService } from '../../Shared/Components/modal/modal.service';
   providedIn: 'root',
 })
 export class Permis {
+  //Servei injectat
   private modalService = inject(ModalService);
 
+  //Definició de la URL base i endpoints
   private readonly baseUrl = environment.apiUrl;
   private readonly permisosEndpoint = '/permisos';
   private readonly url = `${this.baseUrl}${this.permisosEndpoint}`;
 
   constructor(private http: HttpClient) {}
-  /**
-   * Afegir administradora a ciutat 
-   * 
-   * @returns Permis
-   * @throws Error en cas d'error en la petició
-   *  
-   */
+
+  /*** FUNCIONS DE PERMIS : CRIDES A LA API */
+
+  //Funció per crear un nou permis d'administrador per una ciutat
   createPermis(ciutatId: number, adminId: number): Observable<any> {
     const permis:any = {
         usuaria : adminId,

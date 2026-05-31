@@ -76,6 +76,7 @@ export class Home{
 
 
   constructor(){
+    //Si tenim les credentials a l'iniciar el component, carreguem les dades de l'usuari i el seu itinerari
     if(this.authService.credentials()){
       this.homeService.usuari.set(this.authService.credentials()!.user);
       this.homeService.carregaItinerari();
@@ -88,11 +89,13 @@ export class Home{
 
   }
 
+  //Funció auxiliar per actualitzar la ciutat seleccionada i carregar les preguntes i situacions inicials
   actualitzarCiutat(ciutatOutput: CiutatDTO | undefined){
     this.homeService.ciutatSeleccionada.set(ciutatOutput ?? null);
     this.carregaSituacionsInicials();
   }
 
+  //Funció per carregar les situacions i la primera pregunta d'una ciutat seleccionada
   carregaSituacionsInicials(){
     if(this.idCiutatSeleccionada()){
       this.itinerariService.createItinerari({ciutat: this.idCiutatSeleccionada()!}).subscribe({
@@ -110,6 +113,7 @@ export class Home{
     } 
   }
 
+  //Funció per guardar la resposta seleccionada i carregar la següent pregunta
   seleccionaResposta(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
     if(event.id){
       this.homeService.idSituacioSeleccionada.set(event.id);
@@ -119,6 +123,7 @@ export class Home{
     }
   }
 
+  //Funció per mostrar informació d'una pregunta ja passada
   seleccionaPregunta(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
     if(event.id && this.itinerari()){
       const pas = this.passos().find((p) => p.pregunta.id === event.id);
@@ -128,6 +133,7 @@ export class Home{
     }
   }
 
+  //Funció per baixar el PDF de l'itinerari seguit
   baixarPdf(){
     //Petició del PDF a la api
     this.homeService.baixarPDFdeAPI(this.idItinerari()!).subscribe({
@@ -140,8 +146,8 @@ export class Home{
     })
   }
 
+  //Funció per guardar l'itinerari seguit, si no està registrat, mostrar el formulari de registre
   guardar(){
-    console.log("GUARDANT.... ", this.authService.credentials(), this.idItinerari());
     if(!this.authService.credentials()?.user.email){
         this.modalService.showRegistre(this.idItinerari()!);
     }

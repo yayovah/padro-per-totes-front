@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './input-text.scss',
 })
 export class InputText {
+  /* Paramtres d'entrada al component INPUT-TEXT */
   @Input() label = "";
   @Input() type = "";
   @Input() control! : FormControl;

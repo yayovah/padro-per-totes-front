@@ -22,15 +22,19 @@ import { Auth } from '../../../Auth/Services/auth';
 })
 export class SelectCiutats implements OnInit{
 
+  //Serveis injectats
   private ciutatsService = inject(Ciutats);
   private authService = inject(Auth);
 
+  //Dades de l'usuari
   credentials = computed(() => this.authService.credentials());
   usuariId = computed(() => this.credentials()?.user.id);
   usuariRol = computed(() => this.credentials()?.user.rol);
   
+  //Dades de les ciutats
   ciutats = signal<CiutatDTO[]>([]);
   idCiutatSeleccionada = signal<number | null>(null);
+
   // Creem l'array de llistables a partir de l'array de ciutats
   ciutatsLlistables = computed<LlistableDTO[]>(() => 
     this.ciutats().map((ciutat: CiutatDTO) => ({
@@ -39,12 +43,15 @@ export class SelectCiutats implements OnInit{
     }))
   );
   
+  // Ciutat seleccionada a partir de l'id seleccionat i el llistat de ciutats
   ciutatSeleccionada = computed<CiutatDTO | undefined>(() => {
     return this.ciutats().find(ciutat => ciutat.id == this.idCiutatSeleccionada());
   });
 
+  // Output per enviar la ciutat seleccionada al component pare
   ciutatOutput = output<CiutatDTO | undefined>();
 
+  // Elements del formulari
   ciutat: FormControl;
   selectCiutatForm: FormGroup;
 
@@ -55,13 +62,13 @@ export class SelectCiutats implements OnInit{
     this.ciutat = new FormControl('', [
       Validators.required
     ]);
-
     this.selectCiutatForm = this.formBuilder.group({
       ciutat: this.ciutat,
     });
   }
 
   ngOnInit(): void {
+    //Si l'usuari és admin, només es carreguen les ciutats que administra, sinó es carreguen totes les ciutats
     if(this.usuariId() && this.usuariRol() === 'admin'){
       this.ciutatsService.getCiutatsAdministrades(this.usuariId()!).subscribe((ciutats) => {
         this.ciutats.set(ciutats);
@@ -74,10 +81,12 @@ export class SelectCiutats implements OnInit{
   }
 
   submit(){
+    // s'emet la ciutat seleccionada al select
     this.idCiutatSeleccionada.set(this.ciutat.value);
     this.ciutatOutput.emit(this.ciutatSeleccionada());
   }
 
+  // Funció per obtenir el missatge d'error del camp de selecció de ciutat
   getErrorMessage(camp : FormControl, nom : string): string {
     if(camp.hasError('required')) {
       return "Se requiere seleccionar " + nom;

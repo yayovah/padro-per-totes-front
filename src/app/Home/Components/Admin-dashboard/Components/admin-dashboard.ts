@@ -30,7 +30,7 @@ import { MarkdownComponent } from 'ngx-markdown';
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.scss',
 })
-export class AdminDashboard implements OnInit{
+export class AdminDashboard{
   //private selectCiutatService = inject(Ciutats);
   private adminDashService = inject(AdminDashService);
 
@@ -78,15 +78,15 @@ export class AdminDashboard implements OnInit{
     };})
   );
 
-  ngOnInit(){
-    //this.modalService.showModalOk("Bienvenido al panel de administración", "Bienvenid@!");
-  }
+  //Funcions del taulell de superadministració (ideal passar al servei)
 
+  //Funció auxiliar de carrega de dades quan seleccionem una ciutat
   actualitzarCiutat(ciutatOutput: CiutatDTO | undefined){
     this.adminDashService.ciutatSeleccionada.set(ciutatOutput ?? null);
     this.carregaPreguntes();
   }
 
+  //Funció per carregar les preguntes de la ciutat seleccionada
   carregaPreguntes(){
     if(this.idCiutatSeleccionada()){
       this.preguntaService.getPreguntesByCiutat(this.idCiutatSeleccionada()!).subscribe({
@@ -96,6 +96,7 @@ export class AdminDashboard implements OnInit{
     } 
   }
 
+  //Funció per carregar les situacions d'una pregunta seleccionada
   actualitzarPregunta(preguntaActual: PreguntaDTO | undefined){
     if(preguntaActual){
       if(this.accioActual() === 'edit'){
@@ -115,23 +116,11 @@ export class AdminDashboard implements OnInit{
           this.adminDashService.accioActual.set('view');
           this.adminDashService.idPreguntaSeleccionada.set(preguntaActual.id);  
         }
-/* 
-        switch(this.accioActual()){
-          case 'add':
-            this.adminDashService.accioActual.set('view');
-            this.adminDashService.idPreguntaSeleccionada.set(preguntaActual.id);
-            break;
-          case 'addPregunta':
-            this.adminDashService.idSituacioSeleccionada()?
-              this.adminDashService.accioActual.set('edit'):
-              this.adminDashService.accioActual.set('add');
-            this.idPreguntaSeguent.set(preguntaActual.id);
-            break;
-        } */
       }
     }
   }
 
+  //Funció de suport al llistat de preguntes
   handleAccio(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
 
     if(this.idPreguntaSeleccionada() && this.accioActual() === 'add'){
@@ -177,6 +166,7 @@ export class AdminDashboard implements OnInit{
     }
   }
 
+  //Funció de suport al llistat de respostes
   handleAccioSituacions(event: { type: 'edit' | 'delete' | 'view' | 'back' | 'add', id?: any }){
     this.adminDashService.accioActual.set(event.type);
     this.adminDashService.idSituacioSeleccionada.set(event.id ?? null);
@@ -198,10 +188,12 @@ export class AdminDashboard implements OnInit{
     }
   }
 
+  //Funció per mostrar el formulari d'afegir resposta
   afegeixResposta(toggle: boolean =true){
     this.adminDashService.accioActual.set("add");
   }
 
+  //Funció per tancar el formulari d'afegir resposta
   cancelarNovaResposta(){
     this.adminDashService.accioActual.set('view');
   }

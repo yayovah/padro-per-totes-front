@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './text-area.scss',
 })
 export class TextArea {
+  /* Paramtres d'entrada al component TEXT-AREA */
   @Input() label = "";
   @Input() control! : FormControl;
   @Input() placeholder = "";

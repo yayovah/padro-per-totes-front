@@ -10,32 +10,31 @@ import { Register } from './Auth/Components/Register/register';
 
 
 export const routes: Routes = [
+  //Ruta per defecte que redirigeix a Home
   {
     path: '',
     component: Home,
   },
+  //Ruta per acreditar usuàries
   {
     path: 'login',
     component: Login,
   },
+  // Ruta per al registre d'administradores
   {
     path: 'registro',
     component: Register,
   },
-  {
-    path: 'ciutats',
-    component: CiutatsComponent,
-  },
-  {
-    path: 'userDash',
-    component: CiutatsComponent,
-  },
+
+  //Les següents rutes utilitzen l'authGuard' per protegir-les i només permetre l'accés a usuaris amb el rol necessari
+  //Taulell d'Administració
   {
     path: 'adminDash',
     component: AdminDashboard,
     canActivate: [authGuard],
     data: { rolNecessari: 'admin' }
   },
+  //Taulell de Superadministració
   {
     path: 'superadminDash',
     component: SuperadminDashboard,
