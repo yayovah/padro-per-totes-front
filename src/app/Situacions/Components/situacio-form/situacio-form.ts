@@ -10,6 +10,7 @@ import { LlistableDTO } from '../../../Shared/Models/llistable.dto';
 import { Situacio } from '../../Services/situacio';
 import { AdminDashService } from '../../../Home/Services/admin-dash.service';
 import { ModalService } from '../../../Shared/Components/modal/modal.service';
+import { SituacioToBDDTO } from '../../Model/situacioToBD.dto';
 
 @Component({
   selector: 'app-situacio-form',
@@ -79,9 +80,10 @@ constructor(
     effect(() => {
       if(this.situacioSeleccionada()){
         this.situacioForm.patchValue({
-          resposta: this.situacioSeleccionada()!.resposta,
-          seguentPregunta: this.situacioSeleccionada()!.seguent_pregunta
+          resposta: this.situacioSeleccionada()!.resposta?.text,
+          seguentPregunta: this.situacioSeleccionada()!.seguent_pregunta?.id
         })
+        
       }
     });
   }
@@ -99,15 +101,42 @@ constructor(
         seguent_pregunta: this.seguentPregunta.value
       }
     }
-    this.situacioService.createSituacio(dades).subscribe({
-      next: (situacioCreada) => {
-        this.adminDashService.situacions.set([...this.adminDashService.situacions(), situacioCreada]);
-        this.adminDashService.accioActual.set('view');
-      },
-      error: (error) => {
-        this.modalService.showModalError('Error al crear la respuesta:', error);
-      }
-    });
+
+   
+    if(this.idSituacioSeleccionada()){
+      const dadesSituacio : any =  {
+        preguntaId: this.idPreguntaSeleccionada()!,
+        ciutatId: this.idCiutatSeleccionada()!,
+        seguent_pregunta: this.seguentPregunta.value,
+        id: this.idSituacioSeleccionada()!,
+        resposta: 
+          { 
+            id: this.situacioSeleccionada()!.resposta?.id,
+            text: this.resposta.value
+          }
+      };
+      this.situacioService.updateSituacio(dadesSituacio).subscribe({
+        next: (situacioActualitzada) => {
+          this.adminDashService.situacions.set([...this.adminDashService.situacions(), situacioActualitzada]);
+          this.adminDashService.accioActual.set('view');
+        },
+        error: (error) => {
+          this.modalService.showModalError('Error al crear la respuesta:', error);
+        }
+      });
+    }
+    else{
+      this.situacioService.createSituacio(dades).subscribe({
+        next: (situacioCreada) => {
+          this.adminDashService.situacions.set([...this.adminDashService.situacions(), situacioCreada]);
+          this.adminDashService.accioActual.set('view');
+        },
+        error: (error) => {
+          this.modalService.showModalError('Error al crear la respuesta:', error);
+        }
+      });
+    }
+
   }
 
   getErrorMessage(camp : FormControl, nom : string): string {

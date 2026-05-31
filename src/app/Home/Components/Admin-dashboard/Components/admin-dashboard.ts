@@ -79,7 +79,7 @@ export class AdminDashboard implements OnInit{
   );
 
   ngOnInit(){
-    this.modalService.showModalOk("Bienvenido al panel de administración");
+    //this.modalService.showModalOk("Bienvenido al panel de administración", "Bienvenid@!");
   }
 
   actualitzarCiutat(ciutatOutput: CiutatDTO | undefined){
@@ -142,6 +142,7 @@ export class AdminDashboard implements OnInit{
       //Si és el cas d'afegir preguntes, eliminem la pregunta seleccionada
       if(this.accioActual() === 'add' || this.accioActual() === 'edit'){
         this.adminDashService.idPreguntaSeleccionada.set(null);
+        this.adminDashService.idSituacioSeleccionada.set(null);
       }
     }
 
@@ -172,8 +173,6 @@ export class AdminDashboard implements OnInit{
             }
           }
         })
-
- 
       }
     }
   }
